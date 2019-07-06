@@ -1,17 +1,19 @@
 ﻿using Model.Abstractions;
 using Model.Entities.Base;
 using System.Collections.Generic;
-using System.Data;
+using System.Data.SqlClient;
 
-namespace DapperContext.Repositories
+namespace DapperContext.Repositories.Sql
 {
-    /// <inheritdoc />
-    public abstract class BaseRepository<TEntity> : IRepository<TEntity>
+    /// <summary>
+    /// Базовый класс репозитория SQL
+    /// </summary>
+    public abstract class BaseSqlRepository<TEntity> : IRepository<TEntity>
         where TEntity : BaseEntity
     {
-        protected readonly IDbConnection Connection;
+        protected readonly SqlConnection Connection;
 
-        protected BaseRepository(IDbConnection connection)
+        protected BaseSqlRepository(SqlConnection connection)
         {
             Connection = connection;
         }

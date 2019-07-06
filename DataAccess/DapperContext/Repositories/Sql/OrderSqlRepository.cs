@@ -1,15 +1,15 @@
 ﻿using Dapper;
 using Model.Entities;
 using System.Collections.Generic;
-using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 
-namespace DapperContext.Repositories
+namespace DapperContext.Repositories.Sql
 {
     /// <inheritdoc />
-    public class OrderRepository : BaseRepository<Order>
+    public class OrderSqlRepository : BaseSqlRepository<Order>
     {
-        public OrderRepository(IDbConnection connection) : base(connection)
+        public OrderSqlRepository(SqlConnection connection) : base(connection)
         {
         }
 

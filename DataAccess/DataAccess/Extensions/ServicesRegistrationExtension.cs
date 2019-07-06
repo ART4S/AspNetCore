@@ -1,5 +1,6 @@
-﻿using DapperContext.Repositories;
+﻿using DapperContext.Repositories.Sql;
 using EFContext;
+using EFContext.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +24,7 @@ namespace DataAccess.Extensions
             var cnn = config.GetConnectionString("SqlConnection");
 
             services.AddDbContext<AppContext>(opt => opt.UseSqlServer(cnn));
-            services.AddTransient(typeof(IRepository<>), typeof(EFContext.Repositories.BaseRepository<>));
+            services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
 
             return services;
         }
@@ -36,9 +37,9 @@ namespace DataAccess.Extensions
             var cnn = config.GetConnectionString("SqlConnection");
             services.AddTransient(typeof(IDbConnection), x => new SqlConnection(cnn));
 
-            services.AddTransient<IRepository<Customer>, CustomerRepository>();
-            services.AddTransient<IRepository<Order>, OrderRepository>();
-            services.AddTransient<IRepository<Product>, ProductRepository>();
+            services.AddTransient<IRepository<Customer>, CustomerSqlRepository>();
+            services.AddTransient<IRepository<Order>, OrderSqlRepository>();
+            services.AddTransient<IRepository<Product>, ProductSqlRepository>();
 
             return services;
         }
