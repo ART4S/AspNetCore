@@ -18,6 +18,9 @@ namespace DataAccess.Controllers
             _customerRepo = customerRepo;
         }
 
+        /// <summary>
+        /// Получить всех покупателей
+        /// </summary>
         [HttpGet]
         public IActionResult Get()
         {
@@ -25,6 +28,10 @@ namespace DataAccess.Controllers
             return Ok(customers);
         }
 
+        /// <summary>
+        /// Получить покупателя по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор покупателя</param>
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -38,6 +45,10 @@ namespace DataAccess.Controllers
             return Ok(customer);
         }
 
+        /// <summary>
+        /// Добавить покупателя
+        /// </summary>
+        /// <param name="customer">Покупатель</param>
         [HttpPut]
         public IActionResult Add([FromBody, Required] Customer customer)
         {
@@ -45,6 +56,10 @@ namespace DataAccess.Controllers
             return Ok(customer.Id);
         }
 
+        /// <summary>
+        /// Удалить покупателя
+        /// </summary>
+        /// <param name="id">Идентификатор покупателя</param>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

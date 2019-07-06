@@ -4,17 +4,17 @@ using Model.Entities.Base;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EFContext
+namespace EFContext.Repositories
 {
     /// <inheritdoc />
-    public class BaseEFRepository<TEntity> : IRepository<TEntity>
+    public class BaseRepository<TEntity> : IRepository<TEntity>
         where TEntity : BaseEntity, new()
     {
         protected AppContext Context { get; }
 
         protected DbSet<TEntity> Table => Context.Set<TEntity>();
 
-        public BaseEFRepository(AppContext context)
+        public BaseRepository(AppContext context)
         {
             Context = context;
         }

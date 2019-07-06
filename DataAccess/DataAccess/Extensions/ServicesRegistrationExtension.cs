@@ -23,7 +23,7 @@ namespace DataAccess.Extensions
             var cnn = config.GetConnectionString("SqlConnection");
 
             services.AddDbContext<AppContext>(opt => opt.UseSqlServer(cnn));
-            services.AddTransient(typeof(IRepository<>), typeof(BaseEFRepository<>));
+            services.AddTransient(typeof(IRepository<>), typeof(EFContext.Repositories.BaseRepository<>));
 
             return services;
         }
