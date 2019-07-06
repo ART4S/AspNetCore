@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using AppContext = EFContext.AppContext;
 
 namespace DataAccess.Extensions
 {
@@ -22,12 +23,12 @@ namespace DataAccess.Extensions
 
                 try
                 {
-                    var db = serviceProvider.GetService<EFContext.AppContext>().Database;
+                    var db = serviceProvider.GetService<AppContext>().Database;
                     db.Migrate();
                 }
                 catch (Exception ex)
                 {
-                    var logger = serviceProvider.GetService<ILoggerFactory>().CreateLogger<EFContext.AppContext>();
+                    var logger = serviceProvider.GetService<ILoggerFactory>().CreateLogger<AppContext>();
                     logger.LogCritical(ex, "Ошибка при попытке накатить миграцию");
                 }
             }

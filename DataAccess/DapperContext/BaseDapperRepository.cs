@@ -39,7 +39,6 @@ namespace DapperContext
 
         public void Add(TEntity entity)
         {
-            var sql = 
         }
 
         public void Remove(int id)
