@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Model.Abstractions;
 using Model.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataAccess.Controllers
 {
@@ -25,11 +25,31 @@ namespace DataAccess.Controllers
             return Ok(customers);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var customer = _customerRepo.GetById(id);
+
+            if (customer == null)
+            {
+                return BadRequest("Полупатель отсутствует");
+            }
+
+            return Ok(customer);
+        }
+
         [HttpPut]
         public IActionResult Add([FromBody, Required] Customer customer)
         {
             _customerRepo.Add(customer);
             return Ok(customer.Id);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _customerRepo.Remove(id);
+            return Ok();
         }
     }
 }

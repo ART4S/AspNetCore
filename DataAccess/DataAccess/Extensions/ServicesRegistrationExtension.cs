@@ -1,5 +1,4 @@
 ﻿using DapperContext;
-using DapperContext.QueryProvider.Abstractions;
 using EFContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -7,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Model.Abstractions;
 using System.Data;
 using System.Data.SqlClient;
-using DapperContext.QueryProvider.Implementations;
 
 namespace DataAccess.Extensions
 {
@@ -30,10 +28,8 @@ namespace DataAccess.Extensions
         {
             var cnn = config.GetConnectionString("SqlConnection");
 
-            services.AddTransient(typeof(IRepository<>), typeof(BaseDapperRepository<>));
+            services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddTransient(typeof(IDbConnection), x => new SqlConnection(cnn));
-            services.AddTransient(typeof(IQueryProvider), typeof(SqlQueryProvider));
-            services.AddTransient(typeof(TableInfoProvider<>));
 
             return services;
         }
