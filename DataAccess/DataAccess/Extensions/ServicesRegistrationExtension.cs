@@ -1,9 +1,10 @@
-﻿using DapperContext;
+﻿using DapperContext.Repositories;
 using EFContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Model.Abstractions;
+using Model.Entities;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -14,6 +15,9 @@ namespace DataAccess.Extensions
     /// </summary>
     public static class ServicesRegistrationExtension
     {
+        /// <summary>
+        /// Добавить сервисы EF для SQL
+        /// </summary>
         public static IServiceCollection AddEFContextSql(this IServiceCollection services, IConfiguration config)
         {
             var cnn = config.GetConnectionString("SqlConnection");
@@ -24,12 +28,17 @@ namespace DataAccess.Extensions
             return services;
         }
 
+        /// <summary>
+        /// Добавить сервисы Dapper для SQL
+        /// </summary>
         public static IServiceCollection AddDapperSql(this IServiceCollection services, IConfiguration config)
         {
             var cnn = config.GetConnectionString("SqlConnection");
-
-            services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddTransient(typeof(IDbConnection), x => new SqlConnection(cnn));
+
+            services.AddTransient<IRepository<Customer>, CustomerRepository>();
+            services.AddTransient<IRepository<Order>, OrderRepository>();
+            services.AddTransient<IRepository<Product>, ProductRepository>();
 
             return services;
         }

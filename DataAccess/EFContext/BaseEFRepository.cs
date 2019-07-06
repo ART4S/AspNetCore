@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace EFContext
 {
+    /// <inheritdoc />
     public class BaseEFRepository<TEntity> : IRepository<TEntity>
         where TEntity : BaseEntity, new()
     {
@@ -18,22 +19,26 @@ namespace EFContext
             Context = context;
         }
 
+        /// <inheritdoc />
         public virtual List<TEntity> GetAll()
         {
             return Table.AsNoTracking().ToList();
         }
 
+        /// <inheritdoc />
         public virtual TEntity GetById(int id)
         {
             return Table.FirstOrDefault(x => x.Id == id);
         }
 
+        /// <inheritdoc />
         public virtual void Add(TEntity entity)
         {
             Table.Add(entity);
             Context.SaveChanges();
         }
 
+        /// <inheritdoc />
         public virtual void Remove(int id)
         {
             var entity = new TEntity {Id = id};
