@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Model.Entities;
+﻿using Model.Entities;
+using System.Collections.Generic;
 
 namespace Model.Abstractions
 {
@@ -8,6 +8,9 @@ namespace Model.Abstractions
     /// </summary>
     public interface IProductRepository : IRepository<Product>
     {
+        /// <summary>
+        /// Получить список самых дорогих продуктов
+        /// </summary>
         List<Product> GetMostCostlyProducts();
     }
 }

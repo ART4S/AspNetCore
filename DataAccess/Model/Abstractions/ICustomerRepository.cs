@@ -8,6 +8,9 @@ namespace Model.Abstractions
     /// </summary>
     public interface ICustomerRepository : IRepository<Customer>
     {
+        /// <summary>
+        /// Получить отсортированный по количеству заказов список покупателей
+        /// </summary>
         List<Customer> GetOrderedByOrdersCountCustomers();
     }
 }

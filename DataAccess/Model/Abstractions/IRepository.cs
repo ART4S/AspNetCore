@@ -1,7 +1,5 @@
-﻿using System;
-using Model.Entities.Base;
+﻿using Model.Entities.Base;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace Model.Abstractions
 {

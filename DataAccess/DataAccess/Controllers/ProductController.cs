@@ -39,7 +39,7 @@ namespace DataAccess.Controllers
 
             if (product == null)
             {
-                return BadRequest("Продукт отсутствует");
+                return NotFound();
             }
 
             return Ok(product);

@@ -39,7 +39,7 @@ namespace DataAccess.Controllers
 
             if (customer == null)
             {
-                return BadRequest("Полупатель отсутствует");
+                return NotFound();
             }
 
             return Ok(customer);

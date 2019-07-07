@@ -39,7 +39,7 @@ namespace DataAccess.Controllers
 
             if (order == null)
             {
-                return BadRequest("Заказ отсутствует");
+                return NotFound();
             }
 
             return Ok(order);
