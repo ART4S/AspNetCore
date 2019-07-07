@@ -7,7 +7,7 @@ using System.Linq;
 namespace DapperContext.Repositories.Sql
 {
     /// <inheritdoc />
-    public class CustomerSqlRepository : BaseSqlRepository<Customer>
+    public class CustomerSqlRepository : BaseRepository<Customer>
     {
         public CustomerSqlRepository(SqlConnection connection) : base(connection)
         {
