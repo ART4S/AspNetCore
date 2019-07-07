@@ -5,5 +5,6 @@
     /// </summary>
     public interface IProductQueryProvider : IQueryProvider
     {
+        string MostCostlyProductsQuery { get; }
     }
 }

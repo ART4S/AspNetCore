@@ -1,4 +1,5 @@
 ﻿using Model.Entities;
+using System.Collections.Generic;
 
 namespace Model.Abstractions
 {
@@ -7,5 +8,6 @@ namespace Model.Abstractions
     /// </summary>
     public interface ICustomerRepository : IRepository<Customer>
     {
+        List<Customer> GetOrderedByOrdersCountCustomers();
     }
 }

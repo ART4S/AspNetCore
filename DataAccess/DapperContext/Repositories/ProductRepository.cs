@@ -26,5 +26,15 @@ namespace DapperContext.Repositories
 
             return products;
         }
+
+        /// <inheritdoc />
+        public List<Product> GetMostCostlyProducts()
+        {
+            var products = Connection
+                .Query<Product>(QueryProvider.MostCostlyProductsQuery)
+                .ToList();
+
+            return products;
+        }
     }
 }

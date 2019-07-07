@@ -20,5 +20,8 @@ namespace DapperContext.QueryProviders.Implementations.Sql
         public string RemoveQuery
             => "DELETE FROM Customers " +
                "WHERE Id = @id";
+
+        public string OrderedByOrdersCountCustomersQuery
+            => string.Empty;
     }
 }

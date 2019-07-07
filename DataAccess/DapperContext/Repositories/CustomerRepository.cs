@@ -45,5 +45,15 @@ namespace DapperContext.Repositories
 
             return customers;
         }
+
+        /// <inheritdoc />
+        public List<Customer> GetOrderedByOrdersCountCustomers()
+        {
+            var customers = Connection
+                .Query<Customer>(QueryProvider.OrderedByOrdersCountCustomersQuery)
+                .ToList();
+
+            return customers;
+        }
     }
 }

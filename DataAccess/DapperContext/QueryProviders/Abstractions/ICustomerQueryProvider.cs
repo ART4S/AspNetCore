@@ -5,5 +5,6 @@
     /// </summary>
     public interface ICustomerQueryProvider : IQueryProvider
     {
+        string OrderedByOrdersCountCustomersQuery { get; }
     }
 }

@@ -18,5 +18,8 @@ namespace DapperContext.QueryProviders.Implementations.Sql
         public string RemoveQuery
             => "DELETE FROM Products " +
                "WHERE Id = @id";
+
+        public string MostCostlyProductsQuery
+            => string.Empty;
     }
 }
