@@ -11,9 +11,9 @@ namespace DataAccess.Controllers
     [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
-        private readonly IRepository<Order> _orderRepo;
+        private readonly IOrderRepository _orderRepo;
 
-        public OrderController(IRepository<Order> orderRepo)
+        public OrderController(IOrderRepository orderRepo)
         {
             _orderRepo = orderRepo;
         }
@@ -32,7 +32,7 @@ namespace DataAccess.Controllers
         /// Получить заказ по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор заказа</param>
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             var order = _orderRepo.GetById(id);

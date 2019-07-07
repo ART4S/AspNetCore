@@ -1,12 +1,12 @@
-﻿using DapperContext.Repositories.Npgsql;
-using DapperContext.Repositories.Sql;
+﻿using DapperContext.QueryProviders.Abstractions;
+using DapperContext.QueryProviders.Implementations.Sql;
+using DapperContext.Repositories;
 using EFContext;
 using EFContext.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Model.Abstractions;
-using Model.Entities;
 using Npgsql;
 using System.Data;
 using System.Data.SqlClient;
@@ -37,11 +37,15 @@ namespace DataAccess.Extensions
         public static IServiceCollection AddDapperSql(this IServiceCollection services, IConfiguration configuration)
         {
             var cnn = configuration.GetConnectionString("SqlConnection");
-
             services.AddTransient<IDbConnection>(x => new SqlConnection(cnn));
-            services.AddTransient<IRepository<Customer>, CustomerSqlRepository>();
-            services.AddTransient<IRepository<Order>, OrderSqlRepository>();
-            services.AddTransient<IRepository<Product>, ProductSqlRepository>();
+
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+
+            services.AddTransient<ICustomerQueryProvider, CustomerSqlQueryProvider>();
+            services.AddTransient<IOrderQueryProvider, OrderSqlQueryProvider>();
+            services.AddTransient<IProductQueryProvider, ProductSqlQueryProvider>();
 
             return services;
         }
@@ -52,11 +56,11 @@ namespace DataAccess.Extensions
         public static IServiceCollection AddDapperNpgsql(this IServiceCollection services, IConfiguration configuration)
         {
             var cnn = configuration.GetConnectionString("NpgsqlConnection");
-
             services.AddTransient<IDbConnection>(x => new NpgsqlConnection(cnn));
-            services.AddTransient<IRepository<Customer>, CustomerNpgsqlRepository>();
-            services.AddTransient<IRepository<Order>, OrderNpgsqlRepository>();
-            services.AddTransient<IRepository<Product>, ProductNpgsqlRepository>();
+
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
 
             return services;
         }

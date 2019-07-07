@@ -11,9 +11,9 @@ namespace DataAccess.Controllers
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
-        private readonly IRepository<Product> _productRepo;
+        private readonly IProductRepository _productRepo;
 
-        public ProductController(IRepository<Product> productRepo)
+        public ProductController(IProductRepository productRepo)
         {
             _productRepo = productRepo;
         }
@@ -32,7 +32,7 @@ namespace DataAccess.Controllers
         /// Получить продукт по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор продукта</param>
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             var product = _productRepo.GetById(id);
