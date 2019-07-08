@@ -1,9 +1,12 @@
-﻿namespace DapperContext.QueryProviders.Abstractions
+﻿using Model.Entities.Base;
+
+namespace DapperContext.QueryProviders.Abstractions
 {
     /// <summary>
     /// Поставщик запросов
     /// </summary>
-    public interface IQueryProvider
+    public interface IQueryProvider<TEntity>
+        where TEntity : BaseEntity
     {
         /// <summary>
         /// Получить все записи

@@ -1,8 +1,9 @@
 ﻿using DapperContext.QueryProviders.Abstractions;
+using Model.Entities;
 
 namespace DapperContext.QueryProviders.Implementations.Sql
 {
-    public class OrderSqlQueryProvider : IOrderQueryProvider
+    public class OrderSqlQueryProvider : IQueryProvider<Order>
     {
         public string GetAllQuery
             => "SELECT * FROM Orders " +

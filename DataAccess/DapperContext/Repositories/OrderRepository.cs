@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using DapperContext.QueryProviders.Abstractions;
-using Model.Abstractions;
 using Model.Entities;
 using System.Collections.Generic;
 using System.Data;
@@ -8,12 +7,12 @@ using System.Linq;
 
 namespace DapperContext.Repositories
 {
-    /// <inheritdoc cref="IOrderRepository" />
-    public class OrderRepository : BaseRepository<Order, IOrderQueryProvider>, IOrderRepository
+    /// <inheritdoc />
+    public class OrderRepository : BaseRepository<Order, IQueryProvider<Order>>
     {
         public OrderRepository(
             IDbConnection connection,
-            IOrderQueryProvider queryProvider) : base(connection, queryProvider)
+            IQueryProvider<Order> queryProvider) : base(connection, queryProvider)
         {
         }
 

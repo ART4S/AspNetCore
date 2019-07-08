@@ -1,10 +1,10 @@
 ﻿using Dapper;
+using DapperContext.QueryProviders.Abstractions;
 using Model.Abstractions;
 using Model.Entities.Base;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using IQueryProvider = DapperContext.QueryProviders.Abstractions.IQueryProvider;
 
 namespace DapperContext.Repositories
 {
@@ -13,7 +13,7 @@ namespace DapperContext.Repositories
     /// </summary>
     public abstract class BaseRepository<TEntity, TQueryProvider> : IRepository<TEntity>
         where TEntity : BaseEntity
-        where TQueryProvider : IQueryProvider
+        where TQueryProvider : IQueryProvider<TEntity>
     {
         protected readonly IDbConnection Connection;
         protected readonly TQueryProvider QueryProvider;

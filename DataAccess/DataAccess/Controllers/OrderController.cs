@@ -11,9 +11,9 @@ namespace DataAccess.Controllers
     [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
-        private readonly IOrderRepository _orderRepo;
+        private readonly IRepository<Order> _orderRepo;
 
-        public OrderController(IOrderRepository orderRepo)
+        public OrderController(IRepository<Order> orderRepo)
         {
             _orderRepo = orderRepo;
         }

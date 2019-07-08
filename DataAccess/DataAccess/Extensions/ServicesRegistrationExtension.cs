@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Model.Abstractions;
+using Model.Entities;
 using Npgsql;
 using System.Data;
 using System.Data.SqlClient;
@@ -40,12 +41,12 @@ namespace DataAccess.Extensions
             services.AddTransient<IDbConnection>(x => new SqlConnection(cnn));
 
             services.AddTransient<ICustomerRepository, CustomerRepository>();
-            services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IRepository<Order>, OrderRepository>();
 
             services.AddTransient<ICustomerQueryProvider, CustomerSqlQueryProvider>();
-            services.AddTransient<IOrderQueryProvider, OrderSqlQueryProvider>();
             services.AddTransient<IProductQueryProvider, ProductSqlQueryProvider>();
+            services.AddTransient<IQueryProvider<Order>, OrderSqlQueryProvider>();
 
             return services;
         }
@@ -59,8 +60,8 @@ namespace DataAccess.Extensions
             services.AddTransient<IDbConnection>(x => new NpgsqlConnection(cnn));
 
             services.AddTransient<ICustomerRepository, CustomerRepository>();
-            services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IRepository<Order>, OrderRepository>();
 
             return services;
         }
