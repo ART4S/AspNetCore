@@ -1,19 +1,19 @@
 ﻿using Dapper;
-using DapperContext.QueryProviders.Abstractions;
 using Model.Abstractions;
 using Model.Entities;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using DapperContext.StoredProcedureProviders.Implementations;
 
 namespace DapperContext.Repositories
 {
     /// <inheritdoc cref="IProductRepository" />
-    public class ProductRepository : BaseRepository<Product, IProductQueryProvider>, IProductRepository
+    public class ProductRepository : BaseRepository<Product, ProductStoredProcedureProvider>, IProductRepository
     {
         public ProductRepository(
             IDbConnection connection,
-            IProductQueryProvider queryProvider) : base(connection, queryProvider)
+            ProductStoredProcedureProvider storedProcedureProvider) : base(connection, storedProcedureProvider)
         {
         }
 
@@ -21,7 +21,7 @@ namespace DapperContext.Repositories
         public override List<Product> GetAll()
         {
             var products = Connection
-                .Query<Product>(QueryProvider.GetAllQuery)
+                .Query<Product>(StoredProcedureProvider.GetAll)
                 .ToList();
 
             return products;
@@ -31,7 +31,7 @@ namespace DapperContext.Repositories
         public List<Product> GetMostCostlyProducts()
         {
             var products = Connection
-                .Query<Product>(QueryProvider.MostCostlyProductsQuery)
+                .Query<Product>(StoredProcedureProvider.MostCostlyProducts)
                 .ToList();
 
             return products;

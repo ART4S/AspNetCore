@@ -1,31 +1,31 @@
 ﻿using Model.Entities.Base;
 
-namespace DapperContext.QueryProviders.Abstractions
+namespace DapperContext.StoredProcedureProviders
 {
     /// <summary>
-    /// Поставщик запросов
+    /// Поставщик имен хранимых процедур
     /// </summary>
-    public interface IQueryProvider<TEntity>
+    public interface IStoredProcedureProvider<TEntity>
         where TEntity : BaseEntity
     {
         /// <summary>
         /// Получить все записи
         /// </summary>
-        string GetAllQuery { get; }
+        string GetAll { get; }
 
         /// <summary>
         /// Получить запись по идентификатору
         /// </summary>
-        string GetByIdQuery { get; }
+        string GetById { get; }
 
         /// <summary>
         /// Добавить запись
         /// </summary>
-        string AddQuery { get; }
+        string Add { get; }
 
         /// <summary>
         /// Удалить запись
         /// </summary>
-        string RemoveQuery { get; }
+        string Remove { get; }
     }
 }

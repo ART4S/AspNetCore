@@ -1,19 +1,19 @@
 ﻿using Dapper;
-using DapperContext.QueryProviders.Abstractions;
 using Model.Abstractions;
 using Model.Entities;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using DapperContext.StoredProcedureProviders.Implementations;
 
 namespace DapperContext.Repositories
 {
     /// <inheritdoc cref="ICustomerRepository" />
-    public class CustomerRepository : BaseRepository<Customer, ICustomerQueryProvider>, ICustomerRepository
+    public class CustomerRepository : BaseRepository<Customer, CustomersStoredProcedureProvider>, ICustomerRepository
     {
         public CustomerRepository(
             IDbConnection connection,
-            ICustomerQueryProvider queryProvider) : base(connection, queryProvider)
+            CustomersStoredProcedureProvider queryProvider) : base(connection, queryProvider)
         {
         }
 
@@ -23,7 +23,7 @@ namespace DapperContext.Repositories
             var customersDict = new Dictionary<int, Customer>();
 
             var customers = Connection.Query<Customer, Order, Customer>(
-                QueryProvider.GetAllQuery,
+                StoredProcedureProvider.GetAll,
                 (customer, order) =>
                 {
                     if (!customersDict.TryGetValue(customer.Id, out var customerEntry))
@@ -50,7 +50,7 @@ namespace DapperContext.Repositories
         public List<Customer> GetOrderedByOrdersCountCustomers()
         {
             var customers = Connection
-                .Query<Customer>(QueryProvider.OrderedByOrdersCountCustomersQuery)
+                .Query<Customer>(StoredProcedureProvider.OrderedByOrdersCountCustomers)
                 .ToList();
 
             return customers;

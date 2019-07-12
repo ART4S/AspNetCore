@@ -1,25 +1,27 @@
-﻿using DapperContext.QueryProviders.Abstractions;
-using Model.Entities;
+﻿using Model.Entities;
 
-namespace DapperContext.QueryProviders.Implementations.Sql
+namespace DapperContext.StoredProcedureProviders.Implementations
 {
-    public class OrderSqlQueryProvider : IQueryProvider<Order>
+    /// <summary>
+    /// Поставщик имен хранимых процедур для таблицы заказов
+    /// </summary>
+    public class OrderStoredProcedureProvider : IStoredProcedureProvider<Order>
     {
-        public string GetAllQuery
+        public string GetAll
             => "SELECT * FROM Orders " +
                "JOIN Customers ON Customers.Id = Orders.CustomerId " +
                "JOIN Products ON Products.Id = Orders.ProductId ";
 
-        public string GetByIdQuery
+        public string GetById
             => "SELECT * FROM Orders " +
                "WHERE Id = @id";
 
-        public string AddQuery
+        public string Add
             => "INSERT INTO Orders (CustomerId, ProductId)" +
                "VALUES (@CustomerId, @ProductId); " +
                "SELECT CAST(SCOPE_IDENTITY() as int);";
 
-        public string RemoveQuery
+        public string Remove
             => "DELETE FROM Orders " +
                "WHERE Id = @id";
     }

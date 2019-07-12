@@ -10,7 +10,10 @@ namespace DataAccess
         {
             var host = BuildWebHost(args);
 
-            host.MigrateDB();
+            host.MigrateDbChanges();
+            host.CreateSqlStoredProcedures();
+            host.CreateSqlStoredProcedures();
+
             host.Run();
         }
 

@@ -1,18 +1,18 @@
 ﻿using Dapper;
-using DapperContext.QueryProviders.Abstractions;
 using Model.Entities;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using DapperContext.StoredProcedureProviders.Implementations;
 
 namespace DapperContext.Repositories
 {
     /// <inheritdoc />
-    public class OrderRepository : BaseRepository<Order, IQueryProvider<Order>>
+    public class OrderRepository : BaseRepository<Order, OrderStoredProcedureProvider>
     {
         public OrderRepository(
             IDbConnection connection,
-            IQueryProvider<Order> queryProvider) : base(connection, queryProvider)
+            OrderStoredProcedureProvider storedProcedureProvider) : base(connection, storedProcedureProvider)
         {
         }
 
@@ -20,7 +20,7 @@ namespace DapperContext.Repositories
         public override List<Order> GetAll()
         {
             var orders = Connection.Query<Order, Customer, Product, Order>(
-                    QueryProvider.GetAllQuery,
+                    StoredProcedureProvider.GetAll,
                     (order, customer, product) =>
                     {
                         order.Product = product;

@@ -1,6 +1,5 @@
-﻿using DapperContext.QueryProviders.Abstractions;
-using DapperContext.QueryProviders.Implementations.Sql;
-using DapperContext.Repositories;
+﻿using DapperContext.Repositories;
+using DapperContext.StoredProcedureProviders.Implementations;
 using EFContext;
 using EFContext.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +16,7 @@ namespace DataAccess.Extensions
     /// <summary>
     /// Расширения для регистрации сервисов приложения
     /// </summary>
-    public static class ServicesRegistrationExtension
+    public static class ServicesRegistrationExtensions
     {
         /// <summary>
         /// Добавить сервисы EF для SQL
@@ -44,9 +43,9 @@ namespace DataAccess.Extensions
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IRepository<Order>, OrderRepository>();
 
-            services.AddTransient<ICustomerQueryProvider, CustomerSqlQueryProvider>();
-            services.AddTransient<IProductQueryProvider, ProductSqlQueryProvider>();
-            services.AddTransient<IQueryProvider<Order>, OrderSqlQueryProvider>();
+            services.AddTransient<OrderStoredProcedureProvider>();
+            services.AddTransient<ProductStoredProcedureProvider>();
+            services.AddTransient<CustomersStoredProcedureProvider>();
 
             return services;
         }
