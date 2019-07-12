@@ -1,12 +1,9 @@
-﻿using Model.Entities.Base;
-
-namespace DapperContext.StoredProcedureProviders
+﻿namespace DapperContext.StoredProcedureProviders
 {
     /// <summary>
     /// Поставщик имен хранимых процедур
     /// </summary>
-    public interface IStoredProcedureProvider<TEntity>
-        where TEntity : BaseEntity
+    public interface IStoredProcedureProvider
     {
         /// <summary>
         /// Получить все записи

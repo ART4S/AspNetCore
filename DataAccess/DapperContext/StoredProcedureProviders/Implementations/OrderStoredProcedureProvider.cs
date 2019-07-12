@@ -1,11 +1,9 @@
-﻿using Model.Entities;
-
-namespace DapperContext.StoredProcedureProviders.Implementations
+﻿namespace DapperContext.StoredProcedureProviders.Implementations
 {
     /// <summary>
     /// Поставщик имен хранимых процедур для таблицы заказов
     /// </summary>
-    public class OrderStoredProcedureProvider : IStoredProcedureProvider<Order>
+    public class OrderStoredProcedureProvider : IStoredProcedureProvider
     {
         public string GetAll
             => "SELECT * FROM Orders " +

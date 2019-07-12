@@ -3,11 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Data.SqlClient;
+using System.Data;
 using System.IO;
 using System.Linq;
-using Microsoft.Extensions.Configuration;
-using Npgsql;
 using AppContext = EFContext.AppContext;
 
 namespace DataAccess.Extensions
@@ -41,27 +39,8 @@ namespace DataAccess.Extensions
         /// </summary>
         public static IWebHost CreateSqlStoredProcedures(this IWebHost host)
         {
-            var connectionSting = host.Services
-                .GetService<IConfiguration>()
-                .GetConnectionString("SqlConnection");
-
-            var scripts = Directory
-                .GetFiles(
-                    path: Path.Combine(Directory.GetCurrentDirectory(), "DapperContext\\Scripts\\"),
-                    searchPattern: " *.sql",
-                    searchOption: SearchOption.AllDirectories)
-                .Select(File.ReadAllText);
-
-            using (var connection = new NpgsqlConnection(connectionSting))
-            {
-                foreach (var script in scripts)
-                {
-                    using (var command = new NpgsqlCommand(script, connection))
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
+            var scriptsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts\\Sql\\");
+            CreateStoredProcedures(host, scriptsDir);
 
             return host;
         }
@@ -71,29 +50,34 @@ namespace DataAccess.Extensions
         /// </summary>
         public static IWebHost CreateNpgsqlStoredProcedures(this IWebHost host)
         {
-            var connectionSting = host.Services
-                .GetService<IConfiguration>()
-                .GetConnectionString("NpgsqlConnection");
+            var scriptsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts\\Npgsql\\");
+            CreateStoredProcedures(host, scriptsDir);
 
+            return host;
+        }
+
+        /// <summary>
+        /// Создать хранимые процедуры
+        /// </summary>
+        private static void CreateStoredProcedures(IWebHost host, string scriptsDir)
+        {
             var scripts = Directory
-                .GetFiles(
-                    path: Path.Combine(Directory.GetCurrentDirectory(), "DapperContext\\Scripts\\"),
-                    searchPattern: " *.sql",
-                    searchOption: SearchOption.AllDirectories)
+                .GetFiles(scriptsDir, "*.sql", SearchOption.AllDirectories)
                 .Select(File.ReadAllText);
-                
-            using (var connection = new NpgsqlConnection(connectionSting))
+
+            using (var connection = host.Services.GetService<IDbConnection>())
             {
+                connection.Open();
+
                 foreach (var script in scripts)
                 {
-                    using (var command = new NpgsqlCommand(script, connection))
+                    using (var command = connection.CreateCommand())
                     {
+                        command.CommandText = script;
                         command.ExecuteNonQuery();
                     }
                 }
             }
-
-            return host;
         }
     }
 }
