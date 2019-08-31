@@ -11,9 +11,11 @@ namespace DataAccess.Controllers
     [Route("api/[controller]")]
     public class CustomerController : ControllerBase
     {
-        private readonly ICustomerRepository _customerRepo;
+        //private readonly ICustomerRepository _customerRepo;
 
-        public CustomerController(ICustomerRepository customerRepo)
+        private readonly IRepository<Customer> _customerRepo;
+
+        public CustomerController(IRepository<Customer> customerRepo)
         {
             _customerRepo = customerRepo;
         }

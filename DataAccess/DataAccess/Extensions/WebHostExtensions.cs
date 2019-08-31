@@ -20,15 +20,18 @@ namespace DataAccess.Extensions
         /// </summary>
         public static IWebHost MigrateDbChanges(this IWebHost host)
         {
-            try
+            using (var scope = host.Services.CreateScope())
             {
-                var db = host.Services.GetService<AppContext>().Database;
-                db.Migrate();
-            }
-            catch (Exception ex)
-            {
-                var logger = host.Services.GetService<ILoggerFactory>().CreateLogger<AppContext>();
-                logger.LogCritical(ex, "Ошибка при попытке принятия миграции");
+                try
+                {
+                    var db = scope.ServiceProvider.GetService<AppContext>().Database;
+                    db.Migrate();
+                }
+                catch (Exception ex)
+                {
+                    var logger = host.Services.GetService<ILoggerFactory>().CreateLogger<AppContext>();
+                    logger.LogCritical(ex, "Ошибка при попытке принятия миграции");
+                }
             }
 
             return host;

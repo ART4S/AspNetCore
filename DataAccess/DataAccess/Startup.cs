@@ -18,7 +18,8 @@ namespace DataAccess
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddEFContextSql(Configuration);
-            services.AddDapperSql(Configuration);
+            services.AddEFContextNpgsql(Configuration);
+            //services.AddDapperSql(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.62
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{EC9E7145-C439-4D7E-BBFB-4FE285F26F95}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{43BBDE33-6887-49F1-8145-8FC022BBECA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataContext.Sql", "DataContext.Sql\DataContext.Sql.csproj", "{36B5B6AA-472F-4961-88EF-BB188CA21225}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC9E7145-C439-4D7E-BBFB-4FE285F26F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC9E7145-C439-4D7E-BBFB-4FE285F26F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC9E7145-C439-4D7E-BBFB-4FE285F26F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC9E7145-C439-4D7E-BBFB-4FE285F26F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43BBDE33-6887-49F1-8145-8FC022BBECA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43BBDE33-6887-49F1-8145-8FC022BBECA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43BBDE33-6887-49F1-8145-8FC022BBECA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43BBDE33-6887-49F1-8145-8FC022BBECA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36B5B6AA-472F-4961-88EF-BB188CA21225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36B5B6AA-472F-4961-88EF-BB188CA21225}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36B5B6AA-472F-4961-88EF-BB188CA21225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36B5B6AA-472F-4961-88EF-BB188CA21225}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E16CD488-F71F-4021-9317-32C3EAD750F6}
+	EndGlobalSection
+EndGlobal

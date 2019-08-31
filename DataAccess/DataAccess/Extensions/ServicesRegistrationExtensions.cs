@@ -32,6 +32,19 @@ namespace DataAccess.Extensions
         }
 
         /// <summary>
+        /// Добавить сервисы EF для PostgreeSQL
+        /// </summary>
+        public static IServiceCollection AddEFContextNpgsql(this IServiceCollection services, IConfiguration configuration)
+        {
+            var cnn = configuration.GetConnectionString("NpgsqlConnection");
+
+            services.AddDbContext<AppContext>(opt => opt.UseNpgsql(cnn));
+            services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
+
+            return services;
+        }
+
+        /// <summary>
         /// Добавить сервисы Dapper для SQL
         /// </summary>
         public static IServiceCollection AddDapperSql(this IServiceCollection services, IConfiguration configuration)
@@ -51,7 +64,7 @@ namespace DataAccess.Extensions
         }
 
         /// <summary>
-        /// Добавить сервисы Dapper для Npgsql
+        /// Добавить сервисы Dapper для PostgreeSQL
         /// </summary>
         public static IServiceCollection AddDapperNpgsql(this IServiceCollection services, IConfiguration configuration)
         {

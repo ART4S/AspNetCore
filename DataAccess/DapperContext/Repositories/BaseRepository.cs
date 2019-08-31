@@ -13,7 +13,7 @@ namespace DapperContext.Repositories
     /// </summary>
     public abstract class BaseRepository<TEntity, TStoredProcedureProvider> : IRepository<TEntity>
         where TEntity : BaseEntity
-        where TStoredProcedureProvider : IStoredProcedureProvider<TEntity>
+        where TStoredProcedureProvider : IStoredProcedureProvider
     {
         protected readonly IDbConnection Connection;
         protected readonly TStoredProcedureProvider StoredProcedureProvider;

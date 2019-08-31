@@ -1,6 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace EFContext.Migrations
 {
@@ -13,7 +12,7 @@ namespace EFContext.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     Name = table.Column<string>(nullable: true)
                 },
@@ -27,7 +26,7 @@ namespace EFContext.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Cost = table.Column<decimal>(nullable: false)
@@ -42,7 +41,7 @@ namespace EFContext.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     CustomerId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false)
