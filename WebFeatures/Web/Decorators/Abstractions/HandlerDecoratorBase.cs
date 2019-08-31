@@ -1,6 +1,9 @@
-﻿namespace Web.Abstractions
+﻿using Web.Infrastructure;
+
+namespace Web.Decorators.Abstractions
 {
     public abstract class HandlerDecoratorBase<TIn, TOut> : IHandler<TIn, TOut>
+        where TOut : Result
     {
         protected readonly IHandler<TIn, TOut> Decorated;
 

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Security.Claims;
-using Web.Abstractions;
+using Web.Decorators.Abstractions;
 using Web.Infrastructure;
 
 namespace Web.Features.Authentication

@@ -1,9 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Web.Abstractions;
+using Web.Decorators.Abstractions;
+using Web.Infrastructure;
 
-namespace Web.PipelineDecorators
+namespace Web.Decorators.Implementations
 {
+    /// <summary>
+    /// Сохранет изменения контекста (чтобы все изменения происходили в рамках одной транзакции)
+    /// </summary>
     public class SaveChangesDecorator<TIn, TOut> : HandlerDecoratorBase<TIn, TOut>
+        where TOut : Result
     {
         private readonly DbContext _dbContext;
 

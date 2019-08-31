@@ -5,11 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Security.Claims;
-using Web.Abstractions;
+using Web.Decorators;
+using Web.Decorators.Abstractions;
+using Web.Decorators.Implementations;
 using Web.Features.Authentication;
 using Web.Features.Registration;
 using Web.Infrastructure;
-using Web.PipelineDecorators;
 
 namespace Web.Extensions
 {

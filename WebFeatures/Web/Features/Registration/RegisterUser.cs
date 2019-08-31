@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Web.Abstractions;
+using Web.Decorators.Abstractions;
 using Web.Infrastructure;
 
 namespace Web.Features.Registration

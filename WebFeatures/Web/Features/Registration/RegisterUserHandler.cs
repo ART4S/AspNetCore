@@ -3,7 +3,7 @@ using Entities.Model;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Web.Abstractions;
+using Web.Decorators.Abstractions;
 using Web.Infrastructure;
 
 namespace Web.Features.Registration
