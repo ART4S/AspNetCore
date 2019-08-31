@@ -1,4 +1,6 @@
-﻿namespace Web.Decorators.Abstractions
+﻿using Web.Infrastructure;
+
+namespace Web.Decorators.Abstractions
 {
     /// <summary>
     /// Обработчик команд
@@ -7,6 +9,7 @@
     /// <typeparam name="TOut">Результат выполнения команды</typeparam>
     interface ICommandHandler<in TIn, out TOut> : IHandler<TIn, TOut>
         where TIn : ICommand<TOut>
+        where TOut : Result
     {
     }
 }

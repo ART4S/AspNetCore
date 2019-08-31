@@ -14,7 +14,7 @@ namespace Web.Extensions
             {
                 try
                 {
-                    var context = scope.ServiceProvider.GetService<DataContext.Sql.BaseContext>();
+                    var context = scope.ServiceProvider.GetService<DbContext>();
                     context.Database.Migrate();
                 }
                 catch (Exception e)
