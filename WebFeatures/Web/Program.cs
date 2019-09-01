@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Web.Extensions;
 
 namespace Web
 {
@@ -15,10 +14,7 @@ namespace Web
         /// <param name="args">Аргументы командной строки</param>
         public static void Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
-
-            host.UpdateDatabase();
-            host.Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         /// <summary>

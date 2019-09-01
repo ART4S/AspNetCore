@@ -37,14 +37,16 @@ namespace Web.Extensions
         /// </summary>
         public static void AddHandlers(this IServiceCollection services)
         {
+            // TODO: refactor with SimpleInjector
+
             services.AddScoped<IHandler<LoginCommand, Result<Claim[], string>>>(x =>
             {
                 var dbContext = x.GetRequiredService<DbContext>();
                 var protector = x.GetRequiredService<IDataProtectionProvider>();
                 var logger = x.GetRequiredService<ILogger<LoginCommandHandler>>();
 
-                return new SaveChangesDecorator<LoginCommand, Result<Claim[], string>>(
-                    new LoggerDecorator<LoginCommand, Result<Claim[], string>>(
+                return new SaveChangesHandlerDecorator<LoginCommand, Result<Claim[], string>>(
+                    new LoggingHandlerDecorator<LoginCommand, Result<Claim[], string>>(
                         new LoginCommandHandler(protector, dbContext), logger),
                     dbContext);
             });
@@ -56,8 +58,8 @@ namespace Web.Extensions
                 var mapper = x.GetRequiredService<IMapper>();
                 var logger = x.GetRequiredService<ILogger<RegisterUserCommandHandler>>();
 
-                return new SaveChangesDecorator<RegisterUserCommand, Result>(
-                    new LoggerDecorator<RegisterUserCommand, Result>(
+                return new SaveChangesHandlerDecorator<RegisterUserCommand, Result>(
+                    new LoggingHandlerDecorator<RegisterUserCommand, Result>(
                         new RegisterUserCommandHandler(protector, dbContext, mapper), logger), 
                     dbContext);
             });
@@ -80,7 +82,8 @@ namespace Web.Extensions
                 }
             });
 
-            services.AddSingleton(x => config.CreateMapper());
+            var mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
         }
     }
 }

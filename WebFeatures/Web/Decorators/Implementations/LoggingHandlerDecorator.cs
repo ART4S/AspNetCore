@@ -6,12 +6,12 @@ namespace Web.Decorators.Implementations
     /// <summary>
     /// Декоратор логирования
     /// </summary>
-    public class LoggerDecorator<TIn, TOut> : HandlerDecoratorBase<TIn, TOut>
+    public class LoggingHandlerDecorator<TIn, TOut> : HandlerDecoratorBase<TIn, TOut>
     {
         private readonly ILogger<IHandler<TIn, TOut>> _logger;
 
         /// <inheritdoc />
-        public LoggerDecorator(IHandler<TIn, TOut> decorated, ILogger<IHandler<TIn, TOut>> logger) : base(decorated)
+        public LoggingHandlerDecorator(IHandler<TIn, TOut> decorated, ILogger<IHandler<TIn, TOut>> logger) : base(decorated)
         {
             _logger = logger;
         }

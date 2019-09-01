@@ -4,32 +4,12 @@
         <name>Web</name>
     </assembly>
     <members>
-        <member name="T:Web.Attributes.Validation.RequiredAttribute">
-            <summary>
-            Атрибут для проверки на null значение
-            </summary>
-        </member>
-        <member name="M:Web.Attributes.Validation.RequiredAttribute.#ctor(System.Boolean)">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:Web.Attributes.Validation.ValidateModelStateAttribute">
-            <summary>
-            Атрибут для валидации ошибок модели
-            </summary>
-        </member>
-        <member name="M:Web.Attributes.Validation.ValidateModelStateAttribute.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:Web.Decorators.Abstractions.HandlerDecoratorBase`2">
             <summary>
             Декоратор обработчика
             </summary>
         </member>
-        <member name="F:Web.Decorators.Abstractions.HandlerDecoratorBase`2.Decorated">
+        <member name="F:Web.Decorators.Abstractions.HandlerDecoratorBase`2.Decoratee">
             <summary>
             Декорируемый обработчик
             </summary>
@@ -77,15 +57,15 @@
             <typeparam name="TIn">Запрос</typeparam>
             <typeparam name="TOut" >Результат выполнения запроса</typeparam>
         </member>
-        <member name="T:Web.Decorators.Implementations.LogDecorator`2">
+        <member name="T:Web.Decorators.Implementations.LoggingHandlerDecorator`2">
             <summary>
             Декоратор логирования
             </summary>
         </member>
-        <member name="M:Web.Decorators.Implementations.LogDecorator`2.#ctor(Web.Decorators.Abstractions.IHandler{`0,`1},Microsoft.Extensions.Logging.ILogger{Web.Decorators.Abstractions.IHandler{`0,`1}})">
+        <member name="M:Web.Decorators.Implementations.LoggingHandlerDecorator`2.#ctor(Web.Decorators.Abstractions.IHandler{`0,`1},Microsoft.Extensions.Logging.ILogger{Web.Decorators.Abstractions.IHandler{`0,`1}})">
             <inheritdoc />
         </member>
-        <member name="M:Web.Decorators.Implementations.LogDecorator`2.Handle(`0)">
+        <member name="M:Web.Decorators.Implementations.LoggingHandlerDecorator`2.Handle(`0)">
             <inheritdoc />
         </member>
         <member name="T:Web.Decorators.Implementations.SaveChangesDecorator`2">
@@ -160,7 +140,7 @@
             Контроллер для работы с аутентификацией
             </summary>
         </member>
-        <member name="M:Web.Features.Authentication.AuthenticationController.Login(Web.Features.Authentication.Login,Web.Decorators.Abstractions.IHandler{Web.Features.Authentication.Login,Web.Infrastructure.Result{System.Security.Claims.Claim[],System.String}})">
+        <member name="M:Web.Features.Authentication.AuthenticationController.Login(Web.Features.Authentication.LoginCommand,Web.Decorators.Abstractions.IHandler{Web.Features.Authentication.LoginCommand,Web.Infrastructure.Result{System.Security.Claims.Claim[],System.String}})">
             <summary>
             Войти в систему
             </summary>
@@ -170,82 +150,82 @@
             Выйти из системы
             </summary>
         </member>
-        <member name="T:Web.Features.Authentication.Login">
+        <member name="T:Web.Features.Authentication.LoginCommand">
             <summary>
             Команда входа в систему
             </summary>
         </member>
-        <member name="P:Web.Features.Authentication.Login.Name">
+        <member name="P:Web.Features.Authentication.LoginCommand.Name">
             <summary>
             Имя пользователя
             </summary>
         </member>
-        <member name="P:Web.Features.Authentication.Login.Password">
+        <member name="P:Web.Features.Authentication.LoginCommand.Password">
             <summary>
             Пароль пользователя
             </summary>
         </member>
-        <member name="T:Web.Features.Authentication.LoginHandler">
+        <member name="T:Web.Features.Authentication.LoginCommandHandler">
             <summary>
             Вход в систему
             </summary>
         </member>
-        <member name="M:Web.Features.Authentication.LoginHandler.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,Microsoft.EntityFrameworkCore.DbContext)">
+        <member name="M:Web.Features.Authentication.LoginCommandHandler.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,Microsoft.EntityFrameworkCore.DbContext)">
             <inheritdoc />
         </member>
-        <member name="M:Web.Features.Authentication.LoginHandler.Handle(Web.Features.Authentication.Login)">
+        <member name="M:Web.Features.Authentication.LoginCommandHandler.Handle(Web.Features.Authentication.LoginCommand)">
             <inheritdoc />
         </member>
-        <member name="T:Web.Features.Authentication.LoginValidator">
+        <member name="T:Web.Features.Authentication.LoginCommandValidator">
             <summary>
             Валидация входа в систему
             </summary>
         </member>
-        <member name="M:Web.Features.Authentication.LoginValidator.#ctor">
+        <member name="M:Web.Features.Authentication.LoginCommandValidator.#ctor">
             <inheritdoc />
         </member>
-        <member name="T:Web.Features.Registration.RegisterUser">
+        <member name="T:Web.Features.Registration.RegisterUserCommand">
             <summary>
             Команда регистрации пользователя
             </summary>
         </member>
-        <member name="P:Web.Features.Registration.RegisterUser.Name">
+        <member name="P:Web.Features.Registration.RegisterUserCommand.Name">
             <summary>
             Имя пользователя
             </summary>
         </member>
-        <member name="P:Web.Features.Registration.RegisterUser.Email">
+        <member name="P:Web.Features.Registration.RegisterUserCommand.Email">
             <summary>
             E-mail
             </summary>
         </member>
-        <member name="P:Web.Features.Registration.RegisterUser.Password">
+        <member name="P:Web.Features.Registration.RegisterUserCommand.Password">
             <summary>
             Пароль пользователя
             </summary>
         </member>
-        <member name="P:Web.Features.Registration.RegisterUser.ConfirmPassword">
+        <member name="P:Web.Features.Registration.RegisterUserCommand.ConfirmPassword">
             <summary>
             Подтверждение пароля
             </summary>
         </member>
-        <member name="T:Web.Features.Registration.RegisterUserHandler">
+        <member name="T:Web.Features.Registration.RegisterUserCommandHandler">
             <summary>
             Обработчик команды регистрации пользователя
             </summary>
         </member>
-        <member name="M:Web.Features.Registration.RegisterUserHandler.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,Microsoft.EntityFrameworkCore.DbContext,AutoMapper.IMapper)">
+        <member name="M:Web.Features.Registration.RegisterUserCommandHandler.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,Microsoft.EntityFrameworkCore.DbContext,AutoMapper.IMapper)">
             <inheritdoc />
         </member>
-        <member name="M:Web.Features.Registration.RegisterUserHandler.Handle(Web.Features.Registration.RegisterUser)">
+        <member name="M:Web.Features.Registration.RegisterUserCommandHandler.Handle(Web.Features.Registration.RegisterUserCommand)">
             <inheritdoc />
         </member>
-        <member name="T:Web.Features.Registration.RegisterUserValidator">
+        <member name="T:Web.Features.Registration.RegisterUserCommandValidator">
             <summary>
             Валидация регистрации пользователя
             </summary>
         </member>
-        <member name="M:Web.Features.Registration.RegisterUserValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+        <member name="M:Web.Features.Registration.RegisterUserCommandValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
             <inheritdoc />
         </member>
         <member name="T:Web.Features.Registration.RegistrationController">
@@ -253,7 +233,7 @@
             Контроллер для регистрации пользователей
             </summary>
         </member>
-        <member name="M:Web.Features.Registration.RegistrationController.RegisterUser(Web.Features.Registration.RegisterUser,Web.Decorators.Abstractions.IHandler{Web.Features.Registration.RegisterUser,Web.Infrastructure.Result})">
+        <member name="M:Web.Features.Registration.RegistrationController.RegisterUser(Web.Features.Registration.RegisterUserCommand,Web.Decorators.Abstractions.IHandler{Web.Features.Registration.RegisterUserCommand,Web.Infrastructure.Result})">
             <summary>
             Зарегистрировать нового пользователя
             </summary>
@@ -335,20 +315,30 @@
             <param name="failure">Значение неудачного результата</param>
             <param name="statusCode">Код</param>
         </member>
+        <member name="T:Web.Infrastructure.ValidationErrorMessages">
+            <summary>
+            Сообщения об ошибках валидации
+            </summary>
+        </member>
+        <member name="F:Web.Infrastructure.ValidationErrorMessages.NotEmpty">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Web.Program">
             <summary>
-            Точка входа в приложение
+            Стартовый класс приложения
             </summary>
         </member>
         <member name="M:Web.Program.Main(System.String[])">
             <summary>
-            Стартовый метод
+            Точка входа в приложение
             </summary>
             <param name="args">Аргументы командной строки</param>
         </member>
         <member name="M:Web.Program.CreateWebHostBuilder(System.String[])">
             <summary>
-            Строитель хоста
+            Конфигурация хоста
             </summary>
         </member>
         <member name="T:Web.Startup">
@@ -373,6 +363,24 @@
             <summary>
             Настройка приложения
             </summary>
+        </member>
+        <member name="T:Web.Validation.Attributes.RequiredAttribute">
+            <summary>
+            Атрибут для проверки на null значение
+            </summary>
+        </member>
+        <member name="M:Web.Validation.Attributes.RequiredAttribute.#ctor(System.Boolean)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Web.Validation.Attributes.ValidateModelStateAttribute">
+            <summary>
+            Атрибут для валидации ошибок модели
+            </summary>
+        </member>
+        <member name="M:Web.Validation.Attributes.ValidateModelStateAttribute.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <inheritdoc />
         </member>
     </members>
 </doc>

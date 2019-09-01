@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web.Validation.Attributes
 {
@@ -6,13 +7,11 @@ namespace Web.Validation.Attributes
     /// Атрибут для проверки на null значение
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class RequiredAttribute : ValidateModelStateAttribute
+    public class RequiredAttribute : ValidationAttribute
     {
         private readonly System.ComponentModel.DataAnnotations.RequiredAttribute _attr;
 
-        /// <summary>
-        /// 
-        /// </summary>
+        /// <inheritdoc />
         public RequiredAttribute(bool allowEmptyStrings = false)
         {
             _attr = new System.ComponentModel.DataAnnotations.RequiredAttribute
@@ -20,6 +19,12 @@ namespace Web.Validation.Attributes
                 AllowEmptyStrings = allowEmptyStrings,
                 ErrorMessage = "Необходимо заполнить"
             };
+        }
+
+        /// <inheritdoc />
+        public override bool IsValid(object value)
+        {
+            return _attr.IsValid(value);
         }
     }
 }
