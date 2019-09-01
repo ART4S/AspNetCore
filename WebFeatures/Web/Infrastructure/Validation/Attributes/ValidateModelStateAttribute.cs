@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Web.Validation.Attributes
+namespace Web.Infrastructure.Validation.Attributes
 {
     /// <summary>
     /// Атрибут для валидации ошибок модели

@@ -68,16 +68,16 @@
         <member name="M:Web.Decorators.Implementations.LoggingHandlerDecorator`2.Handle(`0)">
             <inheritdoc />
         </member>
-        <member name="T:Web.Decorators.Implementations.SaveChangesDecorator`2">
+        <member name="T:Web.Decorators.Implementations.SaveChangesHandlerDecorator`2">
             <summary>
-            Сохранет изменения контекста
+            Сохраняет изменения контекста
             </summary>
             <remarks>Вызывается после работы всех декораторов для принятия изменений в рамках одной транзакции</remarks>
         </member>
-        <member name="M:Web.Decorators.Implementations.SaveChangesDecorator`2.#ctor(Web.Decorators.Abstractions.IHandler{`0,`1},Microsoft.EntityFrameworkCore.DbContext)">
+        <member name="M:Web.Decorators.Implementations.SaveChangesHandlerDecorator`2.#ctor(Web.Decorators.Abstractions.IHandler{`0,`1},Microsoft.EntityFrameworkCore.DbContext)">
             <inheritdoc />
         </member>
-        <member name="M:Web.Decorators.Implementations.SaveChangesDecorator`2.Handle(`0)">
+        <member name="M:Web.Decorators.Implementations.SaveChangesHandlerDecorator`2.Handle(`0)">
             <inheritdoc />
         </member>
         <member name="T:Web.Extensions.ControllerExtensions">
@@ -123,16 +123,6 @@
         <member name="M:Web.Extensions.StringExtensions.IsNullOrWhiteSpace(System.String)">
             <summary>
             Проверить на null или строку состоящую только из пробельных символов
-            </summary>
-        </member>
-        <member name="T:Web.Extensions.WebHostExtensions">
-            <summary>
-            Расширения для работы с хостом приложения
-            </summary>
-        </member>
-        <member name="M:Web.Extensions.WebHostExtensions.UpdateDatabase(Microsoft.AspNetCore.Hosting.IWebHost)">
-            <summary>
-            Обновить базу данных приложения
             </summary>
         </member>
         <member name="T:Web.Features.Authentication.AuthenticationController">
@@ -320,11 +310,6 @@
             Сообщения об ошибках валидации
             </summary>
         </member>
-        <member name="F:Web.Infrastructure.ValidationErrorMessages.NotEmpty">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:Web.Program">
             <summary>
             Стартовый класс приложения
@@ -370,9 +355,10 @@
             </summary>
         </member>
         <member name="M:Web.Validation.Attributes.RequiredAttribute.#ctor(System.Boolean)">
-            <summary>
-            
-            </summary>
+            <inheritdoc />
+        </member>
+        <member name="M:Web.Validation.Attributes.RequiredAttribute.IsValid(System.Object)">
+            <inheritdoc />
         </member>
         <member name="T:Web.Validation.Attributes.ValidateModelStateAttribute">
             <summary>

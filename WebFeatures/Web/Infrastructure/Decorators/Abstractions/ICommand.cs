@@ -1,4 +1,4 @@
-﻿namespace Web.Decorators.Abstractions
+﻿namespace Web.Infrastructure.Decorators.Abstractions
 {
     /// <summary>
     /// Команда

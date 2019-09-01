@@ -10,8 +10,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Reflection;
-using Web.Extensions;
-using Web.Validation.Attributes;
+using Web.Configuration;
+using Web.Infrastructure.Validation.Attributes;
 
 namespace Web
 {

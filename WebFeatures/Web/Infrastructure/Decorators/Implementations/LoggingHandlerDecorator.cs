@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using Web.Decorators.Abstractions;
+using Web.Infrastructure.Decorators.Abstractions;
 
-namespace Web.Decorators.Implementations
+namespace Web.Infrastructure.Decorators.Implementations
 {
     /// <summary>
     /// Декоратор логирования
@@ -19,8 +19,8 @@ namespace Web.Decorators.Implementations
         /// <inheritdoc />
         public override TOut Handle(TIn input)
         {
-            var result = Decoratee.Handle(input);
-            _logger.LogInformation($"{Decoratee.GetType()} : {input} => {result}");
+            var result = base.Decoratee.Handle(input);
+            _logger.LogInformation($"{base.Decoratee.GetType()} : {input} => {result}");
             return result;
         }
     }

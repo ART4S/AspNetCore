@@ -1,18 +1,22 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using System.Security.Claims;
+using AutoMapper;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Security.Claims;
-using Web.Decorators.Abstractions;
 using Web.Decorators.Implementations;
 using Web.Features.Authentication;
+using Web.Features.Authentication.Login;
 using Web.Features.Registration;
+using Web.Features.Registration.RegisterUser;
 using Web.Infrastructure;
+using Web.Infrastructure.Decorators.Abstractions;
+using Web.Infrastructure.Decorators.Implementations;
+using Web.Infrastructure.Results;
 
-namespace Web.Extensions
+namespace Web.Configuration
 {
     /// <summary>
     /// Расширения для конфигурации сервисов приложения

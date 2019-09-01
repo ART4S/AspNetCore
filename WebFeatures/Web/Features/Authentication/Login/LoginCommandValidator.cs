@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using Web.Infrastructure;
+using Web.Infrastructure.Validation;
 
-namespace Web.Features.Authentication
+namespace Web.Features.Authentication.Login
 {
     /// <summary>
     /// Валидация входа в систему

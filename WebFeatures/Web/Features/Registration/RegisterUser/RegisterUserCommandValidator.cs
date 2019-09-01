@@ -3,7 +3,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace Web.Features.Registration
+namespace Web.Features.Registration.RegisterUser
 {
     /// <summary>
     /// Валидация регистрации пользователя
@@ -17,6 +17,7 @@ namespace Web.Features.Registration
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .MinimumLength(3).WithMessage("Имя должно состоять минимум из 3-х символов")
                 .MaximumLength(15).WithMessage("Имя должно состоять максимум из 15-и символов")
+                .Matches(@"^[A-Za-z0-9#?!@$%^&*-]+$").WithMessage("Имя может содержать буквы, цифры и следующие символы:'#?!@$%^&*-'")
                 .Must(n => dbContext.Set<User>().All(y => n != y.Name))
                     .WithMessage("Пользователь с данным именем уже зарегестрирован");
 

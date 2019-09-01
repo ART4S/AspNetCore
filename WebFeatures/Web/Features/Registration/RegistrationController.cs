@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Web.Decorators.Abstractions;
-using Web.Extensions;
-using Web.Infrastructure;
-using Web.Validation.Attributes;
+using Web.Features.Registration.RegisterUser;
+using Web.Infrastructure.Decorators.Abstractions;
+using Web.Infrastructure.Extensions;
+using Web.Infrastructure.Results;
+using Web.Infrastructure.Validation.Attributes;
 
 namespace Web.Features.Registration
 {

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Entities.Model;
+using Web.Features.Registration.RegisterUser;
 
 namespace Web.Features.Registration
 {

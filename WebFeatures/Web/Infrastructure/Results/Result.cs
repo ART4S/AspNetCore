@@ -1,4 +1,4 @@
-﻿namespace Web.Infrastructure
+﻿namespace Web.Infrastructure.Results
 {
     /// <summary>
     /// Результат выполнения команды/запроса

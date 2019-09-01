@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Web.Infrastructure;
+using Web.Infrastructure.Results;
 
-namespace Web.Extensions
+namespace Web.Infrastructure.Extensions
 {
     /// <summary>
     /// Расширения для контроллера

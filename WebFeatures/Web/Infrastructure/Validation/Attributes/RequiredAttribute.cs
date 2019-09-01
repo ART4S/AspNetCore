@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Web.Validation.Attributes
+namespace Web.Infrastructure.Validation.Attributes
 {
     /// <summary>
     /// Атрибут для проверки на null значение

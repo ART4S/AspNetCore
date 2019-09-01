@@ -2,10 +2,10 @@
 using Entities.Model;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
-using Web.Decorators.Abstractions;
-using Web.Infrastructure;
+using Web.Infrastructure.Decorators.Abstractions;
+using Web.Infrastructure.Results;
 
-namespace Web.Features.Registration
+namespace Web.Features.Registration.RegisterUser
 {
     /// <summary>
     /// Обработчик команды регистрации пользователя

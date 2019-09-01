@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
-using Web.Decorators.Abstractions;
-using Web.Extensions;
-using Web.Infrastructure;
-using Web.Validation.Attributes;
+using Web.Features.Authentication.Login;
+using Web.Infrastructure.Decorators.Abstractions;
+using Web.Infrastructure.Extensions;
+using Web.Infrastructure.Results;
+using Web.Infrastructure.Validation.Attributes;
 
 namespace Web.Features.Authentication
 {

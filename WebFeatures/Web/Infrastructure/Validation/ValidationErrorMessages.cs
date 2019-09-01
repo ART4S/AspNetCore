@@ -1,4 +1,4 @@
-﻿namespace Web.Infrastructure
+﻿namespace Web.Infrastructure.Validation
 {
     /// <summary>
     /// Сообщения об ошибках валидации

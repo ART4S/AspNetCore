@@ -1,4 +1,4 @@
-﻿namespace Web.Extensions
+﻿namespace Web.Infrastructure.Extensions
 {
     /// <summary>
     /// Расширения для работы со строками

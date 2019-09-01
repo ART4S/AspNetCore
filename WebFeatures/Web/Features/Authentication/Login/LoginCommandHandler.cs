@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Security.Claims;
-using Web.Decorators.Abstractions;
-using Web.Infrastructure;
+using Web.Infrastructure.Decorators.Abstractions;
+using Web.Infrastructure.Results;
 
-namespace Web.Features.Authentication
+namespace Web.Features.Authentication.Login
 {
     /// <summary>
     /// Вход в систему
