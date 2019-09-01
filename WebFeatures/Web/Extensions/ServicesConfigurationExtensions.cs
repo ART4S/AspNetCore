@@ -37,28 +37,28 @@ namespace Web.Extensions
         /// </summary>
         public static void AddHandlers(this IServiceCollection services)
         {
-            services.AddScoped<IHandler<Login, Result<Claim[], string>>>(x =>
+            services.AddScoped<IHandler<LoginCommand, Result<Claim[], string>>>(x =>
             {
                 var dbContext = x.GetRequiredService<DbContext>();
                 var protector = x.GetRequiredService<IDataProtectionProvider>();
-                var logger = x.GetRequiredService<ILogger<LoginHandler>>();
+                var logger = x.GetRequiredService<ILogger<LoginCommandHandler>>();
 
-                return new SaveChangesDecorator<Login, Result<Claim[], string>>(
-                    new LogDecorator<Login, Result<Claim[], string>>(
-                        new LoginHandler(protector, dbContext), logger),
+                return new SaveChangesDecorator<LoginCommand, Result<Claim[], string>>(
+                    new LoggerDecorator<LoginCommand, Result<Claim[], string>>(
+                        new LoginCommandHandler(protector, dbContext), logger),
                     dbContext);
             });
 
-            services.AddScoped<IHandler<RegisterUser, Result>>(x =>
+            services.AddScoped<IHandler<RegisterUserCommand, Result>>(x =>
             {
                 var dbContext = x.GetRequiredService<DbContext>();
                 var protector = x.GetRequiredService<IDataProtectionProvider>();
                 var mapper = x.GetRequiredService<IMapper>();
-                var logger = x.GetRequiredService<ILogger<RegisterUserHandler>>();
+                var logger = x.GetRequiredService<ILogger<RegisterUserCommandHandler>>();
 
-                return new SaveChangesDecorator<RegisterUser, Result>(
-                    new LogDecorator<RegisterUser, Result>(
-                        new RegisterUserHandler(protector, dbContext, mapper), logger), 
+                return new SaveChangesDecorator<RegisterUserCommand, Result>(
+                    new LoggerDecorator<RegisterUserCommand, Result>(
+                        new RegisterUserCommandHandler(protector, dbContext, mapper), logger), 
                     dbContext);
             });
         }

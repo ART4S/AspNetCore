@@ -20,7 +20,7 @@ namespace Web.Decorators.Implementations
         /// <inheritdoc />
         public override TOut Handle(TIn input)
         {
-            var res = Decorated.Handle(input);
+            var res = Decoratee.Handle(input);
             _dbContext.SaveChanges();
             return res;
         }

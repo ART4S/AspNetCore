@@ -5,12 +5,12 @@ using Web.Extensions;
 namespace Web
 {
     /// <summary>
-    /// Точка входа в приложение
+    /// Стартовый класс приложения
     /// </summary>
     public class Program
     {
         /// <summary>
-        /// Стартовый метод
+        /// Точка входа в приложение
         /// </summary>
         /// <param name="args">Аргументы командной строки</param>
         public static void Main(string[] args)
@@ -22,7 +22,7 @@ namespace Web
         }
 
         /// <summary>
-        /// Строитель хоста
+        /// Конфигурация хоста
         /// </summary>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) 
             => WebHost.CreateDefaultBuilder(args)

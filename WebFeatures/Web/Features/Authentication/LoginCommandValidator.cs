@@ -6,10 +6,10 @@ namespace Web.Features.Authentication
     /// <summary>
     /// Валидация входа в систему
     /// </summary>
-    public class LoginValidator : AbstractValidator<Login>
+    public class LoginCommandValidator : AbstractValidator<LoginCommand>
     {
         /// <inheritdoc />
-        public LoginValidator()
+        public LoginCommandValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage(ValidationErrorMessages.NotEmpty);

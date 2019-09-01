@@ -6,12 +6,12 @@ namespace Web.Decorators.Implementations
     /// <summary>
     /// Декоратор логирования
     /// </summary>
-    public class LogDecorator<TIn, TOut> : HandlerDecoratorBase<TIn, TOut>
+    public class LoggerDecorator<TIn, TOut> : HandlerDecoratorBase<TIn, TOut>
     {
         private readonly ILogger<IHandler<TIn, TOut>> _logger;
 
         /// <inheritdoc />
-        public LogDecorator(IHandler<TIn, TOut> decorated, ILogger<IHandler<TIn, TOut>> logger) : base(decorated)
+        public LoggerDecorator(IHandler<TIn, TOut> decorated, ILogger<IHandler<TIn, TOut>> logger) : base(decorated)
         {
             _logger = logger;
         }
@@ -19,8 +19,8 @@ namespace Web.Decorators.Implementations
         /// <inheritdoc />
         public override TOut Handle(TIn input)
         {
-            var result = Decorated.Handle(input);
-            _logger.LogInformation($"{Decorated.GetType()} : {input} => {result}");
+            var result = Decoratee.Handle(input);
+            _logger.LogInformation($"{Decoratee.GetType()} : {input} => {result}");
             return result;
         }
     }

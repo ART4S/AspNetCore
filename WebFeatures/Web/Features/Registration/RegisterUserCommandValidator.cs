@@ -8,10 +8,10 @@ namespace Web.Features.Registration
     /// <summary>
     /// Валидация регистрации пользователя
     /// </summary>
-    public class RegisterUserValidator : AbstractValidator<RegisterUser>
+    public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
     {
         /// <inheritdoc />
-        public RegisterUserValidator(DbContext dbContext)
+        public RegisterUserCommandValidator(DbContext dbContext)
         {
             RuleFor(x => x.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)

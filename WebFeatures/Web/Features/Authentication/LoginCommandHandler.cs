@@ -11,20 +11,20 @@ namespace Web.Features.Authentication
     /// <summary>
     /// Вход в систему
     /// </summary>
-    public class LoginHandler : ICommandHandler<Login, Result<Claim[], string>>
+    public class LoginCommandHandler : ICommandHandler<LoginCommand, Result<Claim[], string>>
     {
         private readonly DbContext _dbContext;
         private readonly IDataProtector _protector;
 
         /// <inheritdoc />
-        public LoginHandler(IDataProtectionProvider protectionProvider, DbContext dbContext)
+        public LoginCommandHandler(IDataProtectionProvider protectionProvider, DbContext dbContext)
         {
             _dbContext = dbContext;
             _protector = protectionProvider.CreateProtector("UserPassword");
         }
 
         /// <inheritdoc />
-        public Result<Claim[], string> Handle(Login input)
+        public Result<Claim[], string> Handle(LoginCommand input)
         {
             var user = _dbContext.Set<User>().FirstOrDefault(x => x.Name == input.Name);
             if (user == null)

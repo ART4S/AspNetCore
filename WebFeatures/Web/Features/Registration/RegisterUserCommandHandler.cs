@@ -10,14 +10,14 @@ namespace Web.Features.Registration
     /// <summary>
     /// Обработчик команды регистрации пользователя
     /// </summary>
-    public class RegisterUserHandler : IHandler<RegisterUser, Result>
+    public class RegisterUserCommandHandler : IHandler<RegisterUserCommand, Result>
     {
         private readonly IDataProtector _protector;
         private readonly DbContext _dbContext;
         private readonly IMapper _mapper;
 
         /// <inheritdoc />
-        public RegisterUserHandler(IDataProtectionProvider protectionProvider, DbContext dbContext, IMapper mapper)
+        public RegisterUserCommandHandler(IDataProtectionProvider protectionProvider, DbContext dbContext, IMapper mapper)
         {
             _protector = protectionProvider.CreateProtector("UserPassword");
             _dbContext = dbContext;
@@ -25,7 +25,7 @@ namespace Web.Features.Registration
         }
 
         /// <inheritdoc />
-        public Result Handle(RegisterUser input)
+        public Result Handle(RegisterUserCommand input)
         {
             var user = _mapper.Map<User>(input);
             user.PasswordHash = _protector.Protect(input.Password);

@@ -7,7 +7,7 @@ namespace Web.Features.Authentication
     /// <summary>
     /// Команда входа в систему
     /// </summary>
-    public class Login : ICommand<Result<Claim[], string>>
+    public class LoginCommand : ICommand<Result<Claim[], string>>
     {
         /// <summary>
         /// Имя пользователя

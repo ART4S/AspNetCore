@@ -23,8 +23,8 @@ namespace Web.Features.Authentication
         [HttpPost("[action]")]
         [AllowAnonymous]
         public IActionResult Login(
-            [FromBody, Required] Login command, 
-            [FromServices] IHandler<Login, Result<Claim[], string>> commandHandler)
+            [FromBody, Required] LoginCommand command, 
+            [FromServices] IHandler<LoginCommand, Result<Claim[], string>> commandHandler)
         {
             var res = commandHandler.Handle(command);
             if (!res.IsSuccess)

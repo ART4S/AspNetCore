@@ -11,7 +11,7 @@ namespace Web.Features.Registration
         /// <inheritdoc />
         public RegistrationProfile()
         {
-            CreateMap<RegisterUser, User>(MemberList.Source)
+            CreateMap<RegisterUserCommand, User>(MemberList.Source)
                 .ForSourceMember(x => x.Password, y => y.DoNotValidate())
                 .ForSourceMember(x => x.ConfirmPassword, y => y.DoNotValidate());
         }

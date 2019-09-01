@@ -8,12 +8,12 @@
         /// <summary>
         /// Декорируемый обработчик
         /// </summary>
-        protected readonly IHandler<TIn, TOut> Decorated;
+        protected readonly IHandler<TIn, TOut> Decoratee;
 
         /// <inheritdoc />
-        protected HandlerDecoratorBase(IHandler<TIn, TOut> decorated)
+        protected HandlerDecoratorBase(IHandler<TIn, TOut> decoratee)
         {
-            Decorated = decorated;
+            Decoratee = decoratee;
         }
 
         /// <inheritdoc />

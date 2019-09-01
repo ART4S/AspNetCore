@@ -19,8 +19,8 @@ namespace Web.Features.Registration
         /// </summary>
         [HttpPost]
         public IActionResult RegisterUser(
-            [FromBody, Required] RegisterUser command, 
-            [FromServices] IHandler<RegisterUser, Result> commandHandler)
+            [FromBody, Required] RegisterUserCommand command, 
+            [FromServices] IHandler<RegisterUserCommand, Result> commandHandler)
         {
             var result = commandHandler.Handle(command);
             return this.ResultResponse(result);
