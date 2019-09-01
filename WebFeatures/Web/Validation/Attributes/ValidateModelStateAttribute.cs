@@ -1,18 +1,16 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Web.Attributes
+namespace Web.Validation.Attributes
 {
     /// <summary>
-    /// 
+    /// Атрибут для валидации ошибок модели
     /// </summary>
-    public class ValidationAttribute : ActionFilterAttribute
+    public class ValidateModelStateAttribute : ActionFilterAttribute
     {
+        /// <inheritdoc />
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (context == null) throw new ArgumentException(nameof(context));
-
             if (!context.ModelState.IsValid)
             {
                 context.Result = new BadRequestObjectResult(context.ModelState);

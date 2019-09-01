@@ -24,6 +24,8 @@ namespace DataContext.Sql.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Email");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("PasswordHash");

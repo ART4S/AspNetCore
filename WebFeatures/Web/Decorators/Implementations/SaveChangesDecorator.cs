@@ -1,22 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Web.Decorators.Abstractions;
-using Web.Infrastructure;
 
 namespace Web.Decorators.Implementations
 {
     /// <summary>
-    /// Сохранет изменения контекста (чтобы все изменения происходили в рамках одной транзакции)
+    /// Сохранет изменения контекста
     /// </summary>
+    /// <remarks>Вызывается после работы всех декораторов для принятия изменений в рамках одной транзакции</remarks>
     public class SaveChangesDecorator<TIn, TOut> : HandlerDecoratorBase<TIn, TOut>
-        where TOut : Result
     {
         private readonly DbContext _dbContext;
 
+        /// <inheritdoc />
         public SaveChangesDecorator(IHandler<TIn, TOut> decorated, DbContext dbContext) : base(decorated)
         {
             _dbContext = dbContext;
         }
 
+        /// <inheritdoc />
         public override TOut Handle(TIn input)
         {
             var res = Decorated.Handle(input);

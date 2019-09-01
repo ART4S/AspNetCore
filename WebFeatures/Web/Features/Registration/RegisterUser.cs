@@ -1,15 +1,31 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Web.Decorators.Abstractions;
+﻿using Web.Decorators.Abstractions;
 using Web.Infrastructure;
 
 namespace Web.Features.Registration
 {
+    /// <summary>
+    /// Команда регистрации пользователя
+    /// </summary>
     public class RegisterUser : ICommand<Result>
     {
-        //[RegularExpression(@"^(?=[A-Za-z0-9])(?!.*[._()\[\]-]{2})[A-Za-z0-9._()\[\]-]{3,15}$", ErrorMessage = "Имя должно начинаться с буквы или числа, не должно содержать 2-х последовательных символов, должно содержать от 3-х до 15-и разрешенных символов")]
+        /// <summary>
+        /// Имя пользователя
+        /// </summary>
         public string Name { get; set; }
 
-        //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", ErrorMessage = "Херовый пароль")]
+        /// <summary>
+        /// E-mail
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Пароль пользователя
+        /// </summary>
         public string Password { get; set; }
+
+        /// <summary>
+        /// Подтверждение пароля
+        /// </summary>
+        public string ConfirmPassword { get; set; }
     }
 }

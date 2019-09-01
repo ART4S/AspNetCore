@@ -4,28 +4,34 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
-using Web.Attributes;
 using Web.Decorators.Abstractions;
 using Web.Extensions;
 using Web.Infrastructure;
+using Web.Validation.Attributes;
 
 namespace Web.Features.Authentication
 {
+    /// <summary>
+    /// Контроллер для работы с аутентификацией
+    /// </summary>
     [Route("api/[controller]")]
     public class AuthenticationController : Controller
     {
+        /// <summary>
+        /// Войти в систему
+        /// </summary>
         [HttpPost("[action]")]
         [AllowAnonymous]
         public IActionResult Login(
             [FromBody, Required] Login command, 
             [FromServices] IHandler<Login, Result<Claim[], string>> commandHandler)
         {
-            var result = commandHandler.Handle(command);
-            if (!result.IsSuccess)
-                return this.ResultResponse(result);
+            var res = commandHandler.Handle(command);
+            if (!res.IsSuccess)
+                return this.ResultResponse(res);
 
             var claimsIdentity = new ClaimsIdentity(
-                result.SuccessValue, CookieAuthenticationDefaults.AuthenticationScheme);
+                res.SuccessValue, CookieAuthenticationDefaults.AuthenticationScheme);
 
             HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
@@ -40,6 +46,9 @@ namespace Web.Features.Authentication
             return Ok();
         }
 
+        /// <summary>
+        /// Выйти из системы
+        /// </summary>
         [HttpPost("[action]")]
         public IActionResult Logout()
         {
