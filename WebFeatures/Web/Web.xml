@@ -4,125 +4,24 @@
         <name>Web</name>
     </assembly>
     <members>
-        <member name="T:Web.Decorators.Abstractions.HandlerDecoratorBase`2">
-            <summary>
-            Декоратор обработчика
-            </summary>
-        </member>
-        <member name="F:Web.Decorators.Abstractions.HandlerDecoratorBase`2.Decoratee">
-            <summary>
-            Декорируемый обработчик
-            </summary>
-        </member>
-        <member name="M:Web.Decorators.Abstractions.HandlerDecoratorBase`2.#ctor(Web.Decorators.Abstractions.IHandler{`0,`1})">
-            <inheritdoc />
-        </member>
-        <member name="M:Web.Decorators.Abstractions.HandlerDecoratorBase`2.Handle(`0)">
-            <inheritdoc />
-        </member>
-        <member name="T:Web.Decorators.Abstractions.ICommand`1">
-            <summary>
-            Команда
-            </summary>
-            <typeparam name="TOut">Результат выполнения команды</typeparam>
-        </member>
-        <member name="T:Web.Decorators.Abstractions.ICommandHandler`2">
-            <summary>
-            Обработчик команд
-            </summary>
-            <typeparam name="TIn">Команда</typeparam>
-            <typeparam name="TOut">Результат выполнения команды</typeparam>
-        </member>
-        <member name="T:Web.Decorators.Abstractions.IHandler`2">
-            <summary>
-            Обработчик
-            </summary>
-        </member>
-        <member name="M:Web.Decorators.Abstractions.IHandler`2.Handle(`0)">
-            <summary>
-            Метод обработки
-            </summary>
-            <param name="input">Данные для обработки</param>
-        </member>
-        <member name="T:Web.Decorators.Abstractions.IQuery`1">
-            <summary>
-            Запрос
-            </summary>
-            <typeparam name="TOut">Результат выполнения запроса</typeparam>
-        </member>
-        <member name="T:Web.Decorators.Abstractions.IQueryHandler`2">
-            <summary>
-            Обработчик запроса
-            </summary>
-            <typeparam name="TIn">Запрос</typeparam>
-            <typeparam name="TOut" >Результат выполнения запроса</typeparam>
-        </member>
-        <member name="T:Web.Decorators.Implementations.LoggingHandlerDecorator`2">
-            <summary>
-            Декоратор логирования
-            </summary>
-        </member>
-        <member name="M:Web.Decorators.Implementations.LoggingHandlerDecorator`2.#ctor(Web.Decorators.Abstractions.IHandler{`0,`1},Microsoft.Extensions.Logging.ILogger{Web.Decorators.Abstractions.IHandler{`0,`1}})">
-            <inheritdoc />
-        </member>
-        <member name="M:Web.Decorators.Implementations.LoggingHandlerDecorator`2.Handle(`0)">
-            <inheritdoc />
-        </member>
-        <member name="T:Web.Decorators.Implementations.SaveChangesHandlerDecorator`2">
-            <summary>
-            Сохраняет изменения контекста
-            </summary>
-            <remarks>Вызывается после работы всех декораторов для принятия изменений в рамках одной транзакции</remarks>
-        </member>
-        <member name="M:Web.Decorators.Implementations.SaveChangesHandlerDecorator`2.#ctor(Web.Decorators.Abstractions.IHandler{`0,`1},Microsoft.EntityFrameworkCore.DbContext)">
-            <inheritdoc />
-        </member>
-        <member name="M:Web.Decorators.Implementations.SaveChangesHandlerDecorator`2.Handle(`0)">
-            <inheritdoc />
-        </member>
-        <member name="T:Web.Extensions.ControllerExtensions">
-            <summary>
-            Расширения для контроллера
-            </summary>
-        </member>
-        <member name="M:Web.Extensions.ControllerExtensions.ResultResponse(Microsoft.AspNetCore.Mvc.Controller,Web.Infrastructure.Result)">
-            <summary>
-            Универсальный ответ сервера
-            </summary>
-        </member>
-        <member name="T:Web.Extensions.ServicesConfigurationExtensions">
+        <member name="T:Web.Configuration.ServicesConfigurationExtensions">
             <summary>
             Расширения для конфигурации сервисов приложения
             </summary>
         </member>
-        <member name="M:Web.Extensions.ServicesConfigurationExtensions.AddSqlDataContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Web.Configuration.ServicesConfigurationExtensions.AddSqlDataContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             Добавить контекст данных Sql
             </summary>
         </member>
-        <member name="M:Web.Extensions.ServicesConfigurationExtensions.AddHandlers(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:Web.Configuration.ServicesConfigurationExtensions.AddHandlers(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Добавить обработчики запросов
             </summary>
         </member>
-        <member name="M:Web.Extensions.ServicesConfigurationExtensions.AddAutomapperProfiles(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:Web.Configuration.ServicesConfigurationExtensions.AddAutomapperProfiles(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Добавить профили Automapper
-            </summary>
-        </member>
-        <member name="T:Web.Extensions.StringExtensions">
-            <summary>
-            Расширения для работы со строками
-            </summary>
-        </member>
-        <member name="M:Web.Extensions.StringExtensions.IsNullOrEmpty(System.String)">
-            <summary>
-            Проверить на null или пустую строку
-            </summary>
-        </member>
-        <member name="M:Web.Extensions.StringExtensions.IsNullOrWhiteSpace(System.String)">
-            <summary>
-            Проверить на null или строку состоящую только из пробельных символов
             </summary>
         </member>
         <member name="T:Web.Features.Authentication.AuthenticationController">
@@ -130,7 +29,7 @@
             Контроллер для работы с аутентификацией
             </summary>
         </member>
-        <member name="M:Web.Features.Authentication.AuthenticationController.Login(Web.Features.Authentication.LoginCommand,Web.Decorators.Abstractions.IHandler{Web.Features.Authentication.LoginCommand,Web.Infrastructure.Result{System.Security.Claims.Claim[],System.String}})">
+        <member name="M:Web.Features.Authentication.AuthenticationController.Login(Web.Features.Authentication.Login.LoginCommand,Web.Infrastructure.Decorators.Abstractions.IHandler{Web.Features.Authentication.Login.LoginCommand,Web.Infrastructure.Results.Result{System.Security.Claims.Claim[],System.String}})">
             <summary>
             Войти в систему
             </summary>
@@ -140,82 +39,82 @@
             Выйти из системы
             </summary>
         </member>
-        <member name="T:Web.Features.Authentication.LoginCommand">
+        <member name="T:Web.Features.Authentication.Login.LoginCommand">
             <summary>
             Команда входа в систему
             </summary>
         </member>
-        <member name="P:Web.Features.Authentication.LoginCommand.Name">
+        <member name="P:Web.Features.Authentication.Login.LoginCommand.Name">
             <summary>
             Имя пользователя
             </summary>
         </member>
-        <member name="P:Web.Features.Authentication.LoginCommand.Password">
+        <member name="P:Web.Features.Authentication.Login.LoginCommand.Password">
             <summary>
             Пароль пользователя
             </summary>
         </member>
-        <member name="T:Web.Features.Authentication.LoginCommandHandler">
+        <member name="T:Web.Features.Authentication.Login.LoginCommandHandler">
             <summary>
             Вход в систему
             </summary>
         </member>
-        <member name="M:Web.Features.Authentication.LoginCommandHandler.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,Microsoft.EntityFrameworkCore.DbContext)">
+        <member name="M:Web.Features.Authentication.Login.LoginCommandHandler.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,Microsoft.EntityFrameworkCore.DbContext)">
             <inheritdoc />
         </member>
-        <member name="M:Web.Features.Authentication.LoginCommandHandler.Handle(Web.Features.Authentication.LoginCommand)">
+        <member name="M:Web.Features.Authentication.Login.LoginCommandHandler.Handle(Web.Features.Authentication.Login.LoginCommand)">
             <inheritdoc />
         </member>
-        <member name="T:Web.Features.Authentication.LoginCommandValidator">
+        <member name="T:Web.Features.Authentication.Login.LoginCommandValidator">
             <summary>
             Валидация входа в систему
             </summary>
         </member>
-        <member name="M:Web.Features.Authentication.LoginCommandValidator.#ctor">
+        <member name="M:Web.Features.Authentication.Login.LoginCommandValidator.#ctor">
             <inheritdoc />
         </member>
-        <member name="T:Web.Features.Registration.RegisterUserCommand">
+        <member name="T:Web.Features.Registration.RegisterUser.RegisterUserCommand">
             <summary>
             Команда регистрации пользователя
             </summary>
         </member>
-        <member name="P:Web.Features.Registration.RegisterUserCommand.Name">
+        <member name="P:Web.Features.Registration.RegisterUser.RegisterUserCommand.Name">
             <summary>
             Имя пользователя
             </summary>
         </member>
-        <member name="P:Web.Features.Registration.RegisterUserCommand.Email">
+        <member name="P:Web.Features.Registration.RegisterUser.RegisterUserCommand.Email">
             <summary>
             E-mail
             </summary>
         </member>
-        <member name="P:Web.Features.Registration.RegisterUserCommand.Password">
+        <member name="P:Web.Features.Registration.RegisterUser.RegisterUserCommand.Password">
             <summary>
             Пароль пользователя
             </summary>
         </member>
-        <member name="P:Web.Features.Registration.RegisterUserCommand.ConfirmPassword">
+        <member name="P:Web.Features.Registration.RegisterUser.RegisterUserCommand.ConfirmPassword">
             <summary>
             Подтверждение пароля
             </summary>
         </member>
-        <member name="T:Web.Features.Registration.RegisterUserCommandHandler">
+        <member name="T:Web.Features.Registration.RegisterUser.RegisterUserCommandHandler">
             <summary>
             Обработчик команды регистрации пользователя
             </summary>
         </member>
-        <member name="M:Web.Features.Registration.RegisterUserCommandHandler.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,Microsoft.EntityFrameworkCore.DbContext,AutoMapper.IMapper)">
+        <member name="M:Web.Features.Registration.RegisterUser.RegisterUserCommandHandler.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,Microsoft.EntityFrameworkCore.DbContext,AutoMapper.IMapper)">
             <inheritdoc />
         </member>
-        <member name="M:Web.Features.Registration.RegisterUserCommandHandler.Handle(Web.Features.Registration.RegisterUserCommand)">
+        <member name="M:Web.Features.Registration.RegisterUser.RegisterUserCommandHandler.Handle(Web.Features.Registration.RegisterUser.RegisterUserCommand)">
             <inheritdoc />
         </member>
-        <member name="T:Web.Features.Registration.RegisterUserCommandValidator">
+        <member name="T:Web.Features.Registration.RegisterUser.RegisterUserCommandValidator">
             <summary>
             Валидация регистрации пользователя
             </summary>
         </member>
-        <member name="M:Web.Features.Registration.RegisterUserCommandValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+        <member name="M:Web.Features.Registration.RegisterUser.RegisterUserCommandValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
             <inheritdoc />
         </member>
         <member name="T:Web.Features.Registration.RegistrationController">
@@ -223,7 +122,7 @@
             Контроллер для регистрации пользователей
             </summary>
         </member>
-        <member name="M:Web.Features.Registration.RegistrationController.RegisterUser(Web.Features.Registration.RegisterUserCommand,Web.Decorators.Abstractions.IHandler{Web.Features.Registration.RegisterUserCommand,Web.Infrastructure.Result})">
+        <member name="M:Web.Features.Registration.RegistrationController.RegisterUser(Web.Features.Registration.RegisterUser.RegisterUserCommand,Web.Infrastructure.Decorators.Abstractions.IHandler{Web.Features.Registration.RegisterUser.RegisterUserCommand,Web.Infrastructure.Results.Result})">
             <summary>
             Зарегистрировать нового пользователя
             </summary>
@@ -236,76 +135,196 @@
         <member name="M:Web.Features.Registration.RegistrationProfile.#ctor">
             <inheritdoc />
         </member>
-        <member name="T:Web.Infrastructure.Result">
+        <member name="T:Web.Infrastructure.Decorators.Abstractions.HandlerDecoratorBase`2">
+            <summary>
+            Декоратор обработчика
+            </summary>
+        </member>
+        <member name="F:Web.Infrastructure.Decorators.Abstractions.HandlerDecoratorBase`2.Decoratee">
+            <summary>
+            Декорируемый обработчик
+            </summary>
+        </member>
+        <member name="M:Web.Infrastructure.Decorators.Abstractions.HandlerDecoratorBase`2.#ctor(Web.Infrastructure.Decorators.Abstractions.IHandler{`0,`1})">
+            <inheritdoc />
+        </member>
+        <member name="M:Web.Infrastructure.Decorators.Abstractions.HandlerDecoratorBase`2.Handle(`0)">
+            <inheritdoc />
+        </member>
+        <member name="T:Web.Infrastructure.Decorators.Abstractions.ICommand`1">
+            <summary>
+            Команда
+            </summary>
+            <typeparam name="TOut">Результат выполнения команды</typeparam>
+        </member>
+        <member name="T:Web.Infrastructure.Decorators.Abstractions.ICommandHandler`2">
+            <summary>
+            Обработчик команд
+            </summary>
+            <typeparam name="TIn">Команда</typeparam>
+            <typeparam name="TOut">Результат выполнения команды</typeparam>
+        </member>
+        <member name="T:Web.Infrastructure.Decorators.Abstractions.IHandler`2">
+            <summary>
+            Обработчик
+            </summary>
+        </member>
+        <member name="M:Web.Infrastructure.Decorators.Abstractions.IHandler`2.Handle(`0)">
+            <summary>
+            Метод обработки
+            </summary>
+            <param name="input">Данные для обработки</param>
+        </member>
+        <member name="T:Web.Infrastructure.Decorators.Abstractions.IQuery`1">
+            <summary>
+            Запрос
+            </summary>
+            <typeparam name="TOut">Результат выполнения запроса</typeparam>
+        </member>
+        <member name="T:Web.Infrastructure.Decorators.Abstractions.IQueryHandler`2">
+            <summary>
+            Обработчик запроса
+            </summary>
+            <typeparam name="TIn">Запрос</typeparam>
+            <typeparam name="TOut" >Результат выполнения запроса</typeparam>
+        </member>
+        <member name="T:Web.Infrastructure.Decorators.Implementations.LoggingHandlerDecorator`2">
+            <summary>
+            Декоратор логирования
+            </summary>
+        </member>
+        <member name="M:Web.Infrastructure.Decorators.Implementations.LoggingHandlerDecorator`2.#ctor(Web.Infrastructure.Decorators.Abstractions.IHandler{`0,`1},Microsoft.Extensions.Logging.ILogger{Web.Infrastructure.Decorators.Abstractions.IHandler{`0,`1}})">
+            <inheritdoc />
+        </member>
+        <member name="M:Web.Infrastructure.Decorators.Implementations.LoggingHandlerDecorator`2.Handle(`0)">
+            <inheritdoc />
+        </member>
+        <member name="T:Web.Infrastructure.Decorators.Implementations.SaveChangesHandlerDecorator`2">
+            <summary>
+            Сохраняет изменения контекста
+            </summary>
+            <remarks>Вызывается после работы всех декораторов для принятия изменений в рамках одной транзакции</remarks>
+        </member>
+        <member name="M:Web.Infrastructure.Decorators.Implementations.SaveChangesHandlerDecorator`2.#ctor(Web.Infrastructure.Decorators.Abstractions.IHandler{`0,`1},Microsoft.EntityFrameworkCore.DbContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:Web.Infrastructure.Decorators.Implementations.SaveChangesHandlerDecorator`2.Handle(`0)">
+            <inheritdoc />
+        </member>
+        <member name="T:Web.Infrastructure.Extensions.ControllerExtensions">
+            <summary>
+            Расширения для контроллера
+            </summary>
+        </member>
+        <member name="M:Web.Infrastructure.Extensions.ControllerExtensions.ResultResponse(Microsoft.AspNetCore.Mvc.Controller,Web.Infrastructure.Results.Result)">
+            <summary>
+            Универсальный ответ сервера
+            </summary>
+        </member>
+        <member name="T:Web.Infrastructure.Extensions.StringExtensions">
+            <summary>
+            Расширения для работы со строками
+            </summary>
+        </member>
+        <member name="M:Web.Infrastructure.Extensions.StringExtensions.IsNullOrEmpty(System.String)">
+            <summary>
+            Проверить на null или пустую строку
+            </summary>
+        </member>
+        <member name="M:Web.Infrastructure.Extensions.StringExtensions.IsNullOrWhiteSpace(System.String)">
+            <summary>
+            Проверить на null или строку состоящую только из пробельных символов
+            </summary>
+        </member>
+        <member name="T:Web.Infrastructure.Results.Result">
             <summary>
             Результат выполнения команды/запроса
             </summary>
         </member>
-        <member name="P:Web.Infrastructure.Result.StatusCode">
+        <member name="P:Web.Infrastructure.Results.Result.StatusCode">
             <summary>
             Код
             </summary>
         </member>
-        <member name="P:Web.Infrastructure.Result.SuccessValue">
+        <member name="P:Web.Infrastructure.Results.Result.SuccessValue">
             <summary>
             Значение успешного результата
             </summary>
         </member>
-        <member name="P:Web.Infrastructure.Result.FailureValue">
+        <member name="P:Web.Infrastructure.Results.Result.FailureValue">
             <summary>
             Значение неудачного результата
             </summary>
         </member>
-        <member name="P:Web.Infrastructure.Result.IsSuccess">
+        <member name="P:Web.Infrastructure.Results.Result.IsSuccess">
             <summary>
             Индикатор успешного результата
             </summary>
         </member>
-        <member name="M:Web.Infrastructure.Result.#ctor">
+        <member name="M:Web.Infrastructure.Results.Result.#ctor">
             <inheritdoc />
         </member>
-        <member name="M:Web.Infrastructure.Result.Success(System.Object,System.Int32)">
+        <member name="M:Web.Infrastructure.Results.Result.Success(System.Object,System.Int32)">
             <summary>
             Успешный результат
             </summary>
             <param name="success">Значение успешного результата</param>
             <param name="statusCode">Код</param>
         </member>
-        <member name="M:Web.Infrastructure.Result.Fail(System.Object,System.Int32)">
+        <member name="M:Web.Infrastructure.Results.Result.Fail(System.Object,System.Int32)">
             <summary>
             Неудачный результат
             </summary>
             <param name="failure">Значение неудачного результата</param>
             <param name="statusCode">Код</param>
         </member>
-        <member name="T:Web.Infrastructure.Result`2">
+        <member name="T:Web.Infrastructure.Results.Result`2">
             <summary>
             Типизированный результат выполнения команды/запроса
             </summary>
             <typeparam name="TSuccess">Значение в случае успеха выполнения</typeparam>
             <typeparam name="TFailure">Значение в случае неудачного выполнения</typeparam>
         </member>
-        <member name="P:Web.Infrastructure.Result`2.SuccessValue">
-            <see cref="P:Web.Infrastructure.Result.SuccessValue"/>
+        <member name="P:Web.Infrastructure.Results.Result`2.SuccessValue">
+            <see cref="P:Web.Infrastructure.Results.Result.SuccessValue"/>
         </member>
-        <member name="P:Web.Infrastructure.Result`2.FailureValue">
-            <see cref="P:Web.Infrastructure.Result.FailureValue"/>
+        <member name="P:Web.Infrastructure.Results.Result`2.FailureValue">
+            <see cref="P:Web.Infrastructure.Results.Result.FailureValue"/>
         </member>
-        <member name="M:Web.Infrastructure.Result`2.Success(`0,System.Int32)">
+        <member name="M:Web.Infrastructure.Results.Result`2.Success(`0,System.Int32)">
             <summary>
             Успешный результат
             </summary>
             <param name="success">Значение успешного результата</param>
             <param name="statusCode">Код</param>
         </member>
-        <member name="M:Web.Infrastructure.Result`2.Fail(`1,System.Int32)">
+        <member name="M:Web.Infrastructure.Results.Result`2.Fail(`1,System.Int32)">
             <summary>
             Неудачный результат
             </summary>
             <param name="failure">Значение неудачного результата</param>
             <param name="statusCode">Код</param>
         </member>
-        <member name="T:Web.Infrastructure.ValidationErrorMessages">
+        <member name="T:Web.Infrastructure.Validation.Attributes.RequiredAttribute">
+            <summary>
+            Атрибут для проверки на null значение
+            </summary>
+        </member>
+        <member name="M:Web.Infrastructure.Validation.Attributes.RequiredAttribute.#ctor(System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="M:Web.Infrastructure.Validation.Attributes.RequiredAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:Web.Infrastructure.Validation.Attributes.ValidateModelStateAttribute">
+            <summary>
+            Атрибут для валидации ошибок модели
+            </summary>
+        </member>
+        <member name="M:Web.Infrastructure.Validation.Attributes.ValidateModelStateAttribute.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Web.Infrastructure.Validation.ValidationErrorMessages">
             <summary>
             Сообщения об ошибках валидации
             </summary>
@@ -348,25 +367,6 @@
             <summary>
             Настройка приложения
             </summary>
-        </member>
-        <member name="T:Web.Validation.Attributes.RequiredAttribute">
-            <summary>
-            Атрибут для проверки на null значение
-            </summary>
-        </member>
-        <member name="M:Web.Validation.Attributes.RequiredAttribute.#ctor(System.Boolean)">
-            <inheritdoc />
-        </member>
-        <member name="M:Web.Validation.Attributes.RequiredAttribute.IsValid(System.Object)">
-            <inheritdoc />
-        </member>
-        <member name="T:Web.Validation.Attributes.ValidateModelStateAttribute">
-            <summary>
-            Атрибут для валидации ошибок модели
-            </summary>
-        </member>
-        <member name="M:Web.Validation.Attributes.ValidateModelStateAttribute.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
-            <inheritdoc />
         </member>
     </members>
 </doc>

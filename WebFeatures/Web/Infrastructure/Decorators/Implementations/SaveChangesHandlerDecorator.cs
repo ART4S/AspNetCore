@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Web.Decorators.Abstractions;
+using Web.Infrastructure.Decorators.Abstractions;
 
-namespace Web.Decorators.Implementations
+namespace Web.Infrastructure.Decorators.Implementations
 {
     /// <summary>
     /// Сохраняет изменения контекста

@@ -1,46 +1,51 @@
 ﻿using DataContext.Sql;
+using DbUpdater.Core;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.ComponentModel.Design;
+using System.IO;
 
 namespace DbUpdater
 {
-    static class Program
+    class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            var container = new ServiceContainer();
-            container.AddService(CreateContext);
+            var provider = BuildServices();
+            var updater = provider.GetService<Updater>();
 
-            try
-            {
-                var context = container.GetService<DbContext>();
-                context.Database.EnsureDeleted();
-                context.Database.Migrate();
-            }
-            catch (Exception e)
-            {
-                var logger = container.GetService<ILoggerFactory>().CreateLogger("UpdateDatabase");
-                logger.LogWarning(e.Message);
-            }
+            updater.UpdateDb();
         }
 
-        private static DbContext CreateContext()
+        private static ServiceProvider BuildServices()
         {
-            var connectionString = "";
-            var opt = new DbContextOptionsBuilder<BaseContext>()
-                .UseSqlServer(connectionString)
-                .Options;
+            var services = new ServiceCollection();
+            var configuration = BuildConfiguration();
 
-            var context = new BaseContext(opt);
-            return context;
+            services.AddLogging(x => x.AddConsole());
+
+            services.AddSingleton(configuration);
+
+            services.AddDbContext<DbContext, BaseContext>(opt =>
+                opt.UseSqlServer(configuration.GetConnectionString("Sql")));
+
+            services.AddOptions();
+            services.Configure<UpdaterOptions>(configuration.GetSection(nameof(UpdaterOptions)));
+
+            services.AddSingleton<Updater>();
+
+            return services.BuildServiceProvider();
         }
 
-        public static void AddService<TService>(this ServiceContainer container, Func<TService> serviceProvider)
+        private static IConfiguration BuildConfiguration()
         {
-            container.AddService(typeof(TService), serviceProvider());
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            return configuration;
         }
     }
 }
