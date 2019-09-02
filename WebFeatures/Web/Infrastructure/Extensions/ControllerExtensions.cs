@@ -11,15 +11,15 @@ namespace Web.Infrastructure.Extensions
         /// <summary>
         /// Универсальный ответ сервера
         /// </summary>
-        public static IActionResult ResultResponse(this Controller controller, Result res)
+        public static IActionResult ResultResponse(this Controller controller, Result result)
         {
-            if (res.IsSuccess && res.SuccessValue != null)
-                return controller.StatusCode(res.StatusCode, res.SuccessValue);
+            if (result.IsSuccess && result.SuccessValue != null)
+                return controller.StatusCode(result.StatusCode, result.SuccessValue);
 
-            if (!res.IsSuccess && res.FailureValue != null)
-                return controller.StatusCode(res.StatusCode, res.FailureValue);
+            if (!result.IsSuccess && result.FailureValue != null)
+                return controller.StatusCode(result.StatusCode, result.FailureValue);
 
-            return controller.StatusCode(res.StatusCode);
+            return controller.StatusCode(result.StatusCode);
         }
     }
 }

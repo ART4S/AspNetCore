@@ -27,12 +27,12 @@ namespace Web.Features.Authentication
             [FromBody, Required] LoginCommand command, 
             [FromServices] IHandler<LoginCommand, Result<Claim[], string>> commandHandler)
         {
-            var res = commandHandler.Handle(command);
-            if (!res.IsSuccess)
-                return this.ResultResponse(res);
+            var result = commandHandler.Handle(command);
+            if (!result.IsSuccess)
+                return this.ResultResponse(result);
 
             var claimsIdentity = new ClaimsIdentity(
-                res.SuccessValue, CookieAuthenticationDefaults.AuthenticationScheme);
+                result.SuccessValue, CookieAuthenticationDefaults.AuthenticationScheme);
 
             HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
