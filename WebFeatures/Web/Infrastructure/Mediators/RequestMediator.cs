@@ -3,7 +3,7 @@ using Web.Infrastructure.Pipeline.Abstractions;
 
 namespace Web.Infrastructure.Mediators
 {
-    public class RequestMediator : IRequestMediator
+    class RequestMediator : IRequestMediator
     {
         private readonly IServiceProvider _serviceProvider;
 

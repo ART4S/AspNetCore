@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -48,8 +47,8 @@ namespace Web.Startup
 
             services.AddMvc(opt =>
             {
-                opt.Filters.Add(new ProducesAttribute("application/json"));
                 opt.Filters.Add(new AuthorizeFilter());
+                opt.Filters.Add(new ProducesAttribute("application/json"));
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

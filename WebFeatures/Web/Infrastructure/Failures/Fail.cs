@@ -1,20 +1,29 @@
-﻿namespace Web.Infrastructure.Failures
+﻿using System;
+
+namespace Web.Infrastructure.Failures
 {
+    /// <summary>
+    /// Ошибка запроса
+    /// </summary>
     public class Fail
     {
-        public string UserMessage { get; set; }
+        /// <summary>
+        /// Сообщение с информацией об ошибке
+        /// </summary>
+        public string Message { get; }
 
-        public Fail()
+        /// <inheritdoc />
+        public Fail(string message)
         {
-            
+            Message = message ?? throw new ArgumentNullException(nameof(message));
         }
 
+        /// <summary>
+        /// Преобразует строку в ошибку
+        /// </summary>
         public static implicit operator Fail(string str)
         {
-            return new Fail()
-            {
-                UserMessage = str
-            };
+            return new Fail(str);
         }
     }
 }

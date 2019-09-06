@@ -3,7 +3,10 @@ using Web.Infrastructure.Results;
 
 namespace Web.Infrastructure.Exceptions
 {
-    public class ResultException : Exception
+    /// <summary>
+    /// Исключение с результатом
+    /// </summary>
+    class ResultException : Exception
     {
         public Result Result { get; }
 

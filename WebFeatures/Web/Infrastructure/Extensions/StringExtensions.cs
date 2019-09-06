@@ -3,7 +3,7 @@
     /// <summary>
     /// Расширения для работы со строками
     /// </summary>
-    public static class StringExtensions
+    static class StringExtensions
     {
         /// <summary>
         /// Проверить на null или пустую строку

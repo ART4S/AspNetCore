@@ -6,7 +6,7 @@ namespace Web.Infrastructure.Extensions
     /// <summary>
     /// Расширения для контроллера
     /// </summary>
-    public static class ControllerExtensions
+    static class ControllerExtensions
     {
         /// <summary>
         /// Универсальный ответ сервера

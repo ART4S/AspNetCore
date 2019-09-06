@@ -3,7 +3,7 @@
     /// <summary>
     /// Декоратор обработчика запросов
     /// </summary>
-    public abstract class HandlerDecoratorBase<TRequest, TResult> : IRequestHandler<TRequest, TResult>
+    abstract class HandlerDecoratorBase<TRequest, TResult> : IRequestHandler<TRequest, TResult>
         where TRequest : IRequest<TResult>
     {
         /// <summary>

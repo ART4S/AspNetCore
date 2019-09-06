@@ -1,7 +1,7 @@
 ﻿namespace Web.Infrastructure.Results
 {
     /// <summary>
-    /// Результат выполнения команды/запроса
+    /// Результат выполнения запроса
     /// </summary>
     public class Result
     {
