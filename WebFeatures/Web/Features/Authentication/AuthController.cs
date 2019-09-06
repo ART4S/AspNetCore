@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
 using Web.Features.Authentication.Login;
-using Web.Infrastructure.Decorators.Abstractions;
 using Web.Infrastructure.Extensions;
+using Web.Infrastructure.Failures;
+using Web.Infrastructure.Mediators;
 using Web.Infrastructure.Results;
 using Web.Infrastructure.Validation.Attributes;
 
@@ -15,19 +16,24 @@ namespace Web.Features.Authentication
     /// <summary>
     /// Контроллер для работы с аутентификацией
     /// </summary>
-    [Route("api/[controller]")]
-    public class AuthenticationController : Controller
+    [Route("api/v1/[controller]")]
+    public class AuthController : Controller
     {
+        private readonly IRequestMediator _mediator;
+
+        public AuthController(IRequestMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         /// <summary>
         /// Войти в систему
         /// </summary>
         [HttpPost("[action]")]
         [AllowAnonymous]
-        public IActionResult Login(
-            [FromBody, Required] LoginCommand command, 
-            [FromServices] IHandler<LoginCommand, Result<Claim[], string>> commandHandler)
+        public IActionResult Login([FromBody, Required] LoginCommand command)
         {
-            var result = commandHandler.Handle(command);
+            var result = _mediator.Send<LoginCommand, Result<Claim[], Fail>>(command);
             if (!result.IsSuccess)
                 return this.ResultResponse(result);
 

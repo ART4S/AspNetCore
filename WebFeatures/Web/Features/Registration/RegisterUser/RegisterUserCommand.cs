@@ -1,4 +1,4 @@
-﻿using Web.Infrastructure.Decorators.Abstractions;
+﻿using Web.Infrastructure.Pipeline.Abstractions;
 using Web.Infrastructure.Results;
 
 namespace Web.Features.Registration.RegisterUser
@@ -6,7 +6,7 @@ namespace Web.Features.Registration.RegisterUser
     /// <summary>
     /// Команда регистрации пользователя
     /// </summary>
-    public class RegisterUserCommand : ICommand<Result>
+    public class RegisterUserCommand : IRequest<Result>
     {
         /// <summary>
         /// Имя пользователя

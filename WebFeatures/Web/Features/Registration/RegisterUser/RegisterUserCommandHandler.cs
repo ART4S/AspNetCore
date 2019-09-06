@@ -2,7 +2,7 @@
 using Entities.Model;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
-using Web.Infrastructure.Decorators.Abstractions;
+using Web.Infrastructure.Pipeline.Abstractions;
 using Web.Infrastructure.Results;
 
 namespace Web.Features.Registration.RegisterUser
@@ -10,7 +10,7 @@ namespace Web.Features.Registration.RegisterUser
     /// <summary>
     /// Обработчик команды регистрации пользователя
     /// </summary>
-    public class RegisterUserCommandHandler : IHandler<RegisterUserCommand, Result>
+    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Result>
     {
         private readonly IDataProtector _protector;
         private readonly DbContext _dbContext;
@@ -25,10 +25,10 @@ namespace Web.Features.Registration.RegisterUser
         }
 
         /// <inheritdoc />
-        public Result Handle(RegisterUserCommand input)
+        public Result Handle(RegisterUserCommand request)
         {
-            var user = _mapper.Map<User>(input);
-            user.PasswordHash = _protector.Protect(input.Password);
+            var user = _mapper.Map<User>(request);
+            user.PasswordHash = _protector.Protect(request.Password);
 
             _dbContext.Add(user);
 

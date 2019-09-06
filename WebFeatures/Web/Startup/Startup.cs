@@ -1,19 +1,23 @@
-﻿using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
+using System.Net;
 using System.Reflection;
-using Web.Configuration;
-using Web.Infrastructure.Validation.Attributes;
+using System.Threading.Tasks;
+using Web.Infrastructure.Exceptions;
+using Web.Startup.Configuration;
 
-namespace Web
+namespace Web.Startup
 {
     /// <summary>
     /// Конфигуратор приложения
@@ -36,22 +40,18 @@ namespace Web
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSqlDataContext(Configuration);
-            services.AddHandlers();
-            services.AddAutomapperProfiles();
+            services.AddDataContext(Configuration);
+            services.AddRequestHandlers();
+            services.AddValidators();
+            services.AddAutomapper();
             services.AddDataProtection();
 
             services.AddMvc(opt =>
             {
-                opt.Filters.Add(new ValidateModelStateAttribute());
                 opt.Filters.Add(new ProducesAttribute("application/json"));
                 opt.Filters.Add(new AuthorizeFilter());
             })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-            .AddFluentValidation(opt =>
-            {
-                opt.RegisterValidatorsFromAssemblyContaining<Startup>();
-            });
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
@@ -71,16 +71,32 @@ namespace Web
         /// <summary>
         /// Настройка приложения
         /// </summary>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            app.UseExceptionHandler(errorApp =>
             {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseHsts();
-            }
+                errorApp.Run(context =>
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.ContentType = "text/plain";
+
+                    var feature = context.Features.Get<IExceptionHandlerPathFeature>();
+
+                    if (feature?.Error is ResultException resultEx)
+                    {
+                        context.Response.StatusCode = resultEx.Result.StatusCode;
+                        context.Response.ContentType = "application/json";
+
+                        var json = JsonConvert.SerializeObject(resultEx.Result);
+                        context.Response.WriteAsync(json);
+
+                        return Task.CompletedTask;
+                    }
+
+                    context.Response.WriteAsync("Неизвестная ошибка");
+                    return Task.CompletedTask;
+                });
+            });
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

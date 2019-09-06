@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Security.Claims;
-using Web.Infrastructure.Decorators.Abstractions;
+using Web.Infrastructure.Failures;
+using Web.Infrastructure.Pipeline.Abstractions;
 using Web.Infrastructure.Results;
 
 namespace Web.Features.Authentication.Login
@@ -11,7 +12,7 @@ namespace Web.Features.Authentication.Login
     /// <summary>
     /// Вход в систему
     /// </summary>
-    public class LoginCommandHandler : ICommandHandler<LoginCommand, Result<Claim[], string>>
+    public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<Claim[], Fail>>
     {
         private readonly DbContext _dbContext;
         private readonly IDataProtector _protector;
@@ -24,27 +25,27 @@ namespace Web.Features.Authentication.Login
         }
 
         /// <inheritdoc />
-        public Result<Claim[], string> Handle(LoginCommand input)
+        public Result<Claim[], Fail> Handle(LoginCommand input)
         {
             var user = _dbContext.Set<User>().FirstOrDefault(x => x.Name == input.Name);
             if (user == null)
-                return ErrorResult();
+                return Fail();
 
             var pass = _protector.Unprotect(user.PasswordHash);
             if (pass != input.Password)
-                return ErrorResult();
+                return Fail();
 
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, user.Name)
             };
 
-            return Result<Claim[], string>.Success(claims);
+            return Result<Claim[], Fail>.Success(claims);
         }
 
-        private Result<Claim[], string> ErrorResult()
+        private Result<Claim[], Fail> Fail()
         {
-            return Result<Claim[], string>.Fail("Неверный логин или пароль");
+            return Result<Claim[], Fail>.Fail("Неверный логин или пароль");
         }
     }
 }

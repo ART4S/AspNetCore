@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
-using Web.Infrastructure.Decorators.Abstractions;
+using Web.Infrastructure.Failures;
+using Web.Infrastructure.Pipeline.Abstractions;
 using Web.Infrastructure.Results;
 
 namespace Web.Features.Authentication.Login
@@ -7,7 +8,7 @@ namespace Web.Features.Authentication.Login
     /// <summary>
     /// Команда входа в систему
     /// </summary>
-    public class LoginCommand : ICommand<Result<Claim[], string>>
+    public class LoginCommand : IRequest<Result<Claim[], Fail>>
     {
         /// <summary>
         /// Имя пользователя
