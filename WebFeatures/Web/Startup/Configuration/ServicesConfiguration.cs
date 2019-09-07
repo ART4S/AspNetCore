@@ -49,13 +49,15 @@ namespace Web.Startup.Configuration
                     .WithScopedLifetime();
             });
 
+            services.AddCommandPipeline();
+            services.AddQueryPipeline();
+        }
+
+        private static void AddCommandPipeline(this IServiceCollection services)
+        {
             services.Decorate(
                 typeof(ICommandHandler<,>),
                 typeof(SaveChangesHandlerDecorator<,>));
-
-            services.Decorate(
-                typeof(ICommandHandler<,>),
-                typeof(LoggingHandlerDecorator<,>));
 
             services.Decorate(
                 typeof(ICommandHandler<,>),
@@ -63,6 +65,25 @@ namespace Web.Startup.Configuration
 
             services.Decorate(
                 typeof(ICommandHandler<,>),
+                typeof(LoggingHandlerDecorator<,>));
+
+            services.Decorate(
+                typeof(ICommandHandler<,>),
+                typeof(PerformanceHandlerDecorator<,>));
+        }
+
+        private static void AddQueryPipeline(this IServiceCollection services)
+        {
+            services.Decorate(
+                typeof(IQueryHandler<,>),
+                typeof(ValidationHandlerDecorator<,>));
+
+            services.Decorate(
+                typeof(IQueryHandler<,>),
+                typeof(LoggingHandlerDecorator<,>));
+
+            services.Decorate(
+                typeof(IQueryHandler<,>),
                 typeof(PerformanceHandlerDecorator<,>));
         }
 
