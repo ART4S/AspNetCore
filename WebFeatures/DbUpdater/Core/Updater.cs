@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataContext;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
-using DataContext;
 
 namespace DbUpdater.Core
 {
@@ -57,7 +57,6 @@ namespace DbUpdater.Core
             catch (Exception e)
             {
                 _logger.LogCritical(e, "Неудачная попытка обновления БД");
-                throw;
             }
         }
     }

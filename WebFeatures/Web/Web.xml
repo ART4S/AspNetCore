@@ -9,6 +9,11 @@
             Контроллер для работы с аутентификацией
             </summary>
         </member>
+        <member name="M:Web.Features.Authentication.AuthController.#ctor(Web.Infrastructure.Mediators.IMediator)">
+            <summary>
+            <inheritdoc />
+            </summary>
+        </member>
         <member name="M:Web.Features.Authentication.AuthController.Login(Web.Features.Authentication.Login.LoginCommand)">
             <summary>
             Войти в систему
@@ -52,6 +57,71 @@
         </member>
         <member name="M:Web.Features.Authentication.Login.LoginCommandValidator.#ctor">
             <inheritdoc />
+        </member>
+        <member name="T:Web.Features.Blogs.BlogController">
+            <summary>
+            Контроллер для работы с блогами
+            </summary>
+        </member>
+        <member name="M:Web.Features.Blogs.BlogController.#ctor(Web.Infrastructure.Mediators.IMediator)">
+            <summary>
+            <inheritdoc />
+            </summary>
+        </member>
+        <member name="M:Web.Features.Blogs.BlogController.Create(Web.Features.Blogs.CreateBlog.CreateBlogCommand)">
+            <summary>
+            Создать
+            </summary>
+        </member>
+        <member name="T:Web.Features.Blogs.CreateBlog.CreateBlogCommand">
+            <summary>
+            Команда на создание блога
+            </summary>
+        </member>
+        <member name="P:Web.Features.Blogs.CreateBlog.CreateBlogCommand.AuthorId">
+            <summary>
+            Id автора
+            </summary>
+        </member>
+        <member name="P:Web.Features.Blogs.CreateBlog.CreateBlogCommand.Title">
+            <summary>
+            Заголовок
+            </summary>
+        </member>
+        <member name="P:Web.Features.Blogs.CreateBlog.CreateBlogCommand.Content">
+            <summary>
+            Наполнение
+            </summary>
+        </member>
+        <member name="T:Web.Features.Blogs.CreateBlog.CreateBlogCommandHandler">
+            <summary>
+            Обработчик команды на создание блога
+            </summary>
+        </member>
+        <member name="M:Web.Features.Blogs.CreateBlog.CreateBlogCommandHandler.Handle(Web.Features.Blogs.CreateBlog.CreateBlogCommand)">
+            <summary>
+            <inheritdoc />
+            </summary>
+        </member>
+        <member name="T:Web.Features.Blogs.CreateBlog.CreateBlogCommandValidator">
+            <summary>
+            Валидация команды на создание блога
+            </summary>
+        </member>
+        <member name="M:Web.Features.Blogs.CreateBlog.CreateBlogCommandValidator.#ctor(DataContext.IAppContext)">
+            <summary>
+            <inheritdoc />
+            </summary>
+        </member>
+        <member name="T:Web.Features.Blogs.CreateBlogCommandProfile">
+            <summary>
+            <inheritdoc />
+            </summary>
+        </member>
+        <member name="M:Web.Features.Blogs.CreateBlogCommandProfile.#ctor">
+            <summary>
+            <inheritdoc />
+            </summary>
         </member>
         <member name="T:Web.Features.Registration.RegisterUser.RegisterUserCommand">
             <summary>
@@ -111,7 +181,12 @@
         </member>
         <member name="T:Web.Features.Registration.RegistrationController">
             <summary>
-            Контроллер для регистрации пользователей
+            Контроллер для регистрации новых пользователей
+            </summary>
+        </member>
+        <member name="M:Web.Features.Registration.RegistrationController.#ctor(Web.Infrastructure.Mediators.IMediator)">
+            <summary>
+            <inheritdoc />
             </summary>
         </member>
         <member name="M:Web.Features.Registration.RegistrationController.RegisterUser(Web.Features.Registration.RegisterUser.RegisterUserCommand)">
@@ -119,34 +194,30 @@
             Зарегистрировать нового пользователя
             </summary>
         </member>
+        <member name="T:Web.Infrastructure.Controllers.BaseController">
+            <summary>
+            Базовый класс для контроллеров
+            </summary>
+        </member>
+        <member name="F:Web.Infrastructure.Controllers.BaseController.Mediator">
+            <summary>
+            Посредник для отправки запроса подходящим обработчикам
+            </summary>
+        </member>
+        <member name="M:Web.Infrastructure.Controllers.BaseController.#ctor(Web.Infrastructure.Mediators.IMediator)">
+            <summary>
+            <inheritdoc />
+            </summary>
+        </member>
+        <member name="M:Web.Infrastructure.Controllers.BaseController.ResultResponse(Web.Infrastructure.Results.Result)">
+            <summary>
+            Универсальный ответ
+            </summary>
+            <param name="result">Результат выполнения запроса</param>
+        </member>
         <member name="T:Web.Infrastructure.Exceptions.ResultException">
             <summary>
             Исключение с результатом
-            </summary>
-        </member>
-        <member name="T:Web.Infrastructure.Extensions.ControllerExtensions">
-            <summary>
-            Расширения для контроллера
-            </summary>
-        </member>
-        <member name="M:Web.Infrastructure.Extensions.ControllerExtensions.ResultResponse(Microsoft.AspNetCore.Mvc.Controller,Web.Infrastructure.Results.Result)">
-            <summary>
-            Универсальный ответ сервера
-            </summary>
-        </member>
-        <member name="T:Web.Infrastructure.Extensions.StringExtensions">
-            <summary>
-            Расширения для работы со строками
-            </summary>
-        </member>
-        <member name="M:Web.Infrastructure.Extensions.StringExtensions.IsNullOrEmpty(System.String)">
-            <summary>
-            Проверить на null или пустую строку
-            </summary>
-        </member>
-        <member name="M:Web.Infrastructure.Extensions.StringExtensions.IsNullOrWhiteSpace(System.String)">
-            <summary>
-            Проверить на null или строку состоящую только из пробельных символов
             </summary>
         </member>
         <member name="T:Web.Infrastructure.Failures.Fail">

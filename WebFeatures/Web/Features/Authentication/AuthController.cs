@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
 using Web.Features.Authentication.Login;
-using Web.Infrastructure.Extensions;
+using Web.Infrastructure.Controllers;
 using Web.Infrastructure.Failures;
 using Web.Infrastructure.Mediators;
 using Web.Infrastructure.Results;
@@ -17,13 +17,13 @@ namespace Web.Features.Authentication
     /// Контроллер для работы с аутентификацией
     /// </summary>
     [Route("api/v1/[controller]")]
-    public class AuthController : Controller
+    public class AuthController : BaseController
     {
-        private readonly IMediator _mediator;
-
-        public AuthController(IMediator mediator)
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        public AuthController(IMediator mediator) : base(mediator)
         {
-            _mediator = mediator;
         }
 
         /// <summary>
@@ -33,9 +33,9 @@ namespace Web.Features.Authentication
         [AllowAnonymous]
         public IActionResult Login([FromBody, Required] LoginCommand command)
         {
-            var result = _mediator.Send<LoginCommand, Result<Claim[], Fail>>(command);
+            var result = Mediator.Send<LoginCommand, Result<Claim[], Fail>>(command);
             if (!result.IsSuccess)
-                return this.ResultResponse(result);
+                return ResultResponse(result);
 
             var claimsIdentity = new ClaimsIdentity(
                 result.SuccessValue, CookieAuthenticationDefaults.AuthenticationScheme);

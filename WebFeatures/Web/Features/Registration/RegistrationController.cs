@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Features.Registration.RegisterUser;
-using Web.Infrastructure.Extensions;
+using Web.Infrastructure.Controllers;
 using Web.Infrastructure.Mediators;
 using Web.Infrastructure.Results;
 using Web.Infrastructure.Validation.Attributes;
@@ -9,17 +9,17 @@ using Web.Infrastructure.Validation.Attributes;
 namespace Web.Features.Registration
 {
     /// <summary>
-    /// Контроллер для регистрации пользователей
+    /// Контроллер для регистрации новых пользователей
     /// </summary>
     [Route("api/v1/[controller]")]
     [AllowAnonymous]
-    public class RegistrationController : Controller
+    public class RegistrationController : BaseController
     {
-        private readonly IMediator _mediator;
-
-        public RegistrationController(IMediator mediator)
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        public RegistrationController(IMediator mediator) : base(mediator)
         {
-            _mediator = mediator;
         }
 
         /// <summary>
@@ -28,8 +28,8 @@ namespace Web.Features.Registration
         [HttpPost]
         public IActionResult RegisterUser([FromBody, Required] RegisterUserCommand command)
         {
-            var result = _mediator.Send<RegisterUserCommand, Result>(command);
-            return this.ResultResponse(result);
+            var result = Mediator.Send<RegisterUserCommand, Result>(command);
+            return ResultResponse(result);
         }
     }
 }
