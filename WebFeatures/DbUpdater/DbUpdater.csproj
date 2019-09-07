@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataContext.Sql\DataContext.Sql.csproj" />
+    <ProjectReference Include="..\DataContext\DataContext.csproj" />
   </ItemGroup>
 
   <ItemGroup>

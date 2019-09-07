@@ -3,8 +3,14 @@ using Entities.Model;
 
 namespace Web.Features.Registration.RegisterUser
 {
+    /// <summary>
+    /// <inheritdoc />
+    /// </summary>
     public class RegisterUserCommandProfile : Profile
     {
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
         public RegisterUserCommandProfile()
         {
             CreateMap<RegisterUserCommand, User>(MemberList.Source)

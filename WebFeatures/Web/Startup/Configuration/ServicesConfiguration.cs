@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DataContext;
 using DataContext.Sql;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -20,19 +21,18 @@ namespace Web.Startup.Configuration
         /// <summary>
         /// Добавить контекст данных
         /// </summary>
-        public static void AddDataContext(this IServiceCollection services, IConfiguration configuration)
+        public static void AddAppContext(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("Sql");
-            services.AddDbContext<DbContext, BaseContext>(opt =>
+            services.AddDbContext<IAppContext, SqlAppContext>(opt =>
             {
-                opt.UseSqlServer(connectionString);
+                opt.UseSqlServer(configuration.GetConnectionString(nameof(SqlAppContext)));
             });
         }
 
         /// <summary>
         /// Добавить обработчики запросов
         /// </summary>
-        public static void AddRequestHandlers(this IServiceCollection services)
+        public static void AddHandlers(this IServiceCollection services)
         {
             services.AddScoped<IMediator, Mediator>();
 

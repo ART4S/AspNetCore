@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
+using DataContext;
 
 namespace DbUpdater
 {
@@ -27,7 +28,7 @@ namespace DbUpdater
 
             services.AddSingleton(configuration);
 
-            services.AddDbContext<DbContext, BaseContext>(opt =>
+            services.AddDbContext<IAppContext, SqlAppContext>(opt =>
                 opt.UseSqlServer(configuration.GetConnectionString("Sql")));
 
             services.AddOptions();

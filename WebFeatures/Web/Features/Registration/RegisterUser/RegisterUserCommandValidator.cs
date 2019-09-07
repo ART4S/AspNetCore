@@ -10,7 +10,9 @@ namespace Web.Features.Registration.RegisterUser
     /// </summary>
     public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
     {
+        /// <summary>
         /// <inheritdoc />
+        /// </summary>
         public RegisterUserCommandValidator(DbContext dbContext)
         {
             RuleFor(x => x.Name)

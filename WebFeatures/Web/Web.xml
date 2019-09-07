@@ -89,13 +89,25 @@
         <member name="M:Web.Features.Registration.RegisterUser.RegisterUserCommandHandler.Handle(Web.Features.Registration.RegisterUser.RegisterUserCommand)">
             <inheritdoc />
         </member>
+        <member name="T:Web.Features.Registration.RegisterUser.RegisterUserCommandProfile">
+            <summary>
+            <inheritdoc />
+            </summary>
+        </member>
+        <member name="M:Web.Features.Registration.RegisterUser.RegisterUserCommandProfile.#ctor">
+            <summary>
+            <inheritdoc />
+            </summary>
+        </member>
         <member name="T:Web.Features.Registration.RegisterUser.RegisterUserCommandValidator">
             <summary>
             Валидация регистрации пользователя
             </summary>
         </member>
         <member name="M:Web.Features.Registration.RegisterUser.RegisterUserCommandValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
             <inheritdoc />
+            </summary>
         </member>
         <member name="T:Web.Features.Registration.RegistrationController">
             <summary>
@@ -351,12 +363,12 @@
             Расширения для конфигурации сервисов приложения
             </summary>
         </member>
-        <member name="M:Web.Startup.Configuration.ServicesConfigurationExtensions.AddDataContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Web.Startup.Configuration.ServicesConfigurationExtensions.AddAppContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             Добавить контекст данных
             </summary>
         </member>
-        <member name="M:Web.Startup.Configuration.ServicesConfigurationExtensions.AddRequestHandlers(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:Web.Startup.Configuration.ServicesConfigurationExtensions.AddHandlers(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Добавить обработчики запросов
             </summary>

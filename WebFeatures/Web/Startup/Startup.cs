@@ -39,8 +39,8 @@ namespace Web.Startup
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDataContext(Configuration);
-            services.AddRequestHandlers();
+            services.AddAppContext(Configuration);
+            services.AddHandlers();
             services.AddValidators();
             services.AddAutomapper();
             services.AddDataProtection();

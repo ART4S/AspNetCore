@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Entities.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataContext
 {
-    public class AppContext : DbContext, IAppContext
+    public abstract class AppContext : DbContext, IAppContext
     {
-        public AppContext(DbContextOptions<AppContext> options) : base(options)
+        protected AppContext(DbContextOptions options) : base(options)
         {
             
         }
@@ -13,5 +14,7 @@ namespace DataContext
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppContext).Assembly);
         }
+
+        public DbSet<User> Users { get; set; }
     }
 }

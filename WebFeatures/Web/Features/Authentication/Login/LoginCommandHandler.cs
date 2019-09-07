@@ -1,6 +1,6 @@
-﻿using Entities.Model;
+﻿using DataContext;
+using Entities.Model;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Security.Claims;
 using Web.Infrastructure.Failures;
@@ -14,20 +14,20 @@ namespace Web.Features.Authentication.Login
     /// </summary>
     public class LoginCommandHandler : ICommandHandler<LoginCommand, Result<Claim[], Fail>>
     {
-        private readonly DbContext _dbContext;
+        private readonly IAppContext _context;
         private readonly IDataProtector _protector;
 
         /// <inheritdoc />
-        public LoginCommandHandler(IDataProtectionProvider protectionProvider, DbContext dbContext)
+        public LoginCommandHandler(IDataProtectionProvider protectionProvider, IAppContext context)
         {
-            _dbContext = dbContext;
+            _context = context;
             _protector = protectionProvider.CreateProtector("UserPassword");
         }
 
         /// <inheritdoc />
         public Result<Claim[], Fail> Handle(LoginCommand input)
         {
-            var user = _dbContext.Set<User>().FirstOrDefault(x => x.Name == input.Name);
+            var user = _context.Set<User>().FirstOrDefault(x => x.Name == input.Name);
             if (user == null)
                 return Fail();
 

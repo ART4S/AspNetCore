@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
+using DataContext;
 
 namespace DbUpdater.Core
 {
@@ -13,9 +14,9 @@ namespace DbUpdater.Core
     {
         private readonly ILogger<Updater> _logger;
         private readonly UpdaterOptions _options;
-        private readonly DbContext _context;
+        private readonly IAppContext _context;
 
-        public Updater(ILogger<Updater> logger, IOptions<UpdaterOptions> options, DbContext context)
+        public Updater(ILogger<Updater> logger, IOptions<UpdaterOptions> options, IAppContext context)
         {
             _logger = logger;
             _options = options.Value;
