@@ -50,7 +50,7 @@ namespace Web.Startup.Configuration
             });
 
             services.AddCommandPipeline();
-            services.AddQueryPipeline();
+            //services.AddQueryPipeline();
         }
 
         private static void AddCommandPipeline(this IServiceCollection services)

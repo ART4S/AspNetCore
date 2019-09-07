@@ -33,7 +33,7 @@ namespace Web.Features.Authentication
         [AllowAnonymous]
         public IActionResult Login([FromBody, Required] LoginCommand command)
         {
-            var result = _mediator.SendCommand<LoginCommand, Result<Claim[], Fail>>(command);
+            var result = _mediator.Send<LoginCommand, Result<Claim[], Fail>>(command);
             if (!result.IsSuccess)
                 return this.ResultResponse(result);
 

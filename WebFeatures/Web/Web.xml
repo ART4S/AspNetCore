@@ -157,22 +157,15 @@
         </member>
         <member name="T:Web.Infrastructure.Mediators.IMediator">
             <summary>
-            Посредник для отправки команд/запросов подходящим обработчикам
+            Посредник для отправки запросов подходящим обработчикам
             </summary>
         </member>
-        <member name="M:Web.Infrastructure.Mediators.IMediator.SendQuery``2(``0)">
+        <member name="M:Web.Infrastructure.Mediators.IMediator.Send``2(``0)">
             <summary>
             Послать запрос обработчику
             </summary>
-            <param name="query">Запрос</param>
+            <param name="input">Данные запроса</param>
             <returns>Результат выполнения запроса</returns>
-        </member>
-        <member name="M:Web.Infrastructure.Mediators.IMediator.SendCommand``2(``0)">
-            <summary>
-            Послать команду обработчику
-            </summary>
-            <param name="command">Команда</param>
-            <returns>Результат выполнения команды</returns>
         </member>
         <member name="T:Web.Infrastructure.Pipeline.Abstractions.HandlerDecoratorBase`2">
             <summary>

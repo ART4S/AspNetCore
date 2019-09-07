@@ -28,7 +28,7 @@ namespace Web.Features.Registration
         [HttpPost]
         public IActionResult RegisterUser([FromBody, Required] RegisterUserCommand command)
         {
-            var result = _mediator.SendCommand<RegisterUserCommand, Result>(command);
+            var result = _mediator.Send<RegisterUserCommand, Result>(command);
             return this.ResultResponse(result);
         }
     }
