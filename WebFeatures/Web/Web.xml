@@ -107,6 +107,11 @@
             Зарегистрировать нового пользователя
             </summary>
         </member>
+        <member name="T:Web.Infrastructure.Exceptions.ResultException">
+            <summary>
+            Исключение с результатом
+            </summary>
+        </member>
         <member name="T:Web.Infrastructure.Extensions.ControllerExtensions">
             <summary>
             Расширения для контроллера
@@ -132,9 +137,46 @@
             Проверить на null или строку состоящую только из пробельных символов
             </summary>
         </member>
+        <member name="T:Web.Infrastructure.Failures.Fail">
+            <summary>
+            Ошибка запроса
+            </summary>
+        </member>
+        <member name="P:Web.Infrastructure.Failures.Fail.Message">
+            <summary>
+            Сообщение с информацией об ошибке
+            </summary>
+        </member>
+        <member name="M:Web.Infrastructure.Failures.Fail.#ctor(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Web.Infrastructure.Failures.Fail.op_Implicit(System.String)~Web.Infrastructure.Failures.Fail">
+            <summary>
+            Преобразует строку в ошибку
+            </summary>
+        </member>
+        <member name="T:Web.Infrastructure.Mediators.IMediator">
+            <summary>
+            Посредник для отправки команд/запросов подходящим обработчикам
+            </summary>
+        </member>
+        <member name="M:Web.Infrastructure.Mediators.IMediator.SendQuery``2(``0)">
+            <summary>
+            Послать запрос обработчику
+            </summary>
+            <param name="query">Запрос</param>
+            <returns>Результат выполнения запроса</returns>
+        </member>
+        <member name="M:Web.Infrastructure.Mediators.IMediator.SendCommand``2(``0)">
+            <summary>
+            Послать команду обработчику
+            </summary>
+            <param name="command">Команда</param>
+            <returns>Результат выполнения команды</returns>
+        </member>
         <member name="T:Web.Infrastructure.Pipeline.Abstractions.HandlerDecoratorBase`2">
             <summary>
-            Декоратор обработчика запросов
+            Декоратор для обработчика
             </summary>
         </member>
         <member name="F:Web.Infrastructure.Pipeline.Abstractions.HandlerDecoratorBase`2.Decoratee">
@@ -142,37 +184,57 @@
             Декорируемый обработчик
             </summary>
         </member>
-        <member name="M:Web.Infrastructure.Pipeline.Abstractions.HandlerDecoratorBase`2.#ctor(Web.Infrastructure.Pipeline.Abstractions.IRequestHandler{`0,`1})">
+        <member name="M:Web.Infrastructure.Pipeline.Abstractions.HandlerDecoratorBase`2.#ctor(Web.Infrastructure.Pipeline.Abstractions.IHandler{`0,`1})">
             <inheritdoc />
         </member>
         <member name="M:Web.Infrastructure.Pipeline.Abstractions.HandlerDecoratorBase`2.Handle(`0)">
             <inheritdoc />
         </member>
-        <member name="T:Web.Infrastructure.Pipeline.Abstractions.IRequest`1">
+        <member name="T:Web.Infrastructure.Pipeline.Abstractions.ICommand`1">
+            <summary>
+            Команда
+            </summary>
+            <typeparam name="TOut">Результат выполнения команды</typeparam>
+        </member>
+        <member name="T:Web.Infrastructure.Pipeline.Abstractions.ICommandHandler`2">
+            <summary>
+            Обработчик команды
+            </summary>
+            <typeparam name="TCommand">Команда</typeparam>
+            <typeparam name="TResult">Результат выполнения команды</typeparam>
+        </member>
+        <member name="T:Web.Infrastructure.Pipeline.Abstractions.IHandler`2">
+            <summary>
+            Обработчик
+            </summary>
+            <typeparam name="TIn">Тип входного параметра</typeparam>
+            <typeparam name="TOut">Тип результата</typeparam>
+        </member>
+        <member name="M:Web.Infrastructure.Pipeline.Abstractions.IHandler`2.Handle(`0)">
+            <summary>
+            Метод обработки
+            </summary>
+            <param name="input">Входной параметр</param>
+        </member>
+        <member name="T:Web.Infrastructure.Pipeline.Abstractions.IQuery`1">
             <summary>
             Запрос
             </summary>
-            <typeparam name="TResult">Входные параметры запроса</typeparam>
+            <typeparam name="TOut">Результат выполнения запроса</typeparam>
         </member>
-        <member name="T:Web.Infrastructure.Pipeline.Abstractions.IRequestHandler`2">
+        <member name="T:Web.Infrastructure.Pipeline.Abstractions.IQueryHandler`2">
             <summary>
-            Обработчик запросов
+            Обработчик запроса
             </summary>
-            <typeparam name="TRequest">Запрос</typeparam>
+            <typeparam name="TQuery">Запрос</typeparam>
             <typeparam name="TResult">Результат выполнения запроса</typeparam>
-        </member>
-        <member name="M:Web.Infrastructure.Pipeline.Abstractions.IRequestHandler`2.Handle(`0)">
-            <summary>
-            Метод обработки запроса
-            </summary>
-            <param name="request">Запрос</param>
         </member>
         <member name="T:Web.Infrastructure.Pipeline.Implementations.LoggingHandlerDecorator`2">
             <summary>
             Декоратор логирования
             </summary>
         </member>
-        <member name="M:Web.Infrastructure.Pipeline.Implementations.LoggingHandlerDecorator`2.#ctor(Web.Infrastructure.Pipeline.Abstractions.IRequestHandler{`0,`1},Microsoft.Extensions.Logging.ILogger{`0})">
+        <member name="M:Web.Infrastructure.Pipeline.Implementations.LoggingHandlerDecorator`2.#ctor(Web.Infrastructure.Pipeline.Abstractions.IHandler{`0,`1},Microsoft.Extensions.Logging.ILogger{`0})">
             <inheritdoc />
         </member>
         <member name="M:Web.Infrastructure.Pipeline.Implementations.LoggingHandlerDecorator`2.Handle(`0)">
@@ -184,7 +246,7 @@
             </summary>
             <remarks>Вызывается после работы всех декораторов для принятия изменений в рамках одной транзакции</remarks>
         </member>
-        <member name="M:Web.Infrastructure.Pipeline.Implementations.SaveChangesHandlerDecorator`2.#ctor(Web.Infrastructure.Pipeline.Abstractions.IRequestHandler{`0,`1},Microsoft.EntityFrameworkCore.DbContext)">
+        <member name="M:Web.Infrastructure.Pipeline.Implementations.SaveChangesHandlerDecorator`2.#ctor(Web.Infrastructure.Pipeline.Abstractions.IHandler{`0,`1},Microsoft.EntityFrameworkCore.DbContext)">
             <inheritdoc />
         </member>
         <member name="M:Web.Infrastructure.Pipeline.Implementations.SaveChangesHandlerDecorator`2.Handle(`0)">
@@ -192,7 +254,7 @@
         </member>
         <member name="T:Web.Infrastructure.Results.Result">
             <summary>
-            Результат выполнения команды/запроса
+            Результат выполнения запроса
             </summary>
         </member>
         <member name="P:Web.Infrastructure.Results.Result.StatusCode">

@@ -12,7 +12,7 @@ namespace Web.Features.Authentication.Login
     /// <summary>
     /// Вход в систему
     /// </summary>
-    public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<Claim[], Fail>>
+    public class LoginCommandHandler : ICommandHandler<LoginCommand, Result<Claim[], Fail>>
     {
         private readonly DbContext _dbContext;
         private readonly IDataProtector _protector;

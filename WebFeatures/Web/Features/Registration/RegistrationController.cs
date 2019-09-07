@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Web.Features.Registration.RegisterUser;
 using Web.Infrastructure.Extensions;
 using Web.Infrastructure.Mediators;
-using Web.Infrastructure.Pipeline.Abstractions;
 using Web.Infrastructure.Results;
 using Web.Infrastructure.Validation.Attributes;
 
@@ -16,9 +15,9 @@ namespace Web.Features.Registration
     [AllowAnonymous]
     public class RegistrationController : Controller
     {
-        private readonly IRequestMediator _mediator;
+        private readonly IMediator _mediator;
 
-        public RegistrationController(IRequestMediator mediator)
+        public RegistrationController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -29,7 +28,7 @@ namespace Web.Features.Registration
         [HttpPost]
         public IActionResult RegisterUser([FromBody, Required] RegisterUserCommand command)
         {
-            var result = _mediator.Send<RegisterUserCommand, Result>(command);
+            var result = _mediator.SendCommand<RegisterUserCommand, Result>(command);
             return this.ResultResponse(result);
         }
     }

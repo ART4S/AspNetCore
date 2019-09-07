@@ -34,30 +34,35 @@ namespace Web.Startup.Configuration
         /// </summary>
         public static void AddRequestHandlers(this IServiceCollection services)
         {
-            services.AddScoped<IRequestMediator, RequestMediator>();
+            services.AddScoped<IMediator, Mediator>();
 
             services.Scan(scan =>
             {
                 scan.FromCallingAssembly()
-                    .AddClasses(x => x.AssignableTo(typeof(IRequestHandler<,>)))
+                    .AddClasses(x => x.AssignableTo(typeof(ICommandHandler<,>)))
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime();
+
+                scan.FromCallingAssembly()
+                    .AddClasses(x => x.AssignableTo(typeof(IQueryHandler<,>)))
                     .AsImplementedInterfaces()
                     .WithScopedLifetime();
             });
 
             services.Decorate(
-                typeof(IRequestHandler<,>),
+                typeof(ICommandHandler<,>),
                 typeof(SaveChangesHandlerDecorator<,>));
 
             services.Decorate(
-                typeof(IRequestHandler<,>),
+                typeof(ICommandHandler<,>),
                 typeof(LoggingHandlerDecorator<,>));
 
             services.Decorate(
-                typeof(IRequestHandler<,>),
+                typeof(ICommandHandler<,>),
                 typeof(ValidationHandlerDecorator<,>));
 
             services.Decorate(
-                typeof(IRequestHandler<,>),
+                typeof(ICommandHandler<,>),
                 typeof(PerformanceHandlerDecorator<,>));
         }
 

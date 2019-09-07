@@ -8,7 +8,7 @@ namespace Web.Features.Authentication.Login
     /// <summary>
     /// Команда входа в систему
     /// </summary>
-    public class LoginCommand : IRequest<Result<Claim[], Fail>>
+    public class LoginCommand : ICommand<Result<Claim[], Fail>>
     {
         /// <summary>
         /// Имя пользователя

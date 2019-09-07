@@ -6,22 +6,21 @@ namespace Web.Infrastructure.Pipeline.Implementations
     /// <summary>
     /// Декоратор логирования
     /// </summary>
-    class LoggingHandlerDecorator<TRequest, TResult> : HandlerDecoratorBase<TRequest, TResult>
-        where TRequest : IRequest<TResult>
+    class LoggingHandlerDecorator<TIn, TOut> : HandlerDecoratorBase<TIn, TOut>
     {
-        private readonly ILogger<TRequest> _logger;
+        private readonly ILogger<TIn> _logger;
 
         /// <inheritdoc />
-        public LoggingHandlerDecorator(IRequestHandler<TRequest, TResult> decorated, ILogger<TRequest> logger) : base(decorated)
+        public LoggingHandlerDecorator(IHandler<TIn, TOut> decorated, ILogger<TIn> logger) : base(decorated)
         {
             _logger = logger;
         }
 
         /// <inheritdoc />
-        public override TResult Handle(TRequest request)
+        public override TOut Handle(TIn input)
         {
-            var result = Decoratee.Handle(request);
-            _logger.LogInformation($"{Decoratee.GetType().Name} : {request.ToString()} => {result.ToString()}");
+            var result = Decoratee.Handle(input);
+            _logger.LogInformation($"{Decoratee.GetType().Name} : {input.ToString()} => {result.ToString()}");
             return result;
         }
     }

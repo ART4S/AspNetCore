@@ -19,9 +19,9 @@ namespace Web.Features.Authentication
     [Route("api/v1/[controller]")]
     public class AuthController : Controller
     {
-        private readonly IRequestMediator _mediator;
+        private readonly IMediator _mediator;
 
-        public AuthController(IRequestMediator mediator)
+        public AuthController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -33,7 +33,7 @@ namespace Web.Features.Authentication
         [AllowAnonymous]
         public IActionResult Login([FromBody, Required] LoginCommand command)
         {
-            var result = _mediator.Send<LoginCommand, Result<Claim[], Fail>>(command);
+            var result = _mediator.SendCommand<LoginCommand, Result<Claim[], Fail>>(command);
             if (!result.IsSuccess)
                 return this.ResultResponse(result);
 

@@ -6,7 +6,7 @@ namespace Web.Features.Registration.RegisterUser
     /// <summary>
     /// Команда регистрации пользователя
     /// </summary>
-    public class RegisterUserCommand : IRequest<Result>
+    public class RegisterUserCommand : ICommand<Result>
     {
         /// <summary>
         /// Имя пользователя

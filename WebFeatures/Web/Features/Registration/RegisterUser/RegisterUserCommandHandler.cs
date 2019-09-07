@@ -10,7 +10,7 @@ namespace Web.Features.Registration.RegisterUser
     /// <summary>
     /// Обработчик команды регистрации пользователя
     /// </summary>
-    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Result>
+    public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, Result>
     {
         private readonly IDataProtector _protector;
         private readonly DbContext _dbContext;
@@ -25,10 +25,10 @@ namespace Web.Features.Registration.RegisterUser
         }
 
         /// <inheritdoc />
-        public Result Handle(RegisterUserCommand request)
+        public Result Handle(RegisterUserCommand input)
         {
-            var user = _mapper.Map<User>(request);
-            user.PasswordHash = _protector.Protect(request.Password);
+            var user = _mapper.Map<User>(input);
+            user.PasswordHash = _protector.Protect(input.Password);
 
             _dbContext.Add(user);
 

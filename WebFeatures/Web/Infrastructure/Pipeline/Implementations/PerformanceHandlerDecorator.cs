@@ -4,26 +4,25 @@ using Web.Infrastructure.Pipeline.Abstractions;
 
 namespace Web.Infrastructure.Pipeline.Implementations
 {
-    class PerformanceHandlerDecorator<TRequest, TResult> : HandlerDecoratorBase<TRequest, TResult>
-        where TRequest : IRequest<TResult>
+    class PerformanceHandlerDecorator<TIn, TOut> : HandlerDecoratorBase<TIn, TOut>
     {
-        private readonly ILogger<TRequest> _logger;
+        private readonly ILogger<TIn> _logger;
         private readonly Stopwatch _timer = new Stopwatch();
 
-        public PerformanceHandlerDecorator(ILogger<TRequest> logger, IRequestHandler<TRequest, TResult> decoratee) : base(decoratee)
+        public PerformanceHandlerDecorator(ILogger<TIn> logger, IHandler<TIn, TOut> decoratee) : base(decoratee)
         {
             _logger = logger;
         }
 
-        public override TResult Handle(TRequest request)
+        public override TOut Handle(TIn input)
         {
             _timer.Start();
-            var result = Decoratee.Handle(request);
+            var result = Decoratee.Handle(input);
             _timer.Stop();
 
             if (_timer.ElapsedMilliseconds > 500)
             {
-                _logger.LogWarning($"Долгий запрос: {typeof(TRequest).Name} = {_timer.ElapsedMilliseconds} milliseconds");
+                _logger.LogWarning($"Долгий запрос: {typeof(TIn).Name} = {_timer.ElapsedMilliseconds} milliseconds");
             }
 
             return result;

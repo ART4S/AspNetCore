@@ -5,26 +5,25 @@ using Web.Infrastructure.Results;
 
 namespace Web.Infrastructure.Pipeline.Implementations
 {
-    class ValidationHandlerDecorator<TRequest, TResponse> : HandlerDecoratorBase<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+    class ValidationHandlerDecorator<TIn, TOut> : HandlerDecoratorBase<TIn, TOut>
     {
-        private readonly IValidator<TRequest> _validator;
+        private readonly IValidator<TIn> _validator;
 
-        public ValidationHandlerDecorator(IRequestHandler<TRequest, TResponse> decoratee, IValidator<TRequest> validator) : base(decoratee)
+        public ValidationHandlerDecorator(IHandler<TIn, TOut> decoratee, IValidator<TIn> validator) : base(decoratee)
         {
             _validator = validator;
         }
 
-        public override TResponse Handle(TRequest request)
+        public override TOut Handle(TIn input)
         {
-            var result = _validator.Validate(request);
+            var result = _validator.Validate(input);
             if (!result.IsValid)
             {
                 var failureResult = Result.Fail(result.Errors);
                 throw new ResultException(failureResult);
             }
 
-            return Decoratee.Handle(request);
+            return Decoratee.Handle(input);
         }
     }
 }

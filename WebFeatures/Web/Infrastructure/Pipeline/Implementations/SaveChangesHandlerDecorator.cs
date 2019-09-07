@@ -7,21 +7,20 @@ namespace Web.Infrastructure.Pipeline.Implementations
     /// Сохраняет изменения контекста
     /// </summary>
     /// <remarks>Вызывается после работы всех декораторов для принятия изменений в рамках одной транзакции</remarks>
-    class SaveChangesHandlerDecorator<TRequest, TResult> : HandlerDecoratorBase<TRequest, TResult> 
-        where TRequest : IRequest<TResult>
+    class SaveChangesHandlerDecorator<TIn, TOut> : HandlerDecoratorBase<TIn, TOut>
     {
         private readonly DbContext _dbContext;
 
         /// <inheritdoc />
-        public SaveChangesHandlerDecorator(IRequestHandler<TRequest, TResult> decorated, DbContext dbContext) : base(decorated)
+        public SaveChangesHandlerDecorator(IHandler<TIn, TOut> decorated, DbContext dbContext) : base(decorated)
         {
             _dbContext = dbContext;
         }
 
         /// <inheritdoc />
-        public override TResult Handle(TRequest request)
+        public override TOut Handle(TIn input)
         {
-            var result = Decoratee.Handle(request);
+            var result = Decoratee.Handle(input);
             _dbContext.SaveChanges();
             return result;
         }

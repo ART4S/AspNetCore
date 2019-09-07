@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataContext.Sql", "DataContext.Sql\DataContext.Sql.csproj", "{36B5B6AA-472F-4961-88EF-BB188CA21225}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbUpdater", "DbUpdater\DbUpdater.csproj", "{9CF55235-0F28-486E-8C2B-86463A6F9C53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbUpdater", "DbUpdater\DbUpdater.csproj", "{9CF55235-0F28-486E-8C2B-86463A6F9C53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataContext", "DataContext\DataContext.csproj", "{97AC2B1A-244E-4D2A-B535-BDB924A3A5AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9CF55235-0F28-486E-8C2B-86463A6F9C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CF55235-0F28-486E-8C2B-86463A6F9C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CF55235-0F28-486E-8C2B-86463A6F9C53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97AC2B1A-244E-4D2A-B535-BDB924A3A5AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97AC2B1A-244E-4D2A-B535-BDB924A3A5AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97AC2B1A-244E-4D2A-B535-BDB924A3A5AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97AC2B1A-244E-4D2A-B535-BDB924A3A5AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

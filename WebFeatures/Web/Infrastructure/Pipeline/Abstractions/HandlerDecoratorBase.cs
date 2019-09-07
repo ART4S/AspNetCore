@@ -1,23 +1,22 @@
 ﻿namespace Web.Infrastructure.Pipeline.Abstractions
 {
     /// <summary>
-    /// Декоратор обработчика запросов
+    /// Декоратор для обработчика
     /// </summary>
-    abstract class HandlerDecoratorBase<TRequest, TResult> : IRequestHandler<TRequest, TResult>
-        where TRequest : IRequest<TResult>
+    abstract class HandlerDecoratorBase<TIn, TOut> : IHandler<TIn, TOut>
     {
         /// <summary>
         /// Декорируемый обработчик
         /// </summary>
-        protected readonly IRequestHandler<TRequest, TResult> Decoratee;
+        protected readonly IHandler<TIn, TOut> Decoratee;
 
         /// <inheritdoc />
-        protected HandlerDecoratorBase(IRequestHandler<TRequest, TResult> decoratee)
+        protected HandlerDecoratorBase(IHandler<TIn, TOut> decoratee)
         {
             Decoratee = decoratee;
         }
 
         /// <inheritdoc />
-        public abstract TResult Handle(TRequest request);
+        public abstract TOut Handle(TIn input);
     }
 }
