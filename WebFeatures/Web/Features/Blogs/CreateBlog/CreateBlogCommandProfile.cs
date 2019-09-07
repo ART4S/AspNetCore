@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Entities.Model;
-using Web.Features.Blogs.CreateBlog;
 
-namespace Web.Features.Blogs
+namespace Web.Features.Blogs.CreateBlog
 {
     /// <summary>
     /// <inheritdoc />

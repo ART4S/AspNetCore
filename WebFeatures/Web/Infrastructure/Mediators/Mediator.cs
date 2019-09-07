@@ -17,12 +17,12 @@ namespace Web.Infrastructure.Mediators
         {
             Type typeDefinition = null;
 
-            if (typeof(TIn).GetInterfaces().SingleOrDefault()?.GetGenericTypeDefinition() == typeof(ICommand<>))
+            if (typeof(TIn).GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICommand<>)))
             {
                 typeDefinition = typeof(ICommandHandler<,>);
             }
 
-            if (typeof(TIn).GetInterfaces().SingleOrDefault()?.GetGenericTypeDefinition() == typeof(IQuery<>))
+            if (typeof(TIn).GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IQuery<>)))
             {
                 typeDefinition = typeof(IQueryHandler<,>);
             }

@@ -103,22 +103,22 @@
             <inheritdoc />
             </summary>
         </member>
+        <member name="T:Web.Features.Blogs.CreateBlog.CreateBlogCommandProfile">
+            <summary>
+            <inheritdoc />
+            </summary>
+        </member>
+        <member name="M:Web.Features.Blogs.CreateBlog.CreateBlogCommandProfile.#ctor">
+            <summary>
+            <inheritdoc />
+            </summary>
+        </member>
         <member name="T:Web.Features.Blogs.CreateBlog.CreateBlogCommandValidator">
             <summary>
             Валидация команды на создание блога
             </summary>
         </member>
         <member name="M:Web.Features.Blogs.CreateBlog.CreateBlogCommandValidator.#ctor(DataContext.IAppContext)">
-            <summary>
-            <inheritdoc />
-            </summary>
-        </member>
-        <member name="T:Web.Features.Blogs.CreateBlogCommandProfile">
-            <summary>
-            <inheritdoc />
-            </summary>
-        </member>
-        <member name="M:Web.Features.Blogs.CreateBlogCommandProfile.#ctor">
             <summary>
             <inheritdoc />
             </summary>
