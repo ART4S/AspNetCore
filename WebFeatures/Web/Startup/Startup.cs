@@ -77,14 +77,13 @@ namespace Web.Startup
                 errorApp.Run(context =>
                 {
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    context.Response.ContentType = "text/plain";
+                    context.Response.Headers["Content-Type"] = new[] {"text/plain", "application/json"};
 
                     var feature = context.Features.Get<IExceptionHandlerPathFeature>();
 
                     if (feature?.Error is ResultException resultEx)
                     {
                         context.Response.StatusCode = resultEx.Result.StatusCode;
-                        context.Response.ContentType = "application/json";
 
                         var json = JsonConvert.SerializeObject(resultEx.Result);
                         context.Response.WriteAsync(json);

@@ -39,7 +39,7 @@
             Вход в систему
             </summary>
         </member>
-        <member name="M:Web.Features.Authentication.Login.LoginCommandHandler.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,Microsoft.EntityFrameworkCore.DbContext)">
+        <member name="M:Web.Features.Authentication.Login.LoginCommandHandler.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,DataContext.IAppContext)">
             <inheritdoc />
         </member>
         <member name="M:Web.Features.Authentication.Login.LoginCommandHandler.Handle(Web.Features.Authentication.Login.LoginCommand)">
@@ -83,7 +83,7 @@
             Обработчик команды регистрации пользователя
             </summary>
         </member>
-        <member name="M:Web.Features.Registration.RegisterUser.RegisterUserCommandHandler.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,Microsoft.EntityFrameworkCore.DbContext,AutoMapper.IMapper)">
+        <member name="M:Web.Features.Registration.RegisterUser.RegisterUserCommandHandler.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,DataContext.IAppContext,AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:Web.Features.Registration.RegisterUser.RegisterUserCommandHandler.Handle(Web.Features.Registration.RegisterUser.RegisterUserCommand)">
@@ -104,7 +104,7 @@
             Валидация регистрации пользователя
             </summary>
         </member>
-        <member name="M:Web.Features.Registration.RegisterUser.RegisterUserCommandValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+        <member name="M:Web.Features.Registration.RegisterUser.RegisterUserCommandValidator.#ctor(DataContext.IAppContext)">
             <summary>
             <inheritdoc />
             </summary>
@@ -251,7 +251,7 @@
             </summary>
             <remarks>Вызывается после работы всех декораторов для принятия изменений в рамках одной транзакции</remarks>
         </member>
-        <member name="M:Web.Infrastructure.Pipeline.Implementations.SaveChangesHandlerDecorator`2.#ctor(Web.Infrastructure.Pipeline.Abstractions.IHandler{`0,`1},Microsoft.EntityFrameworkCore.DbContext)">
+        <member name="M:Web.Infrastructure.Pipeline.Implementations.SaveChangesHandlerDecorator`2.#ctor(Web.Infrastructure.Pipeline.Abstractions.IHandler{`0,`1},DataContext.IAppContext)">
             <inheritdoc />
         </member>
         <member name="M:Web.Infrastructure.Pipeline.Implementations.SaveChangesHandlerDecorator`2.Handle(`0)">

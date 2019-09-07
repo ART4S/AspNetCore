@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataContext;
 using Web.Infrastructure.Pipeline.Abstractions;
 
 namespace Web.Infrastructure.Pipeline.Implementations
@@ -9,19 +9,19 @@ namespace Web.Infrastructure.Pipeline.Implementations
     /// <remarks>Вызывается после работы всех декораторов для принятия изменений в рамках одной транзакции</remarks>
     class SaveChangesHandlerDecorator<TIn, TOut> : HandlerDecoratorBase<TIn, TOut>
     {
-        private readonly DbContext _dbContext;
+        private readonly IAppContext _context;
 
         /// <inheritdoc />
-        public SaveChangesHandlerDecorator(IHandler<TIn, TOut> decorated, DbContext dbContext) : base(decorated)
+        public SaveChangesHandlerDecorator(IHandler<TIn, TOut> decorated, IAppContext context) : base(decorated)
         {
-            _dbContext = dbContext;
+            _context = context;
         }
 
         /// <inheritdoc />
         public override TOut Handle(TIn input)
         {
             var result = Decoratee.Handle(input);
-            _dbContext.SaveChanges();
+            _context.SaveChanges();
             return result;
         }
     }

@@ -1,6 +1,6 @@
-﻿using Entities.Model;
+﻿using DataContext;
+using Entities.Model;
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Web.Features.Registration.RegisterUser
@@ -13,20 +13,20 @@ namespace Web.Features.Registration.RegisterUser
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        public RegisterUserCommandValidator(DbContext dbContext)
+        public RegisterUserCommandValidator(IAppContext context)
         {
             RuleFor(x => x.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .MinimumLength(3).WithMessage("Имя должно состоять минимум из 3-х символов")
                 .MaximumLength(15).WithMessage("Имя должно состоять максимум из 15-и символов")
                 .Matches(@"^[A-Za-z0-9#?!@$%^&*-]+$").WithMessage("Имя может содержать буквы, цифры и следующие символы:'#?!@$%^&*-'")
-                .Must(n => dbContext.Set<User>().All(y => n != y.Name))
+                .Must(n => context.Set<User>().All(y => n != y.Name))
                     .WithMessage("Пользователь с данным именем уже зарегестрирован");
 
             RuleFor(x => x.Email)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .EmailAddress().WithMessage("Некорректный e-mail")
-                .Must(e => dbContext.Set<User>().All(x => x.Email != e))
+                .Must(e => context.Set<User>().All(x => x.Email != e))
                     .WithMessage("Пользователь с данным e-mail уже зарегистрирован");
 
 
