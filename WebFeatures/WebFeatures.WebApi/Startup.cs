@@ -60,7 +60,7 @@ namespace WebFeatures.WebApi
         /// <summary>
         /// Настройка приложения
         /// </summary>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 

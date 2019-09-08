@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using WebFeatures.Application.Infrastructure.Failures;
 using WebFeatures.Application.Infrastructure.Results;
+using WebFeatures.Application.Infrastructure.Validation;
 using WebFeatures.Application.Interfaces;
 using WebFeatures.Application.Pipeline.Abstractions;
 
@@ -23,11 +24,15 @@ namespace WebFeatures.Application.Features.Authentication.Login
         {
             var user = _context.Users.FirstOrDefault(x => x.Name == input.Name);
             if (user == null)
-                return Fail();
+            {
+                return Result<Claim[], Fail>.Fail(ValidationErrorMessages.InvalidLoginOrPassword);
+            }
 
             var pass = _protector.Unprotect(user.PasswordHash);
             if (pass != input.Password)
-                return Fail();
+            {
+                return Result<Claim[], Fail>.Fail(ValidationErrorMessages.InvalidLoginOrPassword);
+            }
 
             var claims = new[]
             {
@@ -35,11 +40,6 @@ namespace WebFeatures.Application.Features.Authentication.Login
             };
 
             return Result<Claim[], Fail>.Success(claims);
-        }
-
-        private Result<Claim[], Fail> Fail()
-        {
-            return Result<Claim[], Fail>.Fail("Неверный логин или пароль");
         }
     }
 }
