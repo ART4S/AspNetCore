@@ -9,7 +9,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using WebFeatures.WebApi.Configuration;
-using WebFeatures.WebApi.Filters;
 using WebFeatures.WebApi.Middlewares;
 
 namespace WebFeatures.WebApi
