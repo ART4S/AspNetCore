@@ -1,8 +1,9 @@
 ﻿using DataContext;
-using Entities.Model;
 using FluentValidation;
 using System.Linq;
 using Web.Infrastructure.Validation;
+using WebFeatures.DataContext;
+using WebFeatures.Entities.Model;
 
 namespace Web.Features.Blogs.CreateBlog
 {

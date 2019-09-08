@@ -1,8 +1,8 @@
-﻿using Entities.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using WebFeatures.Entities.Model;
 
-namespace DataContext.Configurations
+namespace WebFeatures.DataContext.Configurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {

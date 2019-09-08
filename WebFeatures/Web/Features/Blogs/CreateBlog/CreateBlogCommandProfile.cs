@@ -1,16 +1,11 @@
 ﻿using AutoMapper;
-using Entities.Model;
+using Web.Features.Blogs.CreateBlog;
+using WebFeatures.Entities.Model;
 
-namespace Web.Features.Blogs.CreateBlog
+namespace WebFeatures.WebApi.Features.Blogs.CreateBlog
 {
-    /// <summary>
-    /// <inheritdoc />
-    /// </summary>
     public class CreateBlogCommandProfile : Profile
     {
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
         public CreateBlogCommandProfile()
         {
             CreateMap<CreateBlogCommand, Blog>(MemberList.Source);

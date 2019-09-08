@@ -1,11 +1,11 @@
-﻿using DataContext;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Linq;
+using WebFeatures.DataContext;
 
-namespace DbUpdater.Core
+namespace WebFeatures.DbUpdater.Core
 {
     /// <summary>
     /// Обновление БД

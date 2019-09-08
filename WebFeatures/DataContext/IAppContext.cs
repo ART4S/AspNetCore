@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace DataContext
+namespace WebFeatures.DataContext
 {
     /// <summary>
     /// Контекст доступа к данным

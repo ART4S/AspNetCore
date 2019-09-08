@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
-using DataContext;
-using Entities.Model;
 using Microsoft.AspNetCore.DataProtection;
+using Web.Features.Registration.RegisterUser;
 using Web.Infrastructure.Pipeline.Abstractions;
 using Web.Infrastructure.Results;
+using WebFeatures.DataContext;
+using WebFeatures.Entities.Model;
 
-namespace Web.Features.Registration.RegisterUser
+namespace WebFeatures.WebApi.Features.Registration.RegisterUser
 {
     /// <summary>
     /// Обработчик команды регистрации пользователя

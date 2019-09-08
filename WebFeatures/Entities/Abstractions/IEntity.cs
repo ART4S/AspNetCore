@@ -1,4 +1,4 @@
-﻿namespace Entities.Abstractions
+﻿namespace WebFeatures.Entities.Abstractions
 {
     /// <summary>
     /// Сущность

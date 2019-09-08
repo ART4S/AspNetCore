@@ -1,7 +1,7 @@
-﻿using Entities.Abstractions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using WebFeatures.Entities.Abstractions;
 
-namespace Entities.Model
+namespace WebFeatures.Entities.Model
 {
     /// <summary>
     /// Блог

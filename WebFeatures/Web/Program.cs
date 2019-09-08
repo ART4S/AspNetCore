@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Web
+namespace WebFeatures.WebApi
 {
     /// <summary>
     /// Стартовый класс приложения
@@ -22,6 +22,6 @@ namespace Web
         /// </summary>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) 
             => WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup.Startup>();
+                .UseStartup<Startup>();
     }
 }

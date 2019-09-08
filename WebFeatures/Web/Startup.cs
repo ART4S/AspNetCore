@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using System;
+using System.IO;
+using System.Net;
+using System.Reflection;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -8,15 +13,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Threading.Tasks;
 using Web.Infrastructure.Exceptions;
-using Web.Startup.Configuration;
+using WebFeatures.WebApi.Configuration;
 
-namespace Web.Startup
+namespace WebFeatures.WebApi
 {
     /// <summary>
     /// Конфигуратор приложения

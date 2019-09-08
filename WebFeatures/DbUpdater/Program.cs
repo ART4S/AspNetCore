@@ -1,13 +1,13 @@
-﻿using DataContext.Sql;
-using DbUpdater.Core;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
-using DataContext;
+using WebFeatures.DataContext;
+using WebFeatures.DataContext.Sql;
+using WebFeatures.DbUpdater.Core;
 
-namespace DbUpdater
+namespace WebFeatures.DbUpdater
 {
     class Program
     {

@@ -1,5 +1,6 @@
 ﻿using DataContext;
 using Web.Infrastructure.Pipeline.Abstractions;
+using WebFeatures.DataContext;
 
 namespace Web.Infrastructure.Pipeline.Implementations
 {

@@ -1,11 +1,12 @@
 ﻿using DataContext;
-using Entities.Model;
 using Microsoft.AspNetCore.DataProtection;
 using System.Linq;
 using System.Security.Claims;
 using Web.Infrastructure.Failures;
 using Web.Infrastructure.Pipeline.Abstractions;
 using Web.Infrastructure.Results;
+using WebFeatures.DataContext;
+using WebFeatures.Entities.Model;
 
 namespace Web.Features.Authentication.Login
 {

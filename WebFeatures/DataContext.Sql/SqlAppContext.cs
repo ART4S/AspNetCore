@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace DataContext.Sql
+namespace WebFeatures.DataContext.Sql
 {
     public class SqlAppContext : AppContext
     {

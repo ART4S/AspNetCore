@@ -1,7 +1,8 @@
 ﻿using DataContext;
-using Entities.Model;
 using FluentValidation;
 using System.Linq;
+using WebFeatures.DataContext;
+using WebFeatures.Entities.Model;
 
 namespace Web.Features.Registration.RegisterUser
 {

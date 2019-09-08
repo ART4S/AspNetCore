@@ -3,15 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{EC9E7145-C439-4D7E-BBFB-4FE285F26F95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebFeatures.WebApi", "Web\WebFeatures.WebApi.csproj", "{EC9E7145-C439-4D7E-BBFB-4FE285F26F95}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{43BBDE33-6887-49F1-8145-8FC022BBECA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebFeatures.Entities", "Entities\WebFeatures.Entities.csproj", "{43BBDE33-6887-49F1-8145-8FC022BBECA4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataContext.Sql", "DataContext.Sql\DataContext.Sql.csproj", "{36B5B6AA-472F-4961-88EF-BB188CA21225}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebFeatures.DataContext.Sql", "DataContext.Sql\WebFeatures.DataContext.Sql.csproj", "{36B5B6AA-472F-4961-88EF-BB188CA21225}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbUpdater", "DbUpdater\DbUpdater.csproj", "{9CF55235-0F28-486E-8C2B-86463A6F9C53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebFeatures.DbUpdater", "DbUpdater\WebFeatures.DbUpdater.csproj", "{9CF55235-0F28-486E-8C2B-86463A6F9C53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataContext", "DataContext\DataContext.csproj", "{97AC2B1A-244E-4D2A-B535-BDB924A3A5AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebFeatures.DataContext", "DataContext\WebFeatures.DataContext.csproj", "{97AC2B1A-244E-4D2A-B535-BDB924A3A5AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{F2D402CF-5F67-4CE0-BA35-EA30138A7981}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{15638826-481F-4118-A12E-44E21994C5A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebFeatures.Common", "WebFeatures.Common\WebFeatures.Common.csproj", "{651517EE-32B2-4227-9D99-5DDA43FAD0DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +45,20 @@ Global
 		{97AC2B1A-244E-4D2A-B535-BDB924A3A5AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97AC2B1A-244E-4D2A-B535-BDB924A3A5AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97AC2B1A-244E-4D2A-B535-BDB924A3A5AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{651517EE-32B2-4227-9D99-5DDA43FAD0DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{651517EE-32B2-4227-9D99-5DDA43FAD0DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{651517EE-32B2-4227-9D99-5DDA43FAD0DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{651517EE-32B2-4227-9D99-5DDA43FAD0DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{43BBDE33-6887-49F1-8145-8FC022BBECA4} = {F2D402CF-5F67-4CE0-BA35-EA30138A7981}
+		{36B5B6AA-472F-4961-88EF-BB188CA21225} = {F2D402CF-5F67-4CE0-BA35-EA30138A7981}
+		{9CF55235-0F28-486E-8C2B-86463A6F9C53} = {F2D402CF-5F67-4CE0-BA35-EA30138A7981}
+		{97AC2B1A-244E-4D2A-B535-BDB924A3A5AD} = {F2D402CF-5F67-4CE0-BA35-EA30138A7981}
+		{651517EE-32B2-4227-9D99-5DDA43FAD0DC} = {15638826-481F-4118-A12E-44E21994C5A6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E16CD488-F71F-4021-9317-32C3EAD750F6}

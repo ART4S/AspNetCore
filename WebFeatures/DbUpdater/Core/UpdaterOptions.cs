@@ -1,4 +1,4 @@
-﻿namespace DbUpdater.Core
+﻿namespace WebFeatures.DbUpdater.Core
 {
     /// <summary>
     /// Параметры обновления БД

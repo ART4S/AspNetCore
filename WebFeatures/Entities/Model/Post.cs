@@ -1,6 +1,6 @@
-﻿using Entities.Abstractions;
+﻿using WebFeatures.Entities.Abstractions;
 
-namespace Entities.Model
+namespace WebFeatures.Entities.Model
 {
     /// <summary>
     /// Пост

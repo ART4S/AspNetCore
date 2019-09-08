@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using WebFeatures.DataContext.Sql;
 
 namespace DataContext.Sql.Migrations
 {
     [DbContext(typeof(SqlAppContext))]
-    [Migration("20190907180804_Initial")]
+    [Migration("20190907184347_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,8 +30,12 @@ namespace DataContext.Sql.Migrations
 
                     b.Property<int>("AuthorId");
 
+                    b.Property<DateTime>("CreatedAt");
+
                     b.Property<string>("Title")
                         .IsRequired();
+
+                    b.Property<DateTime?>("UpdatedAt");
 
                     b.Property<string>("Url")
                         .IsRequired();
@@ -55,8 +60,12 @@ namespace DataContext.Sql.Migrations
                     b.Property<string>("Content")
                         .IsRequired();
 
+                    b.Property<DateTime>("CreatedAt");
+
                     b.Property<string>("Title")
                         .IsRequired();
+
+                    b.Property<DateTime?>("UpdatedAt");
 
                     b.HasKey("Id");
 
@@ -73,6 +82,8 @@ namespace DataContext.Sql.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreatedAt");
+
                     b.Property<string>("Email")
                         .IsRequired();
 
@@ -81,6 +92,8 @@ namespace DataContext.Sql.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired();
+
+                    b.Property<DateTime?>("UpdatedAt");
 
                     b.HasKey("Id");
 

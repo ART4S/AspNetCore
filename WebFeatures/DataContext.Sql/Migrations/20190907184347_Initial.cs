@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataContext.Sql.Migrations
@@ -13,6 +14,8 @@ namespace DataContext.Sql.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: false)
@@ -28,6 +31,8 @@ namespace DataContext.Sql.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: true),
                     AuthorId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: false),
                     Url = table.Column<string>(nullable: false)
@@ -49,6 +54,8 @@ namespace DataContext.Sql.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: true),
                     BlogId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: false),
                     Content = table.Column<string>(nullable: false),

@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using DataContext;
-using DataContext.Sql;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
@@ -10,8 +9,10 @@ using System.Reflection;
 using Web.Infrastructure.Mediators;
 using Web.Infrastructure.Pipeline.Abstractions;
 using Web.Infrastructure.Pipeline.Implementations;
+using WebFeatures.DataContext;
+using WebFeatures.DataContext.Sql;
 
-namespace Web.Startup.Configuration
+namespace WebFeatures.WebApi.Configuration
 {
     /// <summary>
     /// Расширения для конфигурации сервисов приложения
@@ -23,9 +24,10 @@ namespace Web.Startup.Configuration
         /// </summary>
         public static void AddAppContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<IAppContext, SqlAppContext>(opt =>
+            services.AddDbContext<IAppContext, SqlAppContext>(options =>
             {
-                opt.UseSqlServer(configuration.GetConnectionString(nameof(SqlAppContext)));
+                options.UseSqlServer(configuration.GetConnectionString(nameof(SqlAppContext)))
+                    .ConfigureWarnings(warnings => warnings.Log(RelationalEventId.QueryClientEvaluationWarning));
             });
         }
 
