@@ -10,6 +10,7 @@ using System.IO;
 using System.Reflection;
 using WebFeatures.WebApi.Configuration;
 using WebFeatures.WebApi.Filters;
+using WebFeatures.WebApi.Middlewares;
 
 namespace WebFeatures.WebApi
 {
@@ -40,10 +41,7 @@ namespace WebFeatures.WebApi
             services.AddAutomapper();
             services.AddDataProtection();
 
-            services.AddMvc(opt =>
-            {
-                opt.Filters.Add<HandleExceptionAttribute>();
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
@@ -65,10 +63,7 @@ namespace WebFeatures.WebApi
         /// </summary>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
