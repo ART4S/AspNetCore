@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\GitHub\WebFeatures\Web\Web.xml</DocumentationFile>
+    <DocumentationFile>D:\GitHub\WebFeatures\WebFeatures.WebApi\WebFeatures.WebApi.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
