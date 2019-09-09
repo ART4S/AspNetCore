@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using WebFeatures.Application.Infrastructure.Validation;
 
-namespace WebFeatures.Application.Infrastructure.Validation.Attributes
+namespace WebFeatures.WebApi.Attributes
 {
     /// <summary>
     /// Атрибут для проверки на null значение

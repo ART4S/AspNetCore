@@ -9,6 +9,7 @@ using System.Linq;
 using WebFeatures.Application.Interfaces;
 using WebFeatures.Application.Pipeline.Abstractions;
 using WebFeatures.Application.Pipeline.Implementations;
+using WebFeatures.Application.Pipeline.Mediators;
 using WebFeatures.Common.Extensions;
 using WebFeatures.DataContext.Sql;
 

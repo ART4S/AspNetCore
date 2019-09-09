@@ -4,17 +4,17 @@
         <name>WebFeatures.WebApi</name>
     </assembly>
     <members>
-        <member name="T:WebFeatures.Application.Infrastructure.Validation.Attributes.RequiredAttribute">
+        <member name="T:WebFeatures.WebApi.Attributes.RequiredAttribute">
             <summary>
             Атрибут для проверки на null значение
             </summary>
         </member>
-        <member name="M:WebFeatures.Application.Infrastructure.Validation.Attributes.RequiredAttribute.#ctor(System.Boolean)">
+        <member name="M:WebFeatures.WebApi.Attributes.RequiredAttribute.#ctor(System.Boolean)">
             <summary>
             <inheritdoc />
             </summary>
         </member>
-        <member name="M:WebFeatures.Application.Infrastructure.Validation.Attributes.RequiredAttribute.IsValid(System.Object)">
+        <member name="M:WebFeatures.WebApi.Attributes.RequiredAttribute.IsValid(System.Object)">
             <summary>
             <inheritdoc />
             </summary>
@@ -95,14 +95,9 @@
             Зарегистрировать нового пользователя
             </summary>
         </member>
-        <member name="T:WebFeatures.WebApi.Filters.HandleExceptionAttribute">
+        <member name="T:WebFeatures.WebApi.Middlewares.ExceptionHandlerMiddleware">
             <summary>
-            Обработчик исключений
-            </summary>
-        </member>
-        <member name="M:WebFeatures.WebApi.Filters.HandleExceptionAttribute.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
-            <summary>
-            <inheritdoc />
+            Обработчик ошибок сервера
             </summary>
         </member>
         <member name="T:WebFeatures.WebApi.Program">
@@ -139,7 +134,7 @@
             Настройка сервисов приложения
             </summary>
         </member>
-        <member name="M:WebFeatures.WebApi.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+        <member name="M:WebFeatures.WebApi.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>
             Настройка приложения
             </summary>

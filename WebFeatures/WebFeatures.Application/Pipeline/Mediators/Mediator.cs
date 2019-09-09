@@ -2,7 +2,7 @@
 using System.Linq;
 using WebFeatures.Application.Pipeline.Abstractions;
 
-namespace WebFeatures.Application.Pipeline.Implementations
+namespace WebFeatures.Application.Pipeline.Mediators
 {
     public class Mediator : IMediator
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebFeatures.Application.Features.Blogs.CreateBlog;
 using WebFeatures.Application.Infrastructure.Results;
-using WebFeatures.Application.Infrastructure.Validation.Attributes;
+using WebFeatures.WebApi.Attributes;
 using WebFeatures.WebApi.Controllers.Base;
 
 namespace WebFeatures.WebApi.Controllers

@@ -7,7 +7,7 @@ using System.Security.Claims;
 using WebFeatures.Application.Features.Authentication.Login;
 using WebFeatures.Application.Infrastructure.Failures;
 using WebFeatures.Application.Infrastructure.Results;
-using WebFeatures.Application.Infrastructure.Validation.Attributes;
+using WebFeatures.WebApi.Attributes;
 using WebFeatures.WebApi.Controllers.Base;
 
 namespace WebFeatures.WebApi.Controllers
