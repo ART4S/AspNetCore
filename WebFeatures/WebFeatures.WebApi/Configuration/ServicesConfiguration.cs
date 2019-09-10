@@ -11,6 +11,7 @@ using WebFeatures.Application.Pipeline.Abstractions;
 using WebFeatures.Application.Pipeline.Implementations;
 using WebFeatures.Application.Pipeline.Mediators;
 using WebFeatures.Common.Extensions;
+using WebFeatures.Common.Time;
 using WebFeatures.DataContext.Sql;
 
 namespace WebFeatures.WebApi.Configuration
@@ -41,14 +42,14 @@ namespace WebFeatures.WebApi.Configuration
 
             services.Scan(scan =>
             {
-                var assembly = AppDomain.CurrentDomain.GetAssembly("WebFeatures.Application");
+                var assemblyToScan = AppDomain.CurrentDomain.GetAssembly("WebFeatures.Application");
 
-                scan.FromAssemblies(assembly)
+                scan.FromAssemblies(assemblyToScan)
                     .AddClasses(x => x.AssignableTo(typeof(ICommandHandler<,>)))
                     .AsImplementedInterfaces()
                     .WithScopedLifetime();
 
-                scan.FromAssemblies(assembly)
+                scan.FromAssemblies(assemblyToScan)
                     .AddClasses(x => x.AssignableTo(typeof(IQueryHandler<,>)))
                     .AsImplementedInterfaces()
                     .WithScopedLifetime();
@@ -129,6 +130,14 @@ namespace WebFeatures.WebApi.Configuration
 
                 return config.CreateMapper();
             });
+        }
+
+        /// <summary>
+        /// Добавить инфраструктурные сервисы приложения
+        /// </summary>
+        public static void AddInfrastructure(this IServiceCollection services)
+        {
+            services.AddSingleton<IServerTime, ServerTime>();
         }
     }
 }

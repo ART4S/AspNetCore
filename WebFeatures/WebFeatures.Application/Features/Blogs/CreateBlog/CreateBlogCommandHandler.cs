@@ -20,7 +20,7 @@ namespace WebFeatures.Application.Features.Blogs.CreateBlog
         public Result Handle(CreateBlogCommand input)
         {
             var blog = _mapper.Map<Blog>(input);
-            _context.Blogs.Add(blog);
+            _context.Set<Blog>().Add(blog);
 
             return Result.Success();
         }

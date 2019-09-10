@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using WebFeatures.Domian.Entities.Abstractions;
+using WebFeatures.Domian.ValueObjects;
 
 namespace WebFeatures.Domian.Entities.Model
 {
@@ -11,8 +12,10 @@ namespace WebFeatures.Domian.Entities.Model
         }
 
         public string Name { get; set; }
-        public string Email { get; set; }
+
         public string PasswordHash { get; set; }
+
+        public virtual ContactDetails ContactDetails { get; set; }
 
         public virtual ICollection<Blog> Blogs { get; private set; }
     }

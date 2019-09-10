@@ -44,6 +44,11 @@
             Добавить профили Automapper
             </summary>
         </member>
+        <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddInfrastructure(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Добавить инфраструктурные сервисы приложения
+            </summary>
+        </member>
         <member name="T:WebFeatures.WebApi.Controllers.AuthController">
             <summary>
             Контроллер для работы с аутентификацией

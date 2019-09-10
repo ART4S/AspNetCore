@@ -14,10 +14,10 @@ namespace WebFeatures.DbUpdater
     {
         public static void Main()
         {
-            var provider = BuildServices();
-            var updater = provider.GetService<Updater>();
+            var services = BuildServices();
+            var updater = services.GetService<Updater>();
 
-            updater.UpdateDb();
+            updater.Run();
         }
 
         private static ServiceProvider BuildServices()
@@ -28,7 +28,7 @@ namespace WebFeatures.DbUpdater
             services.AddLogging(x => x.AddConsole());
 
             services.AddSingleton(configuration);
-            services.AddSingleton<ITimeProvider, TimeProvider>();
+            services.AddSingleton<IServerTime, ServerTime>();
 
             services.AddDbContext<IAppContext, SqlAppContext>(opt =>
                 opt.UseSqlServer(configuration.GetConnectionString("Sql")));

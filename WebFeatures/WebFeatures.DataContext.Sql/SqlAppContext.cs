@@ -5,7 +5,7 @@ namespace WebFeatures.DataContext.Sql
 {
     public class SqlAppContext : AppContext
     {
-        public SqlAppContext(DbContextOptions<SqlAppContext> options, ITimeProvider timeProvider) : base(options, timeProvider)
+        public SqlAppContext(DbContextOptions<SqlAppContext> options, IServerTime serverTime) : base(options, serverTime)
         {
 
         }

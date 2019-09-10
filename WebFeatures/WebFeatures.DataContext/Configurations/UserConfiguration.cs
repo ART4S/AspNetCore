@@ -10,7 +10,7 @@ namespace WebFeatures.DataContext.Configurations
         {
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.PasswordHash).IsRequired();
-            builder.Property(x => x.Email).IsRequired();
+            builder.OwnsOne(x => x.ContactDetails).Property(x => x.Email).IsRequired();
         }
     }
 }

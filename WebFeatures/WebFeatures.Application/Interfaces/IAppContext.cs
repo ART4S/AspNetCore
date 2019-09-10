@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Interfaces
 {
@@ -8,11 +7,7 @@ namespace WebFeatures.Application.Interfaces
     {
         DatabaseFacade Database { get; }
 
-        DbSet<User> Users { get; set; }
-
-        DbSet<Blog> Blogs { get; set; }
-
-        DbSet<Post> Posts { get; set; }
+        DbSet<T> Set<T>() where T : class;
 
         int SaveChanges();
     }

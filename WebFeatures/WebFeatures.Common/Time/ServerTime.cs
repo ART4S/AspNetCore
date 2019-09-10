@@ -2,7 +2,7 @@
 
 namespace WebFeatures.Common.Time
 {
-    public class TimeProvider : ITimeProvider
+    public class ServerTime : IServerTime
     {
         public DateTime Now => DateTime.UtcNow;
     }

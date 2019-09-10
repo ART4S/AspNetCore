@@ -39,6 +39,7 @@ namespace WebFeatures.WebApi
             services.AddValidators();
             services.AddAutomapper();
             services.AddDataProtection();
+            services.AddInfrastructure();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

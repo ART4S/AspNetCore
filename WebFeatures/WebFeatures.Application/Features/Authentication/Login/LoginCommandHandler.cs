@@ -6,6 +6,7 @@ using WebFeatures.Application.Infrastructure.Results;
 using WebFeatures.Application.Infrastructure.Validation;
 using WebFeatures.Application.Interfaces;
 using WebFeatures.Application.Pipeline.Abstractions;
+using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Authentication.Login
 {
@@ -22,7 +23,7 @@ namespace WebFeatures.Application.Features.Authentication.Login
 
         public Result<Claim[], Fail> Handle(LoginCommand input)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Name == input.Name);
+            var user = _context.Set<User>().FirstOrDefault(x => x.Name == input.Name);
             if (user == null)
             {
                 return Result<Claim[], Fail>.Fail(ValidationErrorMessages.InvalidLoginOrPassword);

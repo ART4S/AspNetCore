@@ -8,11 +8,11 @@ namespace WebFeatures.DataContext
 {
     public abstract class AppContext : DbContext, IAppContext
     {
-        protected readonly ITimeProvider TimeProvider;
+        protected readonly IServerTime ServerTime;
 
-        protected AppContext(DbContextOptions options, ITimeProvider timeProvider) : base(options)
+        protected AppContext(DbContextOptions options, IServerTime serverTime) : base(options)
         {
-            TimeProvider = timeProvider;
+            ServerTime = serverTime;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -20,15 +20,9 @@ namespace WebFeatures.DataContext
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppContext).Assembly);
         }
 
-        public DbSet<User> Users { get; set; }
-
-        public DbSet<Blog> Blogs { get; set; }
-
-        public DbSet<Post> Posts { get; set; }
-
         public override int SaveChanges()
         {
-            var now = TimeProvider.Now;
+            var now = ServerTime.Now;
 
             foreach (var entry in ChangeTracker.Entries())
             {
@@ -49,5 +43,15 @@ namespace WebFeatures.DataContext
 
             return base.SaveChanges();
         }
+
+        #region Tables
+
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<Blog> Blogs { get; set; }
+
+        public DbSet<Post> Posts { get; set; }
+
+        #endregion
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using WebFeatures.Application.Infrastructure.Results;
-using WebFeatures.Application.Pipeline.Abstractions;
 using WebFeatures.Application.Pipeline.Mediators;
 
 namespace WebFeatures.WebApi.Controllers.Base

@@ -23,7 +23,7 @@ namespace WebFeatures.DbUpdater.Core
             _context = context;
         }
 
-        public void UpdateDb()
+        public void Run()
         {
             try
             {

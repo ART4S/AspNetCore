@@ -29,7 +29,7 @@ namespace WebFeatures.Application.Features.Registration.RegisterUser
             var user = _mapper.Map<User>(input);
             user.PasswordHash = _protector.Protect(input.Password);
 
-            _context.Users.Add(user);
+            _context.Set<User>().Add(user);
 
             return Result.Success();
         }
