@@ -7,9 +7,6 @@ using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Registration.RegisterUser
 {
-    /// <summary>
-    /// Обработчик команды регистрации пользователя
-    /// </summary>
     public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, Result>
     {
         private readonly IDataProtector _protector;
@@ -23,7 +20,6 @@ namespace WebFeatures.Application.Features.Registration.RegisterUser
             _mapper = mapper;
         }
 
-        /// <inheritdoc />
         public Result Handle(RegisterUserCommand input)
         {
             var user = _mapper.Map<User>(input);
