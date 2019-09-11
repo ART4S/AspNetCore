@@ -1,7 +1,7 @@
 ﻿using WebFeatures.Application.Interfaces;
 using WebFeatures.Application.Pipeline.Abstractions;
 
-namespace WebFeatures.Application.Pipeline.Implementations
+namespace WebFeatures.Application.Pipeline.Concerns
 {
     /// <summary>
     /// Сохранение изменений контекста

@@ -3,7 +3,7 @@ using WebFeatures.Application.Infrastructure.Failures;
 using WebFeatures.Application.Pipeline.Abstractions;
 using ValidationException = WebFeatures.Application.Infrastructure.Exceptions.ValidationException;
 
-namespace WebFeatures.Application.Pipeline.Implementations
+namespace WebFeatures.Application.Pipeline.Concerns
 {
     /// <summary>
     /// Валидация входных данных запроса

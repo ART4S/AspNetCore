@@ -8,19 +8,8 @@ namespace WebFeatures.Domian.ValueObjects
     /// </summary>
     public class ContactDetails : ValueObject
     {
-        private ContactDetails() { }
-
-        public static ContactDetails Create(string email, string phoneNumber)
-        {
-            return new ContactDetails
-            {
-                Email = email,
-                PhoneNumber = phoneNumber
-            };
-        }
-
-        public string Email { get; private set; }
-        public string PhoneNumber { get; private set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
 
         protected override IEnumerable<object> GetAtomicValues()
         {

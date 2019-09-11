@@ -12,9 +12,7 @@ namespace WebFeatures.Domian.Entities.Model
         }
 
         public string Name { get; set; }
-
         public string PasswordHash { get; set; }
-
         public virtual ContactDetails ContactDetails { get; set; }
 
         public virtual ICollection<Blog> Blogs { get; private set; }

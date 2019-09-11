@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using WebFeatures.Application.Pipeline.Abstractions;
 
-namespace WebFeatures.Application.Pipeline.Implementations
+namespace WebFeatures.Application.Pipeline.Concerns
 {
     /// <summary>
     /// Логирование долгих запросов
