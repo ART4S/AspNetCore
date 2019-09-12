@@ -17,5 +17,16 @@ namespace WebFeatures.Common.Extensions
 
             return assembly;
         }
+
+        public static TAttr GetCustomAttribute<TAttr>(Type sourceType) where TAttr : Attribute
+        {
+            var attr = sourceType.GetCustomAttribute(typeof(TAttr));
+            if (attr == null)
+            {
+                return default;
+            }
+
+            return (TAttr) attr;
+        }
     }
 }

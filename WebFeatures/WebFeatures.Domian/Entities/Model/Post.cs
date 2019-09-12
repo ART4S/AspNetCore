@@ -1,7 +1,9 @@
-﻿using WebFeatures.Domian.Entities.Abstractions;
+﻿using System.ComponentModel;
+using WebFeatures.Domian.Entities.Abstractions;
 
 namespace WebFeatures.Domian.Entities.Model
 {
+    [Description("Пост")]
     public class Post : BaseEntity<int>
     {
         public int BlogId { get; set; }

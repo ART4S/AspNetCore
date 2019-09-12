@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using WebFeatures.Domian.Entities.Abstractions;
 
 namespace WebFeatures.Domian.Entities.Model
 {
+    [Description("Блог")]
     public class Blog : BaseEntity<int>
     {
         public Blog()

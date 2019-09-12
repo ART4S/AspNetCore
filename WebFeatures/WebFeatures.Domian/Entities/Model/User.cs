@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using WebFeatures.Domian.Entities.Abstractions;
 using WebFeatures.Domian.ValueObjects;
 
 namespace WebFeatures.Domian.Entities.Model
 {
+    [Description("Пользователь")]
     public class User : BaseEntity<int>
     {
         public User()
