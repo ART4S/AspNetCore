@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebFeatures.Application.Features.Blogs.CreateBlog;
 using WebFeatures.Application.Features.Blogs.DeleteBlog;
-using WebFeatures.Application.Infrastructure.Results;
+using WebFeatures.Application.Features.Blogs.GetBlogsInfo;
+using WebFeatures.QueryFiltering.Extensions;
+using WebFeatures.QueryFiltering.Filters;
 using WebFeatures.WebApi.Attributes;
 using WebFeatures.WebApi.Controllers.Base;
-using WebFeatures.WebApi.QueryFilters;
 
 namespace WebFeatures.WebApi.Controllers
 {
@@ -13,10 +14,14 @@ namespace WebFeatures.WebApi.Controllers
     /// </summary>
     public class BlogController : BaseController
     {
-        [HttpGet("info")]
-        public IActionResult GetAllInfo(QueryFilter filter)
+        /// <summary>
+        /// Получить информацию по всем блогам
+        /// </summary>
+        [HttpGet("infos")]
+        public IActionResult GetBlogsInfo(QueryFilter filter)
         {
-            
+            var blogsInfo = Mediator.Send(new GetBlogsInfoQuery()).ApplyFilter(filter);
+            return Ok(blogsInfo);
         }
 
         /// <summary>
@@ -25,7 +30,7 @@ namespace WebFeatures.WebApi.Controllers
         [HttpPost]
         public IActionResult Create([FromBody, Required] CreateBlogCommand command)
         {
-            var result = Mediator.Send<CreateBlogCommand, Result>(command);
+            var result = Mediator.Send(command);
             return ResultResponse(result);
         }
 
@@ -36,7 +41,7 @@ namespace WebFeatures.WebApi.Controllers
         [HttpDelete("{id:guid}")]
         public IActionResult Delete([Required] int id)
         {
-            var result = Mediator.Send<DeleteBlogCommand, Result>(new DeleteBlogCommand() {Id = id});
+            var result = Mediator.Send(new DeleteBlogCommand() {Id = id});
             return ResultResponse(result);
         }
     }

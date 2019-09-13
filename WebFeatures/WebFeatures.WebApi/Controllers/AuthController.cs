@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
 using WebFeatures.Application.Features.Authentication.Login;
-using WebFeatures.Application.Infrastructure.Failures;
-using WebFeatures.Application.Infrastructure.Results;
 using WebFeatures.WebApi.Attributes;
 using WebFeatures.WebApi.Controllers.Base;
 
@@ -24,7 +22,7 @@ namespace WebFeatures.WebApi.Controllers
         [AllowAnonymous]
         public IActionResult Login([FromBody, Required] LoginCommand command)
         {
-            var result = Mediator.Send<LoginCommand, Result<Claim[], Fail>>(command);
+            var result = Mediator.Send(command);
             if (!result.IsSuccess)
                 return ResultResponse(result);
 

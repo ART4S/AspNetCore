@@ -1,4 +1,6 @@
-﻿namespace WebFeatures.Application.Pipeline.Mediators
+﻿using WebFeatures.Application.Pipeline.Abstractions;
+
+namespace WebFeatures.Application.Pipeline.Mediators
 {
     /// <summary>
     /// Посредник для отправки запросов подходящим обработчикам
@@ -6,10 +8,19 @@
     public interface IMediator
     {
         /// <summary>
-        /// Послать запрос обработчику
+        /// Передать запрос обработчику команд
         /// </summary>
-        /// <param name="input">Данные запроса</param>
-        /// <returns>Результат выполнения запроса</returns>
-        TOut Send<TIn, TOut>(TIn input);
+        /// <typeparam name="TOut">Результат выполнения команды</typeparam>
+        /// <param name="command">Команда</param>
+        /// <returns></returns>
+        TOut Send<TOut>(ICommand<TOut> command);
+
+        /// <summary>
+        /// Передать запрос обработчику запросов
+        /// </summary>
+        /// <typeparam name="TOut">Результат выполнения запроса</typeparam>
+        /// <param name="query">Запрос</param>
+        /// <returns></returns>
+        TOut Send<TOut>(IQuery<TOut> query);
     }
 }

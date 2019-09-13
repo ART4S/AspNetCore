@@ -6,7 +6,7 @@
     <members>
         <member name="T:WebFeatures.WebApi.Attributes.RequiredAttribute">
             <summary>
-            Атрибут для проверки на null значение
+            Атрибут для проверки на null или default значение
             </summary>
         </member>
         <member name="M:WebFeatures.WebApi.Attributes.RequiredAttribute.#ctor(System.Boolean)">
@@ -93,10 +93,21 @@
             Контроллер для работы с блогами
             </summary>
         </member>
+        <member name="M:WebFeatures.WebApi.Controllers.BlogController.GetBlogsInfo(WebFeatures.QueryFiltering.Filters.QueryFilter)">
+            <summary>
+            Получить информацию по всем блогам
+            </summary>
+        </member>
         <member name="M:WebFeatures.WebApi.Controllers.BlogController.Create(WebFeatures.Application.Features.Blogs.CreateBlog.CreateBlogCommand)">
             <summary>
-            Создать
+            Создать блог
             </summary>
+        </member>
+        <member name="M:WebFeatures.WebApi.Controllers.BlogController.Delete(System.Int32)">
+            <summary>
+            Удалить блог
+            </summary>
+            <param name="id">Id блога</param>
         </member>
         <member name="T:WebFeatures.WebApi.Controllers.RegistrationController">
             <summary>

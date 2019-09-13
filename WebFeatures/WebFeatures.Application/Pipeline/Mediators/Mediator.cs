@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using WebFeatures.Application.Pipeline.Abstractions;
 
 namespace WebFeatures.Application.Pipeline.Mediators
@@ -13,29 +12,20 @@ namespace WebFeatures.Application.Pipeline.Mediators
             _serviceProvider = serviceProvider;
         }
 
-        public TOut Send<TIn, TOut>(TIn input)
+        public TOut Send<TOut>(ICommand<TOut> command)
         {
-            Type typeDefinition = null;
-
-            if (typeof(TIn).GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICommand<>)))
-            {
-                typeDefinition = typeof(ICommandHandler<,>);
-            }
-
-            if (typeof(TIn).GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IQuery<>)))
-            {
-                typeDefinition = typeof(IQueryHandler<,>);
-            }
-
-            if (typeDefinition == null)
-            {
-                throw new ArgumentException($"Invalid type: {typeof(TIn).Name}");
-            }
-
-            var handlerType = typeDefinition.MakeGenericType(typeof(TIn), typeof(TOut));
+            var handlerType = typeof(ICommandHandler<,>).MakeGenericType(command.GetType(), typeof(TOut));
             dynamic handler = _serviceProvider.GetService(handlerType);
 
-            return handler.Handle(input);
+            return handler.Handle(command);
+        }
+
+        public TOut Send<TOut>(IQuery<TOut> query)
+        {
+            var handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TOut));
+            dynamic handler = _serviceProvider.GetService(handlerType);
+
+            return handler.Handle(query);
         }
     }
 }

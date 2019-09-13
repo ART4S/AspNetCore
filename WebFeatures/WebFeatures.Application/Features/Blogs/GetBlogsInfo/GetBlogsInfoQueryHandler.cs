@@ -2,15 +2,13 @@
 using AutoMapper.QueryableExtensions;
 using System.Linq;
 using WebFeatures.Application.Extensions;
-using WebFeatures.Application.Infrastructure.Failures;
-using WebFeatures.Application.Infrastructure.Results;
 using WebFeatures.Application.Interfaces;
 using WebFeatures.Application.Pipeline.Abstractions;
 using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Blogs.GetBlogsInfo
 {
-    public class GetBlogsInfoQueryHandler : IQueryHandler<GetBlogsInfoQuery, Result<IQueryable<BlogInfoDto>, Fail>>
+    public class GetBlogsInfoQueryHandler : IQueryHandler<GetBlogsInfoQuery, IQueryable<BlogInfoDto>>
     {
         private readonly IAppContext _context;
         private readonly IMapper _mapper;
@@ -21,13 +19,13 @@ namespace WebFeatures.Application.Features.Blogs.GetBlogsInfo
             _mapper = mapper;
         }
 
-        public Result<IQueryable<BlogInfoDto>, Fail> Handle(GetBlogsInfoQuery input)
+        public IQueryable<BlogInfoDto> Handle(GetBlogsInfoQuery input)
         {
             var blogs = _context
                 .GetAll<Blog>()
                 .ProjectTo<BlogInfoDto>(_mapper.ConfigurationProvider);
 
-            return Result<IQueryable<BlogInfoDto>, Fail>.Success(blogs);
+            return blogs;
         }
     }
 }

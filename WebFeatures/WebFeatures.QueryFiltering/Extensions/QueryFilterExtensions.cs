@@ -1,14 +1,9 @@
 ﻿using System.Linq;
+using WebFeatures.QueryFiltering.Filters;
 
-namespace WebFeatures.WebApi.QueryFilters
+namespace WebFeatures.QueryFiltering.Extensions
 {
-    // TODO: запилить фильтрацию
-    public class QueryFilter
-    {
-
-    }
-
-    static class QueryFilterExtensions
+    public static class QueryFilterExtensions
     {
         public static IQueryable<T> ApplyFilter<T>(this IQueryable<T> sourceQueryable, QueryFilter filter)
         {

@@ -7,12 +7,12 @@ namespace WebFeatures.Application.Extensions
 {
     static class AppContextExtensions
     {
-        public static void Remove<TEntity, TId>(this IAppContext context, TId id)
+        public static void Remove<TEntity, TId>(this DbSet<TEntity> set, TId id)
             where TEntity : class, IEntity<TId>
             where TId : struct
         {
-            var entity = context.Set<TEntity>().First(x => Equals(x.Id, id));
-            context.Set<TEntity>().Remove(entity);
+            var entity = set.First(x => Equals(x.Id, id));
+            set.Remove(entity);
         }
 
         public static IQueryable<TEntity> GetAll<TEntity>(this IAppContext context, bool tracking = false) where TEntity : class
