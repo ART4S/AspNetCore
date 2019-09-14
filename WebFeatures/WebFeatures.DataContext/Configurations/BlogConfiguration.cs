@@ -16,6 +16,8 @@ namespace WebFeatures.DataContext.Configurations
                 .HasForeignKey(x => x.AuthorId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Ignore(x => x.IsVisible);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Posts.GetPostsInfo
 {
@@ -6,7 +7,7 @@ namespace WebFeatures.Application.Features.Posts.GetPostsInfo
     {
         public GetPostInfosQueryProfile()
         {
-            
+            CreateMap<Post, PostInfoDto>(MemberList.Destination);
         }
     }
 }

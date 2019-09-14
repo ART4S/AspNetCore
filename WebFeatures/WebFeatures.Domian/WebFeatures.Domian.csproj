@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WebFeatures.Common\WebFeatures.Common.csproj" />
+    <ProjectReference Include="..\WebFeatures.Specifications\WebFeatures.Specifications.csproj" />
+  </ItemGroup>
+
 </Project>
