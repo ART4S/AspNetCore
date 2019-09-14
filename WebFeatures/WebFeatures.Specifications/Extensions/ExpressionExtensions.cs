@@ -30,6 +30,13 @@ namespace WebFeatures.Specifications.Extensions
             return Expression.Lambda<TFunc>(merge(left.Body, rightBody), left.Parameters);
         }
 
+        public static Expression<Func<T, bool>> Compose<T, TProp>(
+            this Expression<Func<T, TProp>> propGetter,
+            Expression<Func<TProp, bool>> propCondition)
+        {
+            throw new NotImplementedException();
+        }
+
         private class ParamsReplacerVisitor : ExpressionVisitor
         {
             private readonly Dictionary<ParameterExpression, ParameterExpression> _map;
