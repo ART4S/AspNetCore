@@ -14,7 +14,7 @@ namespace WebFeatures.Domian.Entities.Model
 
         public static class Specs
         {
-            public static readonly Spec<Post> IsVisible = new Spec<Post>(p => p.Content != null && p.Title != null);
+            public static readonly Spec<Post> IsAuthorNotAdmin = new Spec<Post>(p => p.Blog.Author.Name != "Admin");
         }
     }
 }

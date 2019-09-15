@@ -7,7 +7,6 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Reflection;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using WebFeatures.WebApi.Configuration;
 using WebFeatures.WebApi.Middlewares;
 

@@ -24,7 +24,7 @@ namespace WebFeatures.Application.Features.Posts.GetPostsInfo
             var infos = _context
                 .Set<Post>()
                 .AsNoTracking()
-                .Where(Post.Specs.IsVisible)
+                .Where(Post.Specs.IsAuthorNotAdmin)
                 .ProjectTo<PostInfoDto>(_mapper.ConfigurationProvider);
 
             return infos;

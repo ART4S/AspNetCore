@@ -7,7 +7,10 @@ namespace WebFeatures.Application.Features.Registration.RegisterUser
     {
         public RegisterUserCommandProfile()
         {
-            CreateMap<RegisterUserCommand, User>(MemberList.None);
+            CreateMap<User, RegisterUserCommand>(MemberList.Destination)
+                .ForMember(x => x.Password, y => y.Ignore())
+                .ForMember(x => x.ConfirmPassword, y => y.Ignore())
+                .ReverseMap();
         }
     }
 }
