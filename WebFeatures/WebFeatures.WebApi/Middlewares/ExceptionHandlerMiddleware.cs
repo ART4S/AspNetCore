@@ -5,7 +5,6 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using WebFeatures.Application.Infrastructure.Exceptions;
-using WebFeatures.QueryFiltering;
 using WebFeatures.QueryFiltering.Exceptions;
 
 namespace WebFeatures.WebApi.Middlewares
@@ -32,6 +31,8 @@ namespace WebFeatures.WebApi.Middlewares
             }
             catch (ValidationException ex)
             {
+                _logger.LogError(ex, "Ошибка валидации");
+
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
@@ -39,6 +40,8 @@ namespace WebFeatures.WebApi.Middlewares
             }
             catch(FilteringException ex)
             {
+                _logger.LogError(ex, "Ошибка фильтрации результата запроса");
+
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
