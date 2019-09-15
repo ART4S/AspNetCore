@@ -10,7 +10,7 @@ using WebFeatures.DataContext.Sql;
 namespace WebFeatures.DataContext.Sql.Migrations
 {
     [DbContext(typeof(SqlAppContext))]
-    [Migration("20190911183141_Initial")]
+    [Migration("20190915141957_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,9 +35,6 @@ namespace WebFeatures.DataContext.Sql.Migrations
                         .IsRequired();
 
                     b.Property<DateTime?>("UpdatedAt");
-
-                    b.Property<string>("Url")
-                        .IsRequired();
 
                     b.Property<int?>("UserId");
 

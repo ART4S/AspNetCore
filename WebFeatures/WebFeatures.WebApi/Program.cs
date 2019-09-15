@@ -18,7 +18,7 @@ namespace WebFeatures.WebApi
         }
 
         /// <summary>
-        /// Конфигурация хоста
+        /// Настройка хоста
         /// </summary>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) 
             => WebHost.CreateDefaultBuilder(args)

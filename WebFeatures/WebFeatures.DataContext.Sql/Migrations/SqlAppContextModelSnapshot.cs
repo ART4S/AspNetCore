@@ -34,9 +34,6 @@ namespace WebFeatures.DataContext.Sql.Migrations
 
                     b.Property<DateTime?>("UpdatedAt");
 
-                    b.Property<string>("Url")
-                        .IsRequired();
-
                     b.Property<int?>("UserId");
 
                     b.HasKey("Id");

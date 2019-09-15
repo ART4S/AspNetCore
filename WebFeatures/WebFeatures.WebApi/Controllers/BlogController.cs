@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebFeatures.Application.Features.Blogs.CreateBlog;
 using WebFeatures.Application.Features.Blogs.DeleteBlog;
 using WebFeatures.Application.Features.Blogs.GetBlogsInfo;
@@ -10,7 +11,7 @@ using WebFeatures.WebApi.Controllers.Base;
 namespace WebFeatures.WebApi.Controllers
 {
     /// <summary>
-    /// Контроллер для работы с блогами
+    /// Блоги
     /// </summary>
     public class BlogController : BaseController
     {
@@ -18,10 +19,10 @@ namespace WebFeatures.WebApi.Controllers
         /// Получить информацию по всем блогам
         /// </summary>
         [HttpGet("infos")]
-        public IActionResult GetBlogsInfo(QueryFilter filter)
+        public IActionResult GetInfos(QueryFilter filter)
         {
-            var blogsInfo = Mediator.Send(new GetBlogsInfoQuery()).ApplyFilter(filter);
-            return Ok(blogsInfo);
+            var infos = Mediator.Send(new GetBlogInfosQuery()).ApplyFilter(filter);
+            return Ok(infos);
         }
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace WebFeatures.WebApi.Controllers
         /// Удалить блог
         /// </summary>
         /// <param name="id">Id блога</param>
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("{id:int}")]
         public IActionResult Delete([Required] int id)
         {
             var result = Mediator.Send(new DeleteBlogCommand() {Id = id});

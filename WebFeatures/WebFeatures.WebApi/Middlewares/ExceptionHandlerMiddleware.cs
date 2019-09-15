@@ -37,7 +37,7 @@ namespace WebFeatures.WebApi.Middlewares
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "Неизвестное исключение");
+                _logger.LogCritical(ex, "Необработанное исключение");
 
                 context.Response.ContentType = "text/plain";
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

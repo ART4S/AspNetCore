@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using WebFeatures.Application.Interfaces;
 using WebFeatures.Domian.Entities.Model;
 
@@ -17,13 +18,6 @@ namespace WebFeatures.Application.Features.Registration.RegisterUser
                 .Must(n => context.Set<User>().All(y => n != y.Name))
                     .WithMessage("Пользователь с данным именем уже зарегестрирован");
 
-            RuleFor(x => x.Email)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .EmailAddress()
-                    .WithMessage("Некорректный e-mail")
-                .Must(e => context.Set<User>().Count(x => x.ContactDetails.Email == e) == 0)
-                    .WithMessage("Пользователь с данным e-mail уже зарегистрирован");
-
             RuleFor(x => x.Password)
                 .MinimumLength(8).WithMessage("Пароль должен состоять минимум из 8 символов")
                 .Matches(@"[A-Z]").WithMessage("Пароль должен содержать минимум 1 букву в верхнем регистре")
@@ -33,6 +27,13 @@ namespace WebFeatures.Application.Features.Registration.RegisterUser
 
             RuleFor(x => x.ConfirmPassword)
                 .Equal(x => x.Password).WithMessage("Подтверждение пароля не совпадает");
+
+            RuleFor(x => x.ContactDetailsEmail)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .EmailAddress()
+                .WithMessage("Некорректный e-mail")
+                .Must(e => context.Set<User>().AsNoTracking().Count(x => x.ContactDetails.Email == e) == 0)
+                .WithMessage("Пользователь с данным e-mail уже зарегистрирован");
         }
     }
 }

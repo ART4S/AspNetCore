@@ -35,12 +35,9 @@ namespace WebFeatures.WebApi.Attributes
 
             if (type.IsClass)
             {
-                if (!_allowEmptyStrings)
+                if (!_allowEmptyStrings && value is string str && str.IsNullOrWhiteSpace())
                 {
-                    if (value is string str && str.IsNullOrWhiteSpace())
-                    {
-                        return false;
-                    }
+                    return false;
                 }
 
                 return true;

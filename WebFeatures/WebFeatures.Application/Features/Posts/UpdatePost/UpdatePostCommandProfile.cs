@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Posts.UpdatePost
 {
@@ -6,7 +7,7 @@ namespace WebFeatures.Application.Features.Posts.UpdatePost
     {
         public UpdatePostCommandProfile()
         {
-            
+            CreateMap<UpdatePostCommand, Post>(MemberList.Source);
         }
     }
 }

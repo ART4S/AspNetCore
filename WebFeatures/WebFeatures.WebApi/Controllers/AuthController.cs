@@ -11,7 +11,7 @@ using WebFeatures.WebApi.Controllers.Base;
 namespace WebFeatures.WebApi.Controllers
 {
     /// <summary>
-    /// Контроллер для работы с аутентификацией
+    /// Аутентификация
     /// </summary>
     public class AuthController : BaseController
     {

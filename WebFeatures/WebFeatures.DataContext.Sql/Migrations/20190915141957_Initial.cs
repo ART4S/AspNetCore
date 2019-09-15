@@ -36,7 +36,6 @@ namespace WebFeatures.DataContext.Sql.Migrations
                     UpdatedAt = table.Column<DateTime>(nullable: true),
                     AuthorId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: false),
-                    Url = table.Column<string>(nullable: false),
                     UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

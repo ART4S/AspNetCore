@@ -16,16 +16,18 @@ namespace WebFeatures.Application.Pipeline.Mediators
         {
             var handlerType = typeof(ICommandHandler<,>).MakeGenericType(command.GetType(), typeof(TOut));
             dynamic handler = _serviceProvider.GetService(handlerType);
+            dynamic input = command;
 
-            return handler.Handle(command);
+            return handler.Handle(input);
         }
 
         public TOut Send<TOut>(IQuery<TOut> query)
         {
             var handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TOut));
             dynamic handler = _serviceProvider.GetService(handlerType);
+            dynamic input = query;
 
-            return handler.Handle(query);
+            return handler.Handle(input);
         }
     }
 }

@@ -15,7 +15,6 @@ namespace WebFeatures.Domian.Entities.Model
         public int AuthorId { get; set; }
         public virtual User Author { get; set; }
         public string Title { get; set; }
-        public string Url { get; set; }
 
         public virtual ICollection<Post> Posts { get; private set; }
     }

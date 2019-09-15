@@ -3,9 +3,9 @@ using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Blogs.GetBlogsInfo
 {
-    public class GetBlogsInfoQueryProfile : Profile
+    public class GetBlogInfosQueryProfile : Profile
     {
-        public GetBlogsInfoQueryProfile()
+        public GetBlogInfosQueryProfile()
         {
             CreateMap<Blog, BlogInfoDto>(MemberList.Destination);
         }

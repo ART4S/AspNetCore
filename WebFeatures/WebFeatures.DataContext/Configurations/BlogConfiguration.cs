@@ -8,7 +8,6 @@ namespace WebFeatures.DataContext.Configurations
     {
         public void Configure(EntityTypeBuilder<Blog> builder)
         {
-            builder.Property(x => x.Url).IsRequired();
             builder.Property(x => x.Title).IsRequired();
 
             builder.HasOne(x => x.Author)
@@ -16,8 +15,6 @@ namespace WebFeatures.DataContext.Configurations
                 .HasForeignKey(x => x.AuthorId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Ignore(x => x.IsVisible);
         }
     }
 }

@@ -34,6 +34,16 @@
             Добавить обработчики запросов
             </summary>
         </member>
+        <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddCommandPipeline(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Добавить pipeline для команд
+            </summary>
+        </member>
+        <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddQueryPipeline(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Добавить pipeline для запросов
+            </summary>
+        </member>
         <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddValidators(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Добавить валидаторы
@@ -51,7 +61,7 @@
         </member>
         <member name="T:WebFeatures.WebApi.Controllers.AuthController">
             <summary>
-            Контроллер для работы с аутентификацией
+            Аутентификация
             </summary>
         </member>
         <member name="M:WebFeatures.WebApi.Controllers.AuthController.Login(WebFeatures.Application.Features.Authentication.Login.LoginCommand)">
@@ -90,10 +100,10 @@
         </member>
         <member name="T:WebFeatures.WebApi.Controllers.BlogController">
             <summary>
-            Контроллер для работы с блогами
+            Блоги
             </summary>
         </member>
-        <member name="M:WebFeatures.WebApi.Controllers.BlogController.GetBlogsInfo(WebFeatures.QueryFiltering.Filters.QueryFilter)">
+        <member name="M:WebFeatures.WebApi.Controllers.BlogController.GetInfos(WebFeatures.QueryFiltering.Filters.QueryFilter)">
             <summary>
             Получить информацию по всем блогам
             </summary>
@@ -109,9 +119,42 @@
             </summary>
             <param name="id">Id блога</param>
         </member>
+        <member name="T:WebFeatures.WebApi.Controllers.PostController">
+            <summary>
+            Посты
+            </summary>
+        </member>
+        <member name="M:WebFeatures.WebApi.Controllers.PostController.GetInfos(WebFeatures.QueryFiltering.Filters.QueryFilter)">
+            <summary>
+            Получить информацию по всем постам
+            </summary>
+            <param name="filter">Фильтр</param>
+        </member>
+        <member name="M:WebFeatures.WebApi.Controllers.PostController.GetById(System.Int32)">
+            <summary>
+            Получить пост
+            </summary>
+            <param name="id">Id поста</param>
+        </member>
+        <member name="M:WebFeatures.WebApi.Controllers.PostController.Create(WebFeatures.Application.Features.Posts.CreatePost.CreatePostCommand)">
+            <summary>
+            Создать пост
+            </summary>
+        </member>
+        <member name="M:WebFeatures.WebApi.Controllers.PostController.Update(WebFeatures.Application.Features.Posts.UpdatePost.UpdatePostCommand)">
+            <summary>
+            Редактировать пост
+            </summary>
+        </member>
+        <member name="M:WebFeatures.WebApi.Controllers.PostController.Delete(System.Int32)">
+            <summary>
+            Удалить пост
+            </summary>
+            <param name="id">Id поста</param>
+        </member>
         <member name="T:WebFeatures.WebApi.Controllers.RegistrationController">
             <summary>
-            Контроллер для регистрации новых пользователей
+            Регистрация новых пользователей
             </summary>
         </member>
         <member name="M:WebFeatures.WebApi.Controllers.RegistrationController.RegisterUser(WebFeatures.Application.Features.Registration.RegisterUser.RegisterUserCommand)">
@@ -137,7 +180,7 @@
         </member>
         <member name="M:WebFeatures.WebApi.Program.CreateWebHostBuilder(System.String[])">
             <summary>
-            Конфигурация хоста
+            Настройка хоста
             </summary>
         </member>
         <member name="T:WebFeatures.WebApi.Startup">
@@ -155,12 +198,12 @@
         </member>
         <member name="M:WebFeatures.WebApi.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Настройка сервисов приложения
+            Конфигурация сервисов приложения
             </summary>
         </member>
         <member name="M:WebFeatures.WebApi.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>
-            Настройка приложения
+            Конфигурация приложения
             </summary>
         </member>
     </members>

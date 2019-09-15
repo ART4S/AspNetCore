@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using WebFeatures.Application.Extensions;
 using WebFeatures.Application.Interfaces;
 using WebFeatures.Application.Pipeline.Abstractions;
 using WebFeatures.Domian.Entities.Model;
@@ -21,11 +21,13 @@ namespace WebFeatures.Application.Features.Posts.GetPostsInfo
 
         public IQueryable<PostInfoDto> Handle(GetPostInfosQuery input)
         {
-            var posts = _context.GetAll<Post>()
+            var infos = _context
+                .Set<Post>()
+                .AsNoTracking()
                 .Where(Post.Specs.IsVisible)
                 .ProjectTo<PostInfoDto>(_mapper.ConfigurationProvider);
 
-            return posts;
+            return infos;
         }
     }
 }

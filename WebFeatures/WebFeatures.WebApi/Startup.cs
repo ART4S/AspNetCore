@@ -7,6 +7,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using WebFeatures.WebApi.Configuration;
 using WebFeatures.WebApi.Middlewares;
 
@@ -29,7 +30,7 @@ namespace WebFeatures.WebApi
         public IConfiguration Configuration { get; }
 
         /// <summary>
-        /// Настройка сервисов приложения
+        /// Конфигурация сервисов приложения
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
@@ -58,7 +59,7 @@ namespace WebFeatures.WebApi
         }
 
         /// <summary>
-        /// Настройка приложения
+        /// Конфигурация приложения
         /// </summary>
         public void Configure(IApplicationBuilder app)
         {
@@ -71,6 +72,7 @@ namespace WebFeatures.WebApi
             });
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

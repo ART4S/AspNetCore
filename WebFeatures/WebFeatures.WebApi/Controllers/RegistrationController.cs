@@ -7,7 +7,7 @@ using WebFeatures.WebApi.Controllers.Base;
 namespace WebFeatures.WebApi.Controllers
 {
     /// <summary>
-    /// Контроллер для регистрации новых пользователей
+    /// Регистрация новых пользователей
     /// </summary>
     [AllowAnonymous]
     public class RegistrationController : BaseController

@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentValidation;
 using WebFeatures.Application.Infrastructure.Failures;
 using WebFeatures.Application.Pipeline.Abstractions;
 using ValidationException = WebFeatures.Application.Infrastructure.Exceptions.ValidationException;
@@ -10,20 +12,24 @@ namespace WebFeatures.Application.Pipeline.Concerns
     /// </summary>
     public class ValidationHandlerDecorator<TIn, TOut> : HandlerDecoratorBase<TIn, TOut>
     {
-        private readonly IValidator<TIn> _validator;
+        private readonly IEnumerable<IValidator<TIn>> _validators;
 
-        public ValidationHandlerDecorator(IHandler<TIn, TOut> decoratee, IValidator<TIn> validator) : base(decoratee)
+        public ValidationHandlerDecorator(IHandler<TIn, TOut> decoratee, IEnumerable<IValidator<TIn>> validators) : base(decoratee)
         {
-            _validator = validator;
+            _validators = validators;
         }
 
         public override TOut Handle(TIn input)
         {
-            var validationResult = _validator.Validate(input);
-            if (!validationResult.IsValid)
+            var errors = _validators
+                .Select(x => x.Validate(input))
+                .Where(x => !x.IsValid)
+                .SelectMany(x => x.Errors)
+                .ToList();
+
+            if (errors.Any())
             {
-                var fail = new Fail(validationResult.Errors);
-                throw new ValidationException(fail);
+                throw new ValidationException(new Fail(errors));
             }
 
             return Decoratee.Handle(input);

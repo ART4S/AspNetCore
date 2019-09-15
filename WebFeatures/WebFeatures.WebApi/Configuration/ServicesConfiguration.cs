@@ -19,7 +19,7 @@ namespace WebFeatures.WebApi.Configuration
     /// <summary>
     /// Расширения для конфигурации сервисов приложения
     /// </summary>
-    public static class ServicesConfiguration
+    static class ServicesConfiguration
     {
         /// <summary>
         /// Добавить контекст данных
@@ -56,9 +56,12 @@ namespace WebFeatures.WebApi.Configuration
             });
 
             services.AddCommandPipeline();
-            //services.AddQueryPipeline();
+            services.AddQueryPipeline();
         }
 
+        /// <summary>
+        /// Добавить pipeline для команд
+        /// </summary>
         private static void AddCommandPipeline(this IServiceCollection services)
         {
             services.Decorate(
@@ -78,6 +81,9 @@ namespace WebFeatures.WebApi.Configuration
                 typeof(PerformanceHandlerDecorator<,>));
         }
 
+        /// <summary>
+        /// Добавить pipeline для запросов
+        /// </summary>
         private static void AddQueryPipeline(this IServiceCollection services)
         {
             services.Decorate(
@@ -114,22 +120,21 @@ namespace WebFeatures.WebApi.Configuration
         /// </summary>
         public static void AddAutomapper(this IServiceCollection services)
         {
-            services.AddSingleton(provider =>
+            var config = new MapperConfiguration(opt =>
             {
-                var config = new MapperConfiguration(opt =>
+                var profiles = AppDomain.CurrentDomain.GetAssembly("WebFeatures.Application")
+                    .GetTypes()
+                    .Where(x => x.IsSubclassOf(typeof(Profile)));
+
+                foreach (var profile in profiles)
                 {
-                    var profiles = AppDomain.CurrentDomain.GetAssembly("WebFeatures.Application")
-                        .GetTypes()
-                        .Where(x => x.IsSubclassOf(typeof(Profile)));
-
-                    foreach (var profile in profiles)
-                    {
-                        opt.AddProfile(profile);
-                    }
-                });
-
-                return config.CreateMapper();
+                    opt.AddProfile(profile);
+                }
             });
+
+            config.AssertConfigurationIsValid();
+
+            services.AddSingleton(provider => config.CreateMapper());
         }
 
         /// <summary>
