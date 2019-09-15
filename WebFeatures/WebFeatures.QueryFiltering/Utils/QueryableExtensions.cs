@@ -13,7 +13,7 @@ namespace WebFeatures.QueryFiltering.Utils
         {
             try
             {
-                var queryString = filter.GetQueryString();
+                var queryString = filter.BuildQueryString();
                 var records = sourceQueryable.LinqToQuerystring(queryString).ToList();
 
                 return new FilteringResult(records);
@@ -24,7 +24,7 @@ namespace WebFeatures.QueryFiltering.Utils
             }
         }
 
-        private static string GetQueryString(this QueryFilter filter)
+        private static string BuildQueryString(this QueryFilter filter)
         {
             var filteringParams = new List<string>();
 
