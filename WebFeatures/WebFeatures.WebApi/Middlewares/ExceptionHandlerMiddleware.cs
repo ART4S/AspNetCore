@@ -5,6 +5,8 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using WebFeatures.Application.Infrastructure.Exceptions;
+using WebFeatures.QueryFiltering;
+using WebFeatures.QueryFiltering.Exceptions;
 
 namespace WebFeatures.WebApi.Middlewares
 {
@@ -34,6 +36,13 @@ namespace WebFeatures.WebApi.Middlewares
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(ex.Fail));
+            }
+            catch(FilteringException ex)
+            {
+                context.Response.ContentType = "application/json";
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                await context.Response.WriteAsync(ex.Message);
             }
             catch (Exception ex)
             {

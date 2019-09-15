@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using WebFeatures.Specifications.Extensions;
+using WebFeatures.Specifications.Utils;
 
 namespace WebFeatures.Specifications
 {

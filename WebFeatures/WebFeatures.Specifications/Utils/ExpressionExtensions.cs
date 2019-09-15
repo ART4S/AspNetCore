@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace WebFeatures.Specifications.Extensions
+namespace WebFeatures.Specifications.Utils
 {
     internal static class ExpressionExtensions
     {

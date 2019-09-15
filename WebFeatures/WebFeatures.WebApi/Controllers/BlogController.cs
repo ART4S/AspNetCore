@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebFeatures.Application.Features.Blogs.CreateBlog;
 using WebFeatures.Application.Features.Blogs.DeleteBlog;
 using WebFeatures.Application.Features.Blogs.GetBlogsInfo;
-using WebFeatures.QueryFiltering.Extensions;
 using WebFeatures.QueryFiltering.Filters;
+using WebFeatures.QueryFiltering.Utils;
 using WebFeatures.WebApi.Attributes;
 using WebFeatures.WebApi.Controllers.Base;
 
