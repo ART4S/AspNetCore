@@ -4,7 +4,7 @@ using WebFeatures.Domian.Entities.Abstractions;
 
 namespace WebFeatures.Application.Extensions
 {
-    static class AppContextExtensions
+    internal static class AppContextExtensions
     {
         public static bool Exists<TEntity, TId>(this DbSet<TEntity> set, TId id) 
             where TEntity : class, IEntity<TId>

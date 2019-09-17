@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using WebFeatures.Specifications.Visitors;
 
 namespace WebFeatures.Specifications.Utils
 {
@@ -37,51 +37,5 @@ namespace WebFeatures.Specifications.Utils
             var body = new ExpressionReplacerVisitor(right.Parameters[0], left.Body).Visit(right.Body);
             return Expression.Lambda<Func<T, bool>>(body, left.Parameters[0]);
         }
-
-        #region Visitors
-
-        private class ExpressionReplacerVisitor : ExpressionVisitor
-        {
-            private readonly Expression _source;
-            private readonly Expression _replacement;
-
-            public ExpressionReplacerVisitor(Expression source, Expression replacement)
-            {
-                _source = source;
-                _replacement = replacement;
-            }
-
-            public override Expression Visit(Expression node)
-            {
-                if (node == _source)
-                {
-                    node = _replacement;
-                }
-
-                return base.Visit(node);
-            }
-        }
-
-        private class ParamsReplacerVisitor : ExpressionVisitor
-        {
-            private readonly Dictionary<ParameterExpression, ParameterExpression> _replacementsMap;
-
-            public ParamsReplacerVisitor(Dictionary<ParameterExpression, ParameterExpression> replacementsMap)
-            {
-                _replacementsMap = replacementsMap;
-            }
-
-            protected override Expression VisitParameter(ParameterExpression param)
-            {
-                if (_replacementsMap.TryGetValue(param, out var replacement))
-                {
-                    param = replacement;
-                }
-
-                return base.VisitParameter(param);
-            }
-        }
-
-        #endregion
     }
 }
