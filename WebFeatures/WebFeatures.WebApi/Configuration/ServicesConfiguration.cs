@@ -5,7 +5,10 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using Swashbuckle.AspNetCore.Swagger;
 using WebFeatures.Application.Interfaces;
 using WebFeatures.Application.Pipeline.Abstractions;
 using WebFeatures.Application.Pipeline.Concerns;
@@ -36,7 +39,7 @@ namespace WebFeatures.WebApi.Configuration
         /// <summary>
         /// Добавить обработчики запросов
         /// </summary>
-        public static void AddHandlers(this IServiceCollection services)
+        public static void AddPipeline(this IServiceCollection services)
         {
             services.AddScoped<IMediator, Mediator>();
 
@@ -60,7 +63,7 @@ namespace WebFeatures.WebApi.Configuration
         }
 
         /// <summary>
-        /// Добавить pipeline для команд
+        /// Добавить обработчики для команд
         /// </summary>
         private static void AddCommandPipeline(this IServiceCollection services)
         {
@@ -82,7 +85,7 @@ namespace WebFeatures.WebApi.Configuration
         }
 
         /// <summary>
-        /// Добавить pipeline для запросов
+        /// Добавить обработчики для запросов
         /// </summary>
         private static void AddQueryPipeline(this IServiceCollection services)
         {
@@ -116,7 +119,7 @@ namespace WebFeatures.WebApi.Configuration
         }
 
         /// <summary>
-        /// Добавить профили Automapper
+        /// Добавить профили automapper
         /// </summary>
         public static void AddAutomapper(this IServiceCollection services)
         {
@@ -143,6 +146,23 @@ namespace WebFeatures.WebApi.Configuration
         public static void AddInfrastructure(this IServiceCollection services)
         {
             services.AddSingleton<IServerTime, ServerTime>();
+        }
+
+        /// <summary>
+        /// Добавить swagger
+        /// </summary>
+        public static void AddSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info() { Title = "WebFeatures", Version = "v1" });
+
+                var xml = Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
+                if (File.Exists(xml))
+                {
+                    c.IncludeXmlComments(xml);
+                }
+            });
         }
     }
 }

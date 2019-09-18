@@ -26,6 +26,8 @@ namespace WebFeatures.QueryFiltering.Utils
 
         private static string BuildQueryString(this QueryFilter filter)
         {
+            if (filter == null) return string.Empty;
+
             var filteringParams = new List<string>();
 
             if (filter.Skip.HasValue && filter.Skip.Value > 0)
