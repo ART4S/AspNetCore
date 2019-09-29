@@ -44,6 +44,18 @@ namespace QueryFiltering
                     sourceQueryable = OrderBy(sourceQueryable, parser);
                     continue;
                 }
+
+                if (queryParam.StartsWith("$top"))
+                {
+                    sourceQueryable = Top(sourceQueryable, parser);
+                    continue;
+                }
+
+                if (queryParam.StartsWith("$skip"))
+                {
+                    sourceQueryable = Skip(sourceQueryable, parser);
+                    continue;
+                }
             }
 
             return sourceQueryable;
@@ -68,6 +80,26 @@ namespace QueryFiltering
             walker.Walk(listener, tree);
 
             return (IQueryable<T>) listener.OrderedQueryable;
+        }
+
+        private static IQueryable<T> Top<T>(IQueryable<T> sourceQueryable, QueryFilteringParser parser)
+        {
+            var visitor = new TopVisitor();
+
+            var tree = parser.top();
+            var count = tree.Accept(visitor);
+
+            return sourceQueryable.Take(count);
+        }
+
+        private static IQueryable<T> Skip<T>(IQueryable<T> sourceQueryable, QueryFilteringParser parser)
+        {
+            var visitor = new SkipVisitor();
+
+            var tree = parser.top();
+            var count = tree.Accept(visitor);
+
+            return sourceQueryable.Skip(count);
         }
     }
 }
