@@ -44,23 +44,13 @@ namespace QueryFiltering.Visitors
 
         public override ExpressionNode VisitFilterExpression(QueryFilteringParser.FilterExpressionContext context)
         {
-            if (context.ChildCount == 1)
-            {
-                return context.children[0].Accept(this); // VisitAtom
-            }
-
-            if (context.ChildCount % 2 == 0)
-            {
-                throw new FilterException("Ќельз€ применить операцию ветвлени€ - количество дочерних элементов должно быть нечетным");
-            }
-
-            ExpressionNode result = null;
-
             var children = context.children.Reverse().ToArray();
+
+            ExpressionNode result = children[0].Accept(this);
 
             for (int i = 1; i < children.Length; i += 2)
             {
-                var left = result ?? children[i - 1].Accept(this);
+                var left = result;
                 var right = children[i + 1].Accept(this);
 
                 var node = (ITerminalNode)children[i];

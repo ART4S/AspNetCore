@@ -65,7 +65,7 @@ namespace QueryFiltering.Tests
         [Fact]
         public void Filter_DoubleValueEqualsNegativeNumber_ExpectedTrue()
         {
-            var input = "$filter=DoubleValue eq -1.00";
+            var input = "$filter=DoubleValue eq -1d";
             var testObject = new TestObject() { DoubleValue = -1 };
 
             var visitor = new FilterVisitor(typeof(TestObject));
