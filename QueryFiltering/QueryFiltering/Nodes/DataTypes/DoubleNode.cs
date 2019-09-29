@@ -10,9 +10,9 @@ namespace QueryFiltering.Nodes.DataTypes
         {
         }
 
-        public override Expression BuildExpression()
+        public override Expression Build()
         {
-            return Expression.Constant(double.Parse(Value, CultureInfo.InvariantCulture));
+            return Expression.Constant(double.Parse(Value.Replace("d",""), CultureInfo.InvariantCulture));
         }
     }
 }

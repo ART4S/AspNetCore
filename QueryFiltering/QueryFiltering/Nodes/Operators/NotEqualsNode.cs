@@ -5,13 +5,13 @@ namespace QueryFiltering.Nodes.Operators
 {
     internal class NotEqualsNode : AggregateNode
     {
-        public NotEqualsNode(BaseNode left, BaseNode right) : base(left, right)
+        public NotEqualsNode(ExpressionNode left, ExpressionNode right) : base(left, right)
         {
         }
 
-        public override Expression BuildExpression()
+        public override Expression Build()
         {
-            return Expression.NotEqual(Left.BuildExpression(), Right.BuildExpression());
+            return Expression.NotEqual(Left.Build(), Right.Build());
         }
     }
 }

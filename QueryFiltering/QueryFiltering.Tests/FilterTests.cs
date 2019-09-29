@@ -1,80 +1,119 @@
 using QueryFiltering.Tests.Model;
+using QueryFiltering.Visitors;
+using System;
+using System.Linq.Expressions;
 using Xunit;
 
 namespace QueryFiltering.Tests
 {
     public class FilterTests
     {
-        [Theory]
-        [InlineData(21)]
-        [InlineData(199)]
-        public void ProductPriceLessThan200AndGreaterThan200_ReturnsTrue(int price)
+        [Fact]
+        public void Filter_IntValueEqualsMaxNumber_ExpectedTrue()
         {
-            var func = LambdaFactory.Create<Product, bool, QueryFilteringParser.FilterExpressionContext>(
-                "Price lt 200 and Price gt 20", 
-                parser => parser.filterExpression()).Compile();
+            var input = "$filter=IntValue eq 2147483647";
+            var testObject = new TestObject() { IntValue = int.MaxValue };
 
-            var product = new Product
-            {
-                Price = price
-            };
+            var visitor = new FilterVisitor(typeof(TestObject));
 
-            Assert.True(func(product));
+            var parser = TestHelper.CreateParser(input);
+            var tree = parser.filter().Accept(visitor);
+            var expression = (Expression<Func<TestObject, bool>>)tree.Build();
+            var func = expression.Compile();
+
+            var result = func(testObject);
+
+            Assert.True(result);
         }
 
-        [Theory]
-        [InlineData(19)]
-        [InlineData(20)]
-        [InlineData(200)]
-        [InlineData(201)]
-        public void product_price_lt_200_and_price_gt_20_return_false(int price)
+        [Fact]
+        public void Filter_IntValueEqualsMinNumber_ExpectedTrue()
         {
-            var func = LambdaFactory.Create<Product, bool, QueryFilteringParser.FilterExpressionContext>(
-                "Price lt 200 and Price gt 20",
-                parser => parser.filterExpression()).Compile();
+            var input = "$filter=IntValue eq -2147483648";
+            var testObject = new TestObject() { IntValue = int.MinValue };
 
-            var product = new Product
-            {
-                Price = price
-            };
+            var visitor = new FilterVisitor(typeof(TestObject));
 
-            Assert.False(func(product));
+            var parser = TestHelper.CreateParser(input);
+            var tree = parser.filter().Accept(visitor);
+            var expression = (Expression<Func<TestObject, bool>>)tree.Build();
+            var func = expression.Compile();
+
+            var result = func(testObject);
+
+            Assert.True(result);
         }
 
-        [Theory]
-        [InlineData(150, 2)]
-        [InlineData(35, 2.05)]
-        public void product_price_lt_200_and_Price_gt_35_or_price_eq_35_and_discount_eq_2_05_ReturnsTrue(int price, double discount)
+        [Fact]
+        public void Filter_DoubleValueEqualsPositiveNumber_ExpectedTrue()
         {
-            var product = new Product
-            {
-                Price = price,
-                Discount = discount
-            };
+            var input = "$filter=DoubleValue eq 1.00d";
+            var testObject = new TestObject() { DoubleValue = 1 };
 
-            var func = LambdaFactory.Create<Product, bool, QueryFilteringParser.FilterExpressionContext>(
-                "(Price lt 200 and Price gt 35) or (Price eq 35 and Discount eq 2.05)",
-                parser => parser.filterExpression()).Compile();
+            var visitor = new FilterVisitor(typeof(TestObject));
 
-            Assert.True(func(product));
+            var parser = TestHelper.CreateParser(input);
+            var tree = parser.filter().Accept(visitor);
+            var expression = (Expression<Func<TestObject, bool>>)tree.Build();
+            var func = expression.Compile();
+
+            var result = func(testObject);
+
+            Assert.True(result);
         }
 
-        [Theory]
-        [InlineData(35, 2)]
-        [InlineData(35, 2.06)]
-        public void product_price_lt_200_and_Price_gt_35_or_price_eq_35_and_discount_eq_2_05_ReturnsFalse(int price, double discount)
+        [Fact]
+        public void Filter_DoubleValueEqualsNegativeNumber_ExpectedTrue()
         {
-            var product = new Product
-            {
-                Price = price,
-                Discount = discount
-            };
+            var input = "$filter=DoubleValue eq -1.00";
+            var testObject = new TestObject() { DoubleValue = -1 };
 
-            var func = LambdaFactory.Create<Product, bool, QueryFilteringParser.FilterExpressionContext>(
-                "(Price lt 200 and Price gt 35) or (Price eq 35 and Discount eq 2.05)",
-                parser => parser.filterExpression()).Compile();
+            var visitor = new FilterVisitor(typeof(TestObject));
 
-            Assert.False(func(product));
+            var parser = TestHelper.CreateParser(input);
+            var tree = parser.filter().Accept(visitor);
+            var expression = (Expression<Func<TestObject, bool>>)tree.Build();
+            var func = expression.Compile();
+
+            var result = func(testObject);
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void Filter_BoolValueEqualsTrue_ExpectedTrue()
+        {
+            var input = "$filter=BoolValue eq true";
+            var testObject = new TestObject() { BoolValue = true };
+
+            var visitor = new FilterVisitor(typeof(TestObject));
+
+            var parser = TestHelper.CreateParser(input);
+            var tree = parser.filter().Accept(visitor);
+            var expression = (Expression<Func<TestObject, bool>>)tree.Build();
+            var func = expression.Compile();
+
+            var result = func(testObject);
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void Filter_BoolValueEqualsFalse_ExpectedTrue()
+        {
+            var input = "$filter=BoolValue eq false";
+            var testObject = new TestObject() { BoolValue = false };
+
+            var visitor = new FilterVisitor(typeof(TestObject));
+
+            var parser = TestHelper.CreateParser(input);
+            var tree = parser.filter().Accept(visitor);
+            var expression = (Expression<Func<TestObject, bool>>)tree.Build();
+            var func = expression.Compile();
+
+            var result = func(testObject);
+
+            Assert.True(result);
         }
     }
 }

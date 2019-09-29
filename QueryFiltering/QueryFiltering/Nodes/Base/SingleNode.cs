@@ -1,6 +1,6 @@
 ﻿namespace QueryFiltering.Nodes.Base
 {
-    internal abstract class SingleNode : BaseNode
+    internal abstract class SingleNode : ExpressionNode
     {
         protected readonly string Value;
 

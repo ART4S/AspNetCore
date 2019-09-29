@@ -5,13 +5,13 @@ namespace QueryFiltering.Nodes.Operators
 {
     internal class GreaterThanOrEqualNode : AggregateNode
     {
-        public GreaterThanOrEqualNode(BaseNode left, BaseNode right) : base(left, right)
+        public GreaterThanOrEqualNode(ExpressionNode left, ExpressionNode right) : base(left, right)
         {
         }
 
-        public override Expression BuildExpression()
+        public override Expression Build()
         {
-            return Expression.GreaterThanOrEqual(Left.BuildExpression(), Right.BuildExpression());
+            return Expression.GreaterThanOrEqual(Left.Build(), Right.Build());
         }
     }
 }

@@ -3,9 +3,9 @@ using System.Linq.Expressions;
 
 namespace QueryFiltering.Nodes.DataTypes
 {
-    internal class NullNode : BaseNode
+    internal class NullNode : ExpressionNode
     {
-        public override Expression BuildExpression()
+        public override Expression Build()
         {
             return Expression.Constant(null);
         }

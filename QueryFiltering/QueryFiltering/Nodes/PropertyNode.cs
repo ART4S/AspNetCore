@@ -12,11 +12,11 @@ namespace QueryFiltering.Nodes
             _parameter = parameter;
         }
 
-        public override Expression BuildExpression()
+        public override Expression Build()
         {
             MemberExpression property = null;
 
-            foreach (var propertyName in Value.Split("/"))
+            foreach (var propertyName in Value.Split("."))
             {
                 if (property == null)
                 {

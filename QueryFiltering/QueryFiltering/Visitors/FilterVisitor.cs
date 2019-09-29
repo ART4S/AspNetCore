@@ -5,43 +5,44 @@ using QueryFiltering.Nodes.Aggregates;
 using QueryFiltering.Nodes.Base;
 using QueryFiltering.Nodes.DataTypes;
 using QueryFiltering.Nodes.Operators;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("QueryFiltering.Tests")]
-namespace QueryFiltering
+namespace QueryFiltering.Visitors
 {
-    internal class FilterVisitor : QueryFilteringBaseVisitor<BaseNode>
+    internal class FilterVisitor : QueryFilteringBaseVisitor<ExpressionNode>
     {
+        private readonly Type _sourceType;
         private readonly ParameterExpression _parameter;
 
-        public FilterVisitor(ParameterExpression parameter)
+        public FilterVisitor(Type sourceType)
         {
-            _parameter = parameter;
+            _sourceType = sourceType;
+            _parameter = Expression.Parameter(_sourceType);
         }
 
-        public override BaseNode Visit(IParseTree tree)
+        public override ExpressionNode Visit(IParseTree tree)
         {
             return tree.Accept(this);
         }
 
-        public override BaseNode VisitTerminal(ITerminalNode node)
+        public override ExpressionNode VisitTerminal(ITerminalNode node)
         {
             throw new FilterException($"{nameof(VisitTerminal)} -> {node.GetText()}");
         }
 
-        public override BaseNode VisitErrorNode(IErrorNode node)
+        public override ExpressionNode VisitErrorNode(IErrorNode node)
         {
             throw new FilterException($"{nameof(VisitErrorNode)} -> {node.GetText()}");
         }
 
-        public override BaseNode VisitFilter(QueryFilteringParser.FilterContext context)
+        public override ExpressionNode VisitFilter(QueryFilteringParser.FilterContext context)
         {
-            return context.expression.Accept(this);
+            return new FilterNode(_sourceType, _parameter, context.expression.Accept(this));
         }
 
-        public override BaseNode VisitFilterExpression(QueryFilteringParser.FilterExpressionContext context)
+        public override ExpressionNode VisitFilterExpression(QueryFilteringParser.FilterExpressionContext context)
         {
             if (context.ChildCount == 1)
             {
@@ -53,7 +54,7 @@ namespace QueryFiltering
                 throw new FilterException("Ќельз€ применить операцию ветвлени€ - количество дочерних элементов должно быть нечетным");
             }
 
-            BaseNode result = null;
+            ExpressionNode result = null;
 
             var children = context.children.Reverse().ToArray();
 
@@ -82,7 +83,7 @@ namespace QueryFiltering
             return result;
         }
 
-        public override BaseNode VisitAtom(QueryFilteringParser.AtomContext context)
+        public override ExpressionNode VisitAtom(QueryFilteringParser.AtomContext context)
         {
             var result = context.boolExpr?.Accept(this) ?? context.filterExpr?.Accept(this) ?? throw new FilterException($"{nameof(VisitAtom)} -> {context.GetText()}");
 
@@ -94,7 +95,7 @@ namespace QueryFiltering
             return result;
         }
 
-        public override BaseNode VisitBoolExpression(QueryFilteringParser.BoolExpressionContext context)
+        public override ExpressionNode VisitBoolExpression(QueryFilteringParser.BoolExpressionContext context)
         {
             var left = context.left.Accept(this);
             var right = context.right.Accept(this);
@@ -132,12 +133,12 @@ namespace QueryFiltering
             throw new FilterException($"{nameof(VisitBoolExpression)} -> {context.GetText()}");
         }
 
-        public override BaseNode VisitProperty(QueryFilteringParser.PropertyContext context)
+        public override ExpressionNode VisitProperty(QueryFilteringParser.PropertyContext context)
         {
             return new PropertyNode(context.value.Text, _parameter);
         }
 
-        public override BaseNode VisitConstant(QueryFilteringParser.ConstantContext context)
+        public override ExpressionNode VisitConstant(QueryFilteringParser.ConstantContext context)
         {
             if (context.value.Type == QueryFilteringLexer.INT)
             {
