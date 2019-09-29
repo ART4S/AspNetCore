@@ -9,7 +9,7 @@ namespace QueryFiltering.Tests
     public class FilterTests
     {
         [Fact]
-        public void Filter_IntValueEqualsMaxNumber_ExpectedTrue()
+        public void Filter_IntValueEqualsMaxValue_ExpectedTrue()
         {
             var input = "$filter=IntValue eq 2147483647";
             var testObject = new TestObject() { IntValue = int.MaxValue };
@@ -27,7 +27,7 @@ namespace QueryFiltering.Tests
         }
 
         [Fact]
-        public void Filter_IntValueEqualsMinNumber_ExpectedTrue()
+        public void Filter_IntValueEqualsMinValue_ExpectedTrue()
         {
             var input = "$filter=IntValue eq -2147483648";
             var testObject = new TestObject() { IntValue = int.MinValue };

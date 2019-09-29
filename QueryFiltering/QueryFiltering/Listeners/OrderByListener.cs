@@ -17,7 +17,7 @@ namespace QueryFiltering.Listeners
         public OrderByListener(IQueryable sourceQueryable)
         {
             _orderedQueryable = sourceQueryable;
-            _parameter = Expression.Parameter(_orderedQueryable.ElementType);
+            _parameter = Expression.Parameter(sourceQueryable.ElementType);
         }
 
         public override void ExitOrderProperty(QueryFilteringParser.OrderPropertyContext context)
@@ -47,6 +47,8 @@ namespace QueryFiltering.Listeners
                 .MakeGenericMethod(_orderedQueryable.ElementType, property.Type);
 
             _orderedQueryable = (IQueryable) orderBy.Invoke(null, new[] { _orderedQueryable, expression });
+
+            _ordered = true;
         }
     }
 }

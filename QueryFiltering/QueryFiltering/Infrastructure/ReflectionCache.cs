@@ -31,7 +31,7 @@ namespace QueryFiltering.Infrastructure
 
         public static MethodInfo ThenByDescending => Methods.GetOrAdd("ThenByDescending",
             k => typeof(Queryable)
-                .GetMethods(BindingFlags.Public | BindingFlags.Static)
+                .GetMethods()
                 .First(x => x.Name == "ThenByDescending" && x.GetParameters().Length == 2));
     }
 }

@@ -48,13 +48,13 @@ namespace QueryFiltering.Tests
         {
             var testObjects = new[]
             {
-                new TestObject(){IntValue = 4, DoubleValue = 7},
+                new TestObject(){IntValue = 4, DoubleValue = 1},
                 new TestObject(){IntValue = 3, DoubleValue = 6},
-                new TestObject(){IntValue = 2, DoubleValue = 5},
                 new TestObject(){IntValue = 2, DoubleValue = 4},
                 new TestObject(){IntValue = 2, DoubleValue = 3},
+                new TestObject(){IntValue = 2, DoubleValue = 5},
                 new TestObject(){IntValue = 2, DoubleValue = 2},
-                new TestObject(){IntValue = 1, DoubleValue = 1},
+                new TestObject(){IntValue = 1, DoubleValue = 7},
             }.AsQueryable();
 
             var actual = testObjects
