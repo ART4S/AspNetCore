@@ -7,6 +7,20 @@ namespace QueryFiltering.Tests
     public class QueryFilteringTests
     {
         [Fact]
+        public void ApplyQuery_EmptyQuery_ReturnsSameQueryable()
+        {
+            var testObjects = new[]
+            {
+                new TestObject()
+            }.AsQueryable();
+
+            var actual = testObjects.ApplyQuery("");
+            var expected = testObjects;
+
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
         public void OrderBy_IntValueByAsc_IntValueOrderedByAsc()
         {
             var testObjects = new[]

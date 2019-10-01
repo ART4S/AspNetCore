@@ -51,7 +51,7 @@ namespace QueryFiltering.Visitors
                 typeof(Func<,>).MakeGenericType(_sourceQueryable.ElementType, property.Type));
 
             var expression = lambda.Invoke(null, new object[] { property, new ParameterExpression[] { _parameter } });
-
+            
             var orderBy = (context.op.Type == QueryFilteringLexer.ASC ? 
                     context.firstSort ? ReflectionCache.OrderBy : ReflectionCache.ThenBy : 
                     context.firstSort ? ReflectionCache.OrderByDescending : ReflectionCache.ThenByDescending)
