@@ -5,13 +5,13 @@ namespace QueryFiltering.Nodes.Operators
 {
     internal class EqualsNode : AggregateNode
     {
-        public EqualsNode(ExpressionNode left, ExpressionNode right) : base(left, right)
+        public EqualsNode(BaseNode left, BaseNode right) : base(left, right)
         {
         }
 
-        public override Expression Build()
+        public override Expression BuildExpression()
         {
-            return Expression.Equal(Left.Build(), Right.Build());
+            return Expression.Equal(Left.BuildExpression(), Right.BuildExpression());
         }
     }
 }

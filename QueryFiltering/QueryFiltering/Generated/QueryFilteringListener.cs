@@ -141,15 +141,15 @@ public interface IQueryFilteringListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitProperty([NotNull] QueryFilteringParser.PropertyContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="QueryFilteringParser.orderProperty"/>.
+	/// Enter a parse tree produced by <see cref="QueryFilteringParser.orderByProperty"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterOrderProperty([NotNull] QueryFilteringParser.OrderPropertyContext context);
+	void EnterOrderByProperty([NotNull] QueryFilteringParser.OrderByPropertyContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="QueryFilteringParser.orderProperty"/>.
+	/// Exit a parse tree produced by <see cref="QueryFilteringParser.orderByProperty"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitOrderProperty([NotNull] QueryFilteringParser.OrderPropertyContext context);
+	void ExitOrderByProperty([NotNull] QueryFilteringParser.OrderByPropertyContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="QueryFilteringParser.constant"/>.
 	/// </summary>

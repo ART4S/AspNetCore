@@ -1,11 +1,11 @@
 ﻿namespace QueryFiltering.Nodes.Base
 {
-    internal abstract class AggregateNode : ExpressionNode
+    internal abstract class AggregateNode : BaseNode
     {
-        protected readonly ExpressionNode Left;
-        protected readonly ExpressionNode Right;
+        protected readonly BaseNode Left;
+        protected readonly BaseNode Right;
 
-        protected AggregateNode(ExpressionNode left, ExpressionNode right)
+        protected AggregateNode(BaseNode left, BaseNode right)
         {
             Left = left;
             Right = right;

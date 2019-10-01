@@ -1,10 +1,7 @@
 ﻿using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
-using QueryFiltering.Listeners;
 using QueryFiltering.Visitors;
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("QueryFiltering.Tests")]
@@ -14,92 +11,19 @@ namespace QueryFiltering
     {
         public static IQueryable<T> ApplyQuery<T>(this IQueryable<T> sourceQueryable, string query)
         {
-            if (string.IsNullOrWhiteSpace(query))
-            {
-                return sourceQueryable;
-            }
-
-            if (query.StartsWith('?'))
-            {
-                query = query.Substring(1);
-            }
-
-            var queryParams = query.Split('&').Where(x => x.StartsWith('$'));
+            if (sourceQueryable == null) throw new ArgumentNullException(nameof(sourceQueryable));
+            if (query == null) throw new ArgumentNullException(nameof(query));
 
             var parser = new QueryFilteringParser(
                 new CommonTokenStream(
                     new QueryFilteringLexer(
                         new AntlrInputStream(query))));
 
-            foreach (var queryParam in queryParams)
-            {
-                if (queryParam.StartsWith("$filter"))
-                {
-                    sourceQueryable = Filter(sourceQueryable, parser);
-                    continue;
-                }
+            var visitor = new QueryVisitor(sourceQueryable);
 
-                if (queryParam.StartsWith("$orderBy"))
-                {
-                    sourceQueryable = OrderBy(sourceQueryable, parser);
-                    continue;
-                }
+            var resultQueryable = parser.query().Accept(visitor);
 
-                if (queryParam.StartsWith("$top"))
-                {
-                    sourceQueryable = Top(sourceQueryable, parser);
-                    continue;
-                }
-
-                if (queryParam.StartsWith("$skip"))
-                {
-                    sourceQueryable = Skip(sourceQueryable, parser);
-                    continue;
-                }
-            }
-
-            return sourceQueryable;
-        }
-
-        private static IQueryable<T> Filter<T>(IQueryable<T> sourceQueryable, QueryFilteringParser parser)
-        {
-            var visitor = new FilterVisitor(typeof(T));
-            var tree = parser.filter().Accept(visitor);
-            var expression = (Expression<Func<T, bool>>)tree.Build();
-
-            return sourceQueryable.Where(expression);
-        }
-
-        private static IQueryable<T> OrderBy<T>(IQueryable<T> sourceQueryable, QueryFilteringParser parser)
-        {
-            var walker = new ParseTreeWalker();
-
-            var listener = new OrderByListener(sourceQueryable);
-            var tree = parser.orderBy();
-
-            walker.Walk(listener, tree);
-
-            return (IQueryable<T>) listener.OrderedQueryable;
-        }
-
-        private static IQueryable<T> Top<T>(IQueryable<T> sourceQueryable, QueryFilteringParser parser)
-        {
-            var visitor = new TopVisitor();
-
-            var tree = parser.top();
-            var count = tree.Accept(visitor);
-
-            return sourceQueryable.Take(count);
-        }
-
-        private static IQueryable<T> Skip<T>(IQueryable<T> sourceQueryable, QueryFilteringParser parser)
-        {
-            var visitor = new SkipVisitor();
-
-            var tree = parser.top();
-            var count = tree.Accept(visitor);
-
-            return sourceQueryable.Skip(count);
+            return (IQueryable<T>) resultQueryable;
         }
     }
 }

@@ -98,11 +98,11 @@ public interface IQueryFilteringVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitProperty([NotNull] QueryFilteringParser.PropertyContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QueryFilteringParser.orderProperty"/>.
+	/// Visit a parse tree produced by <see cref="QueryFilteringParser.orderByProperty"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitOrderProperty([NotNull] QueryFilteringParser.OrderPropertyContext context);
+	Result VisitOrderByProperty([NotNull] QueryFilteringParser.OrderByPropertyContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QueryFilteringParser.constant"/>.
 	/// </summary>

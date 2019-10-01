@@ -167,17 +167,17 @@ public partial class QueryFilteringBaseListener : IQueryFilteringListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitProperty([NotNull] QueryFilteringParser.PropertyContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="QueryFilteringParser.orderProperty"/>.
+	/// Enter a parse tree produced by <see cref="QueryFilteringParser.orderByProperty"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterOrderProperty([NotNull] QueryFilteringParser.OrderPropertyContext context) { }
+	public virtual void EnterOrderByProperty([NotNull] QueryFilteringParser.OrderByPropertyContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="QueryFilteringParser.orderProperty"/>.
+	/// Exit a parse tree produced by <see cref="QueryFilteringParser.orderByProperty"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitOrderProperty([NotNull] QueryFilteringParser.OrderPropertyContext context) { }
+	public virtual void ExitOrderByProperty([NotNull] QueryFilteringParser.OrderByPropertyContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="QueryFilteringParser.constant"/>.
 	/// <para>The default implementation does nothing.</para>

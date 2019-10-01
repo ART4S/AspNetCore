@@ -10,7 +10,7 @@ namespace QueryFiltering.Nodes.DataTypes
         {
         }
 
-        public override Expression Build()
+        public override Expression BuildExpression()
         {
             return Expression.Constant(Guid.Parse(Value));
         }

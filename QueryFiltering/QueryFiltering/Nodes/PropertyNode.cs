@@ -12,7 +12,7 @@ namespace QueryFiltering.Nodes
             _parameter = parameter;
         }
 
-        public override Expression Build()
+        public override Expression BuildExpression()
         {
             MemberExpression property = null;
 

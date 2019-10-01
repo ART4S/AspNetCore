@@ -31,7 +31,22 @@ namespace QueryFiltering.Infrastructure
 
         public static MethodInfo ThenByDescending => Methods.GetOrAdd("ThenByDescending",
             k => typeof(Queryable)
-                .GetMethods()
+                .GetMethods(BindingFlags.Public | BindingFlags.Static)
                 .First(x => x.Name == "ThenByDescending" && x.GetParameters().Length == 2));
+
+        public static MethodInfo Skip => Methods.GetOrAdd("Skip",
+            k => typeof(Queryable)
+                .GetMethods(BindingFlags.Public | BindingFlags.Static)
+                .First(x => x.Name == "Skip" && x.GetParameters().Length == 2));
+
+        public static MethodInfo Take => Methods.GetOrAdd("Take",
+            k => typeof(Queryable)
+                .GetMethods(BindingFlags.Public | BindingFlags.Static)
+                .First(x => x.Name == "Take" && x.GetParameters().Length == 2));
+
+        public static MethodInfo Where => Methods.GetOrAdd("Where",
+            k => typeof(Queryable)
+                .GetMethods(BindingFlags.Public | BindingFlags.Static)
+                .First(x => x.Name == "Where" && x.GetParameters().Length == 2));
     }
 }

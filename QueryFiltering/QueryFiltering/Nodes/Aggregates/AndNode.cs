@@ -5,13 +5,13 @@ namespace QueryFiltering.Nodes.Aggregates
 {
     internal class AndNode : AggregateNode
     {
-        public AndNode(ExpressionNode left, ExpressionNode right) : base(left, right)
+        public AndNode(BaseNode left, BaseNode right) : base(left, right)
         {
         }
 
-        public override Expression Build()
+        public override Expression BuildExpression()
         {
-            return Expression.AndAlso(Left.Build(), Right.Build());
+            return Expression.AndAlso(Left.BuildExpression(), Right.BuildExpression());
         }
     }
 }

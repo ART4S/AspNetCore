@@ -1,7 +1,9 @@
-﻿namespace QueryFiltering.Nodes.Base
+﻿using System.Linq.Expressions;
+
+namespace QueryFiltering.Nodes.Base
 {
-    internal abstract class BaseNode<T>
+    internal abstract class BaseNode
     {
-        public abstract T Build();
+        public abstract Expression BuildExpression();
     }
 }

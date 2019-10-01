@@ -3,18 +3,18 @@ using QueryFiltering.Nodes.Base;
 
 namespace QueryFiltering.Nodes.Operators
 {
-    internal class NotNode : ExpressionNode
+    internal class NotNode : BaseNode
     {
-        private readonly ExpressionNode _node;
+        private readonly BaseNode _node;
 
-        public NotNode(ExpressionNode node)
+        public NotNode(BaseNode node)
         {
             _node = node;
         }
 
-        public override Expression Build()
+        public override Expression BuildExpression()
         {
-            return Expression.Not(_node.Build());
+            return Expression.Not(_node.BuildExpression());
         }
     }
 }
