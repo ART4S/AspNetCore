@@ -77,37 +77,23 @@ namespace QueryFiltering.Visitors
             var left = context.left.Accept(this);
             var right = context.right.Accept(this);
 
-            if (context.operation.Type == QueryFilteringLexer.EQUALS)
+            switch (context.operation.Type)
             {
-                return new EqualsNode(left, right);
+                case QueryFilteringLexer.EQUALS:
+                    return new EqualsNode(left, right);
+                case QueryFilteringLexer.NOTEQUALS:
+                    return new NotEqualsNode(left, right);
+                case QueryFilteringLexer.GREATERTHAN:
+                    return new GreaterThanNode(left, right);
+                case QueryFilteringLexer.GREATERTHANOREQUAL:
+                    return new GreaterThanOrEqualNode(left, right);
+                case QueryFilteringLexer.LESSTHAN:
+                    return new LessThanNode(left, right);
+                case QueryFilteringLexer.LESSTHANOREQUAL:
+                    return new LessThanOrEqualNode(left, right);
+                default:
+                    throw new FilterException($"{nameof(VisitBoolExpression)} -> {context.GetText()}");
             }
-
-            if (context.operation.Type == QueryFilteringLexer.NOTEQUALS)
-            {
-                return new NotEqualsNode(left, right);
-            }
-
-            if (context.operation.Type == QueryFilteringLexer.GREATERTHAN)
-            {
-                return new GreaterThanNode(left, right);
-            }
-
-            if (context.operation.Type == QueryFilteringLexer.GREATERTHANOREQUAL)
-            {
-                return new GreaterThanOrEqualNode(left, right);
-            }
-
-            if (context.operation.Type == QueryFilteringLexer.LESSTHAN)
-            {
-                return new LessThanNode(left, right);
-            }
-
-            if (context.operation.Type == QueryFilteringLexer.LESSTHANOREQUAL)
-            {
-                return new LessThanOrEqualNode(left, right);
-            }
-
-            throw new FilterException($"{nameof(VisitBoolExpression)} -> {context.GetText()}");
         }
 
         public override BaseNode VisitProperty(QueryFilteringParser.PropertyContext context)
@@ -117,47 +103,27 @@ namespace QueryFiltering.Visitors
 
         public override BaseNode VisitConstant(QueryFilteringParser.ConstantContext context)
         {
-            if (context.value.Type == QueryFilteringLexer.INT)
+            switch (context.value.Type)
             {
-                return new IntNode(context.value.Text);
+                case QueryFilteringLexer.INT:
+                    return new IntNode(context.value.Text);
+                case QueryFilteringLexer.LONG:
+                    return new LongNode(context.value.Text);
+                case QueryFilteringLexer.DOUBLE:
+                    return new DoubleNode(context.value.Text);
+                case QueryFilteringLexer.FLOAT:
+                    return new FloatNode(context.value.Text);
+                case QueryFilteringLexer.DECIMAL:
+                    return new DecimalNode(context.value.Text);
+                case QueryFilteringLexer.BOOL:
+                    return new BoolNode(context.value.Text);
+                case QueryFilteringLexer.GUID:
+                    return new GuidNode(context.value.Text);
+                case QueryFilteringLexer.NULL:
+                    return new NullNode();
+                default:
+                    throw new FilterException($"{nameof(VisitConstant)} -> {context.GetText()}");
             }
-
-            if (context.value.Type == QueryFilteringLexer.LONG)
-            {
-                return new LongNode(context.value.Text);
-            }
-
-            if (context.value.Type == QueryFilteringLexer.DOUBLE)
-            {
-                return new DoubleNode(context.value.Text);
-            }
-
-            if (context.value.Type == QueryFilteringLexer.FLOAT)
-            {
-                return new FloatNode(context.value.Text);
-            }
-
-            if (context.value.Type == QueryFilteringLexer.DECIMAL)
-            {
-                return new DecimalNode(context.value.Text);
-            }
-
-            if (context.value.Type == QueryFilteringLexer.BOOL)
-            {
-                return new BoolNode(context.value.Text);
-            }
-
-            if (context.value.Type == QueryFilteringLexer.GUID)
-            {
-                return new GuidNode(context.value.Text);
-            }
-
-            if (context.value.Type == QueryFilteringLexer.NULL)
-            {
-                return new NullNode();
-            }
-
-            throw new FilterException($"{nameof(VisitConstant)} -> {context.GetText()}");
         }
     }
 }

@@ -5,18 +5,20 @@ using System.Linq.Expressions;
 
 namespace QueryFiltering.Visitors
 {
-    internal class QueryVisitor : QueryFilteringBaseVisitor<IQueryable>
+    internal class QueryVisitor : QueryFilteringBaseVisitor<object>
     {
-        private IQueryable _sourceQueryable;
+        private object _sourceQueryable;
+        private readonly Type _elementType;
         private readonly ParameterExpression _parameter;
 
         public QueryVisitor(IQueryable sourceQueryable)
         {
             _sourceQueryable = sourceQueryable;
-            _parameter = Expression.Parameter(_sourceQueryable.ElementType);
+            _elementType = sourceQueryable.ElementType;
+            _parameter = Expression.Parameter(sourceQueryable.ElementType);
         }
 
-        public override IQueryable VisitQuery(QueryFilteringParser.QueryContext context)
+        public override object VisitQuery(QueryFilteringParser.QueryContext context)
         {
             foreach (var parameter in context.queryParameter())
             {
@@ -26,7 +28,7 @@ namespace QueryFiltering.Visitors
             return _sourceQueryable;
         }
 
-        public override IQueryable VisitQueryParameter(QueryFilteringParser.QueryParameterContext context)
+        public override object VisitQueryParameter(QueryFilteringParser.QueryParameterContext context)
         {
             foreach (var child in context.children)
             {
@@ -36,46 +38,46 @@ namespace QueryFiltering.Visitors
             return _sourceQueryable;
         }
 
-        public override IQueryable VisitTop(QueryFilteringParser.TopContext context)
+        public override object VisitTop(QueryFilteringParser.TopContext context)
         {
             var count = context.Accept(new TopVisitor());
 
             var take = ReflectionCache.Take
-                .MakeGenericMethod(_sourceQueryable.ElementType);
+                .MakeGenericMethod(_elementType);
 
-            return (IQueryable) take.Invoke(null, new object[] { _sourceQueryable, count });
+            return take.Invoke(null, new[] { _sourceQueryable, count });
         }
 
-        public override IQueryable VisitSkip(QueryFilteringParser.SkipContext context)
+        public override object VisitSkip(QueryFilteringParser.SkipContext context)
         {
             var count = context.Accept(new SkipVisitor());
 
             var skip = ReflectionCache.Skip
-                .MakeGenericMethod(_sourceQueryable.ElementType);
+                .MakeGenericMethod(_elementType);
 
-            return (IQueryable) skip.Invoke(null, new object[] { _sourceQueryable, count });
+            return skip.Invoke(null, new[] { _sourceQueryable, count });
         }
 
-        public override IQueryable VisitFilter(QueryFilteringParser.FilterContext context)
+        public override object VisitFilter(QueryFilteringParser.FilterContext context)
         {
             var visitor = new FilterVisitor(_parameter);
             var tree = context.Accept(visitor);
 
             var lambda = ReflectionCache.Lambda
                 .MakeGenericMethod(typeof(Func<,>)
-                    .MakeGenericType(_sourceQueryable.ElementType, typeof(bool)));
+                    .MakeGenericType(_elementType, typeof(bool)));
 
             var expression = lambda.Invoke(null, new object[] { tree.BuildExpression(), new ParameterExpression[] { _parameter } });
 
             var where = ReflectionCache.Where
-                .MakeGenericMethod(_sourceQueryable.ElementType);
+                .MakeGenericMethod(_elementType);
 
-            return (IQueryable) where.Invoke(null, new[] { _sourceQueryable, expression });
+            return where.Invoke(null, new[] { _sourceQueryable, expression });
         }
 
-        public override IQueryable VisitOrderBy(QueryFilteringParser.OrderByContext context)
+        public override object VisitOrderBy(QueryFilteringParser.OrderByContext context)
         {
-            var visitor = new OrderByVisitor(_sourceQueryable, _parameter);
+            var visitor = new OrderByVisitor(_sourceQueryable, _elementType, _parameter);
             return context.Accept(visitor);
         }
     }

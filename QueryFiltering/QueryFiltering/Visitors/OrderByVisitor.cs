@@ -1,27 +1,28 @@
 ﻿using QueryFiltering.Infrastructure;
 using System;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace QueryFiltering.Visitors
 {
-    internal class OrderByVisitor : QueryFilteringBaseVisitor<IQueryable>
+    internal class OrderByVisitor : QueryFilteringBaseVisitor<object>
     {
-        private IQueryable _sourceQueryable;
+        private object _sourceQueryable;
+        private readonly Type _elementType;
         private readonly ParameterExpression _parameter;
 
-        public OrderByVisitor(IQueryable sourceQueryable, ParameterExpression parameter)
+        public OrderByVisitor(object sourceQueryable, Type elementType, ParameterExpression parameter)
         {
             _sourceQueryable = sourceQueryable;
+            _elementType = elementType;
             _parameter = parameter;
         }
 
-        public override IQueryable VisitOrderBy(QueryFilteringParser.OrderByContext context)
+        public override object VisitOrderBy(QueryFilteringParser.OrderByContext context)
         {
             return context.expression.Accept(this);
         }
 
-        public override IQueryable VisitOrderByExpression(QueryFilteringParser.OrderByExpressionContext context)
+        public override object VisitOrderByExpression(QueryFilteringParser.OrderByExpressionContext context)
         {
             foreach (var orderProperty in context.orderByProperty())
             {
@@ -31,7 +32,7 @@ namespace QueryFiltering.Visitors
             return _sourceQueryable;
         }
 
-        public override IQueryable VisitOrderByProperty(QueryFilteringParser.OrderByPropertyContext context)
+        public override object VisitOrderByProperty(QueryFilteringParser.OrderByPropertyContext context)
         {
             MemberExpression property = null;
 
@@ -48,16 +49,16 @@ namespace QueryFiltering.Visitors
             }
 
             var lambda = ReflectionCache.Lambda.MakeGenericMethod(
-                typeof(Func<,>).MakeGenericType(_sourceQueryable.ElementType, property.Type));
+                typeof(Func<,>).MakeGenericType(_elementType, property.Type));
 
             var expression = lambda.Invoke(null, new object[] { property, new ParameterExpression[] { _parameter } });
             
             var orderBy = (context.op.Type == QueryFilteringLexer.ASC ? 
                     context.firstSort ? ReflectionCache.OrderBy : ReflectionCache.ThenBy : 
                     context.firstSort ? ReflectionCache.OrderByDescending : ReflectionCache.ThenByDescending)
-                .MakeGenericMethod(_sourceQueryable.ElementType, property.Type);
+                .MakeGenericMethod(_elementType, property.Type);
 
-            return (IQueryable)orderBy.Invoke(null, new[] { _sourceQueryable, expression });
+            return orderBy.Invoke(null, new[] { _sourceQueryable, expression });
         }
     }
 }
