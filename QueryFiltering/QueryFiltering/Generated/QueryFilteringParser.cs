@@ -807,9 +807,9 @@ public partial class QueryFilteringParser : Parser {
 	}
 
 	public partial class AtomContext : ParserRuleContext {
-		public PropertyContext propertyValue;
-		public ConstantContext constantValue;
-		public FunctionContext functionValue;
+		public PropertyContext propertyRule;
+		public ConstantContext constantRule;
+		public FunctionContext functionRule;
 		public PropertyContext property() {
 			return GetRuleContext<PropertyContext>(0);
 		}
@@ -850,7 +850,7 @@ public partial class QueryFilteringParser : Parser {
 			case PROPERTYACCESS:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 94; _localctx.propertyValue = property();
+				State = 94; _localctx.propertyRule = property();
 				}
 				break;
 			case INT:
@@ -864,7 +864,7 @@ public partial class QueryFilteringParser : Parser {
 			case STRING:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 95; _localctx.constantValue = constant();
+				State = 95; _localctx.constantRule = constant();
 				}
 				break;
 			case TOUPPER:
@@ -873,7 +873,7 @@ public partial class QueryFilteringParser : Parser {
 			case ENDSWITH:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 96; _localctx.functionValue = function();
+				State = 96; _localctx.functionRule = function();
 				}
 				break;
 			default:

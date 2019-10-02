@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using QueryFiltering.Infrastructure;
+﻿using QueryFiltering.Infrastructure;
 using QueryFiltering.Nodes.Base;
 using System.Linq;
 using System.Linq.Expressions;
@@ -8,7 +7,7 @@ namespace QueryFiltering.Nodes.Functions
 {
     internal class ToUpperNode : FunctionNode
     {
-        public ToUpperNode(IList<BaseNode> parameters) : base(parameters)
+        public ToUpperNode(BaseNode[] parameters) : base(parameters)
         {
         }
 

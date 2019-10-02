@@ -35,48 +35,50 @@ namespace QueryFiltering.Visitors
         {
             var children = context.children.Reverse().ToArray();
 
-            BaseNode result = children[0].Accept(this);
+            BaseNode resultNode = children[0].Accept(this);
 
             for (int i = 1; i < children.Length; i += 2)
             {
-                var left = result;
+                var left = resultNode;
                 var right = children[i + 1].Accept(this);
 
-                var node = (ITerminalNode)children[i];
+                var aggregateNode = (ITerminalNode)children[i];
 
-                switch (node.Symbol.Type)
+                switch (aggregateNode.Symbol.Type)
                 {
                     case QueryFilteringLexer.AND:
-                        result = new AndNode(left, right);
+                        resultNode = new AndNode(left, right);
                         continue;
                     case QueryFilteringLexer.OR:
-                        result = new OrNode(left, right);
+                        resultNode = new OrNode(left, right);
                         continue;
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(node.Symbol.Type));
+                        throw new ArgumentOutOfRangeException(nameof(aggregateNode.Symbol.Type));
                 }
             }
 
-            return result;
+            return resultNode;
         }
 
         public override BaseNode VisitFilterAtom(QueryFilteringParser.FilterAtomContext context)
         {
-            var result = context.boolExpr?.Accept(this) ?? context.filterExpr?.Accept(this) ?? throw new FilterException($"{nameof(VisitAtom)} -> {context.GetText()}");
+            var resultNode = context.boolExpr?.Accept(this) ?? 
+                             context.filterExpr?.Accept(this) ?? 
+                             throw new FilterException($"{nameof(VisitAtom)} -> {context.GetText()}");
 
             if (context.not != null)
             {
-                result = new NotNode(result);
+                resultNode = new NotNode(resultNode);
             }
 
-            return result;
+            return resultNode;
         }
 
         public override BaseNode VisitAtom(QueryFilteringParser.AtomContext context)
         {
-            return context.propertyValue?.Accept(this) ?? 
-                   context.constantValue?.Accept(this) ?? 
-                   context.functionValue?.Accept(this) ?? 
+            return context.propertyRule?.Accept(this) ?? 
+                   context.constantRule?.Accept(this) ?? 
+                   context.functionRule?.Accept(this) ?? 
                    throw new FilterException($"{nameof(VisitAtom)} -> {context.GetText()}");
         }
 
@@ -143,7 +145,7 @@ namespace QueryFiltering.Visitors
             switch (context.value.Type)
             {
                 case QueryFilteringParser.TOUPPER:
-                    return new ToUpperNode(parameters.ToList());
+                    return new ToUpperNode(parameters.ToArray());
                 default:
                     throw new ArgumentOutOfRangeException(nameof(context.value.Type));
             }

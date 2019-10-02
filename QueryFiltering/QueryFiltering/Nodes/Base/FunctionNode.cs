@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace QueryFiltering.Nodes.Base
+﻿namespace QueryFiltering.Nodes.Base
 {
     internal abstract class FunctionNode : BaseNode
     {
-        protected IList<BaseNode> Parameters;
+        protected BaseNode[] Parameters;
 
-        protected FunctionNode(IList<BaseNode> parameters)
+        protected FunctionNode(BaseNode[] parameters)
         {
             Parameters = parameters;
         }
