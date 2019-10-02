@@ -4,7 +4,9 @@ using QueryFiltering.Nodes;
 using QueryFiltering.Nodes.Aggregates;
 using QueryFiltering.Nodes.Base;
 using QueryFiltering.Nodes.DataTypes;
+using QueryFiltering.Nodes.Functions;
 using QueryFiltering.Nodes.Operators;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -42,25 +44,23 @@ namespace QueryFiltering.Visitors
 
                 var node = (ITerminalNode)children[i];
 
-                if (node.Symbol.Type == QueryFilteringLexer.AND)
+                switch (node.Symbol.Type)
                 {
-                    result = new AndNode(left, right);
-                    continue;
+                    case QueryFilteringLexer.AND:
+                        result = new AndNode(left, right);
+                        continue;
+                    case QueryFilteringLexer.OR:
+                        result = new OrNode(left, right);
+                        continue;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(node.Symbol.Type));
                 }
-
-                if (node.Symbol.Type == QueryFilteringLexer.OR)
-                {
-                    result = new OrNode(left, right);
-                    continue;
-                }
-
-                throw new FilterException($"{nameof(VisitFilterExpression)} -> {node.GetText()}");
             }
 
             return result;
         }
 
-        public override BaseNode VisitAtom(QueryFilteringParser.AtomContext context)
+        public override BaseNode VisitFilterAtom(QueryFilteringParser.FilterAtomContext context)
         {
             var result = context.boolExpr?.Accept(this) ?? context.filterExpr?.Accept(this) ?? throw new FilterException($"{nameof(VisitAtom)} -> {context.GetText()}");
 
@@ -70,6 +70,14 @@ namespace QueryFiltering.Visitors
             }
 
             return result;
+        }
+
+        public override BaseNode VisitAtom(QueryFilteringParser.AtomContext context)
+        {
+            return context.propertyValue?.Accept(this) ?? 
+                   context.constantValue?.Accept(this) ?? 
+                   context.functionValue?.Accept(this) ?? 
+                   throw new FilterException($"{nameof(VisitAtom)} -> {context.GetText()}");
         }
 
         public override BaseNode VisitBoolExpression(QueryFilteringParser.BoolExpressionContext context)
@@ -92,7 +100,7 @@ namespace QueryFiltering.Visitors
                 case QueryFilteringLexer.LESSTHANOREQUAL:
                     return new LessThanOrEqualNode(left, right);
                 default:
-                    throw new FilterException($"{nameof(VisitBoolExpression)} -> {context.GetText()}");
+                    throw new ArgumentOutOfRangeException(nameof(context.operation.Type));
             }
         }
 
@@ -121,8 +129,23 @@ namespace QueryFiltering.Visitors
                     return new GuidNode(context.value.Text);
                 case QueryFilteringLexer.NULL:
                     return new NullNode();
+                case QueryFilteringLexer.STRING:
+                    return new StringNode(context.value.Text);
                 default:
-                    throw new FilterException($"{nameof(VisitConstant)} -> {context.GetText()}");
+                    throw new ArgumentOutOfRangeException(nameof(context.value.Type));
+            }
+        }
+
+        public override BaseNode VisitFunction(QueryFilteringParser.FunctionContext context)
+        {
+            var parameters = context.atom().Select(x => x.Accept(this));
+
+            switch (context.value.Type)
+            {
+                case QueryFilteringParser.TOUPPER:
+                    return new ToUpperNode(parameters.ToList());
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(context.value.Type));
             }
         }
     }

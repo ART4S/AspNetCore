@@ -83,18 +83,6 @@ public partial class QueryFilteringBaseListener : IQueryFilteringListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitSkip([NotNull] QueryFilteringParser.SkipContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="QueryFilteringParser.filter"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterFilter([NotNull] QueryFilteringParser.FilterContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="QueryFilteringParser.filter"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitFilter([NotNull] QueryFilteringParser.FilterContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="QueryFilteringParser.orderBy"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -106,18 +94,6 @@ public partial class QueryFilteringBaseListener : IQueryFilteringListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitOrderBy([NotNull] QueryFilteringParser.OrderByContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="QueryFilteringParser.filterExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterFilterExpression([NotNull] QueryFilteringParser.FilterExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="QueryFilteringParser.filterExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitFilterExpression([NotNull] QueryFilteringParser.FilterExpressionContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="QueryFilteringParser.orderByExpression"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -131,17 +107,53 @@ public partial class QueryFilteringBaseListener : IQueryFilteringListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitOrderByExpression([NotNull] QueryFilteringParser.OrderByExpressionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="QueryFilteringParser.atom"/>.
+	/// Enter a parse tree produced by <see cref="QueryFilteringParser.orderByProperty"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterAtom([NotNull] QueryFilteringParser.AtomContext context) { }
+	public virtual void EnterOrderByProperty([NotNull] QueryFilteringParser.OrderByPropertyContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="QueryFilteringParser.atom"/>.
+	/// Exit a parse tree produced by <see cref="QueryFilteringParser.orderByProperty"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitAtom([NotNull] QueryFilteringParser.AtomContext context) { }
+	public virtual void ExitOrderByProperty([NotNull] QueryFilteringParser.OrderByPropertyContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="QueryFilteringParser.filter"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterFilter([NotNull] QueryFilteringParser.FilterContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="QueryFilteringParser.filter"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitFilter([NotNull] QueryFilteringParser.FilterContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="QueryFilteringParser.filterExpression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterFilterExpression([NotNull] QueryFilteringParser.FilterExpressionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="QueryFilteringParser.filterExpression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitFilterExpression([NotNull] QueryFilteringParser.FilterExpressionContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="QueryFilteringParser.filterAtom"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterFilterAtom([NotNull] QueryFilteringParser.FilterAtomContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="QueryFilteringParser.filterAtom"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitFilterAtom([NotNull] QueryFilteringParser.FilterAtomContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="QueryFilteringParser.boolExpression"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -155,6 +167,18 @@ public partial class QueryFilteringBaseListener : IQueryFilteringListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitBoolExpression([NotNull] QueryFilteringParser.BoolExpressionContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="QueryFilteringParser.atom"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterAtom([NotNull] QueryFilteringParser.AtomContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="QueryFilteringParser.atom"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitAtom([NotNull] QueryFilteringParser.AtomContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="QueryFilteringParser.property"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -167,18 +191,6 @@ public partial class QueryFilteringBaseListener : IQueryFilteringListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitProperty([NotNull] QueryFilteringParser.PropertyContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="QueryFilteringParser.orderByProperty"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterOrderByProperty([NotNull] QueryFilteringParser.OrderByPropertyContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="QueryFilteringParser.orderByProperty"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitOrderByProperty([NotNull] QueryFilteringParser.OrderByPropertyContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="QueryFilteringParser.constant"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -190,6 +202,18 @@ public partial class QueryFilteringBaseListener : IQueryFilteringListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitConstant([NotNull] QueryFilteringParser.ConstantContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="QueryFilteringParser.function"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterFunction([NotNull] QueryFilteringParser.FunctionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="QueryFilteringParser.function"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitFunction([NotNull] QueryFilteringParser.FunctionContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

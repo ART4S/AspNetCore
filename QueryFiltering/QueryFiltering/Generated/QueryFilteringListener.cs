@@ -71,16 +71,6 @@ public interface IQueryFilteringListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitSkip([NotNull] QueryFilteringParser.SkipContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="QueryFilteringParser.filter"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterFilter([NotNull] QueryFilteringParser.FilterContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="QueryFilteringParser.filter"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitFilter([NotNull] QueryFilteringParser.FilterContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="QueryFilteringParser.orderBy"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -90,16 +80,6 @@ public interface IQueryFilteringListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitOrderBy([NotNull] QueryFilteringParser.OrderByContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="QueryFilteringParser.filterExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterFilterExpression([NotNull] QueryFilteringParser.FilterExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="QueryFilteringParser.filterExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitFilterExpression([NotNull] QueryFilteringParser.FilterExpressionContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="QueryFilteringParser.orderByExpression"/>.
 	/// </summary>
@@ -111,15 +91,45 @@ public interface IQueryFilteringListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitOrderByExpression([NotNull] QueryFilteringParser.OrderByExpressionContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="QueryFilteringParser.atom"/>.
+	/// Enter a parse tree produced by <see cref="QueryFilteringParser.orderByProperty"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterAtom([NotNull] QueryFilteringParser.AtomContext context);
+	void EnterOrderByProperty([NotNull] QueryFilteringParser.OrderByPropertyContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="QueryFilteringParser.atom"/>.
+	/// Exit a parse tree produced by <see cref="QueryFilteringParser.orderByProperty"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitAtom([NotNull] QueryFilteringParser.AtomContext context);
+	void ExitOrderByProperty([NotNull] QueryFilteringParser.OrderByPropertyContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="QueryFilteringParser.filter"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterFilter([NotNull] QueryFilteringParser.FilterContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="QueryFilteringParser.filter"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitFilter([NotNull] QueryFilteringParser.FilterContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="QueryFilteringParser.filterExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterFilterExpression([NotNull] QueryFilteringParser.FilterExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="QueryFilteringParser.filterExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitFilterExpression([NotNull] QueryFilteringParser.FilterExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="QueryFilteringParser.filterAtom"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterFilterAtom([NotNull] QueryFilteringParser.FilterAtomContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="QueryFilteringParser.filterAtom"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitFilterAtom([NotNull] QueryFilteringParser.FilterAtomContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="QueryFilteringParser.boolExpression"/>.
 	/// </summary>
@@ -131,6 +141,16 @@ public interface IQueryFilteringListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitBoolExpression([NotNull] QueryFilteringParser.BoolExpressionContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="QueryFilteringParser.atom"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterAtom([NotNull] QueryFilteringParser.AtomContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="QueryFilteringParser.atom"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitAtom([NotNull] QueryFilteringParser.AtomContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="QueryFilteringParser.property"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -141,16 +161,6 @@ public interface IQueryFilteringListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitProperty([NotNull] QueryFilteringParser.PropertyContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="QueryFilteringParser.orderByProperty"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterOrderByProperty([NotNull] QueryFilteringParser.OrderByPropertyContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="QueryFilteringParser.orderByProperty"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitOrderByProperty([NotNull] QueryFilteringParser.OrderByPropertyContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="QueryFilteringParser.constant"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -160,4 +170,14 @@ public interface IQueryFilteringListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitConstant([NotNull] QueryFilteringParser.ConstantContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="QueryFilteringParser.function"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterFunction([NotNull] QueryFilteringParser.FunctionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="QueryFilteringParser.function"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitFunction([NotNull] QueryFilteringParser.FunctionContext context);
 }

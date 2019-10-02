@@ -6,6 +6,10 @@
 
         public double DoubleValue { get; set; }
 
+        public decimal DecimalValue { get; set; }
+
         public bool BoolValue { get; set; }
+
+        public string StringValue { get; set; }
     }
 }

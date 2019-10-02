@@ -10,43 +10,48 @@ namespace QueryFiltering.Infrastructure
         private static readonly ConcurrentDictionary<string, MethodInfo> Methods = new ConcurrentDictionary<string, MethodInfo>();
 
         public static MethodInfo Lambda => Methods.GetOrAdd("Lambda",
-            k => typeof(Expression)
+            n => typeof(Expression)
                 .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == "Lambda"));
+                .First(x => x.Name == n));
 
         public static MethodInfo OrderBy => Methods.GetOrAdd("OrderBy",
-            k => typeof(Queryable)
+            n => typeof(Queryable)
                 .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == "OrderBy" && x.GetParameters().Length == 2));
+                .First(x => x.Name == n && x.GetParameters().Length == 2));
 
         public static MethodInfo OrderByDescending => Methods.GetOrAdd("OrderByDescending",
-            k => typeof(Queryable)
+            n => typeof(Queryable)
                 .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == "OrderByDescending" && x.GetParameters().Length == 2));
+                .First(x => x.Name == n && x.GetParameters().Length == 2));
 
         public static MethodInfo ThenBy => Methods.GetOrAdd("ThenBy",
-            k => typeof(Queryable)
+            n => typeof(Queryable)
                 .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == "ThenBy" && x.GetParameters().Length == 2));
+                .First(x => x.Name == n && x.GetParameters().Length == 2));
 
         public static MethodInfo ThenByDescending => Methods.GetOrAdd("ThenByDescending",
-            k => typeof(Queryable)
+            n => typeof(Queryable)
                 .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == "ThenByDescending" && x.GetParameters().Length == 2));
+                .First(x => x.Name == n && x.GetParameters().Length == 2));
 
         public static MethodInfo Skip => Methods.GetOrAdd("Skip",
-            k => typeof(Queryable)
+            n => typeof(Queryable)
                 .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == "Skip" && x.GetParameters().Length == 2));
+                .First(x => x.Name == n && x.GetParameters().Length == 2));
 
         public static MethodInfo Take => Methods.GetOrAdd("Take",
-            k => typeof(Queryable)
+            n => typeof(Queryable)
                 .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == "Take" && x.GetParameters().Length == 2));
+                .First(x => x.Name == n && x.GetParameters().Length == 2));
 
         public static MethodInfo Where => Methods.GetOrAdd("Where",
-            k => typeof(Queryable)
+            n => typeof(Queryable)
                 .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == "Where" && x.GetParameters().Length == 2));
+                .First(x => x.Name == n && x.GetParameters().Length == 2));
+
+        public static MethodInfo ToUpper => Methods.GetOrAdd("Where",
+            n => typeof(string)
+                .GetMethods(BindingFlags.Public)
+                .First(x => x.Name == n && x.GetParameters().Length == 0));
     }
 }

@@ -39,31 +39,32 @@ public partial class QueryFilteringParser : Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		OR=10, AND=11, NOT=12, EQUALS=13, NOTEQUALS=14, GREATERTHAN=15, GREATERTHANOREQUAL=16, 
 		LESSTHAN=17, LESSTHANOREQUAL=18, INT=19, LONG=20, DOUBLE=21, FLOAT=22, 
-		DECIMAL=23, BOOL=24, GUID=25, NULL=26, WHITESPACE=27, PROPERTYACCESS=28, 
-		ASC=29, DESC=30, STRING=31, CHAR=32;
+		DECIMAL=23, BOOL=24, GUID=25, NULL=26, STRING=27, PROPERTYACCESS=28, TOUPPER=29, 
+		TOLOWER=30, STARTSWITH=31, ENDSWITH=32, WHITESPACE=33, ASC=34, DESC=35;
 	public const int
 		RULE_query = 0, RULE_queryParameter = 1, RULE_top = 2, RULE_skip = 3, 
-		RULE_filter = 4, RULE_orderBy = 5, RULE_filterExpression = 6, RULE_orderByExpression = 7, 
-		RULE_atom = 8, RULE_boolExpression = 9, RULE_property = 10, RULE_orderByProperty = 11, 
-		RULE_constant = 12;
+		RULE_orderBy = 4, RULE_orderByExpression = 5, RULE_orderByProperty = 6, 
+		RULE_filter = 7, RULE_filterExpression = 8, RULE_filterAtom = 9, RULE_boolExpression = 10, 
+		RULE_atom = 11, RULE_property = 12, RULE_constant = 13, RULE_function = 14;
 	public static readonly string[] ruleNames = {
-		"query", "queryParameter", "top", "skip", "filter", "orderBy", "filterExpression", 
-		"orderByExpression", "atom", "boolExpression", "property", "orderByProperty", 
-		"constant"
+		"query", "queryParameter", "top", "skip", "orderBy", "orderByExpression", 
+		"orderByProperty", "filter", "filterExpression", "filterAtom", "boolExpression", 
+		"atom", "property", "constant", "function"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'?'", "'&'", "'$top='", "'$skip='", "'$filter='", "'$orderBy='", 
-		"','", "'('", "')'", "'or'", "'and'", "'not'", "'eq'", "'ne'", "'gt'", 
-		"'ge'", "'lt'", "'le'", null, null, null, null, null, null, null, "'null'", 
-		null, null, "'asc'", "'desk'"
+		null, "'?'", "'&'", "'$top='", "'$skip='", "'$orderBy='", "','", "'$filter='", 
+		"'('", "')'", "'or'", "'and'", "'not'", "'eq'", "'ne'", "'gt'", "'ge'", 
+		"'lt'", "'le'", null, null, null, null, null, null, null, "'null'", null, 
+		null, "'toupper'", "'tolower'", "'startswith'", "'endswith'", null, "'asc'", 
+		"'desk'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, null, null, null, null, null, null, null, null, null, "OR", "AND", 
 		"NOT", "EQUALS", "NOTEQUALS", "GREATERTHAN", "GREATERTHANOREQUAL", "LESSTHAN", 
 		"LESSTHANOREQUAL", "INT", "LONG", "DOUBLE", "FLOAT", "DECIMAL", "BOOL", 
-		"GUID", "NULL", "WHITESPACE", "PROPERTYACCESS", "ASC", "DESC", "STRING", 
-		"CHAR"
+		"GUID", "NULL", "STRING", "PROPERTYACCESS", "TOUPPER", "TOLOWER", "STARTSWITH", 
+		"ENDSWITH", "WHITESPACE", "ASC", "DESC"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -132,32 +133,32 @@ public partial class QueryFilteringParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 37;
+			State = 41;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__6))) != 0)) {
 				{
-				State = 27;
+				State = 31;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==T__0) {
 					{
-					State = 26; Match(T__0);
+					State = 30; Match(T__0);
 					}
 				}
 
-				State = 29; queryParameter();
-				State = 34;
+				State = 33; queryParameter();
+				State = 38;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				while (_la==T__1) {
 					{
 					{
-					State = 30; Match(T__1);
-					State = 31; queryParameter();
+					State = 34; Match(T__1);
+					State = 35; queryParameter();
 					}
 					}
-					State = 36;
+					State = 40;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
@@ -215,31 +216,31 @@ public partial class QueryFilteringParser : Parser {
 		QueryParameterContext _localctx = new QueryParameterContext(Context, State);
 		EnterRule(_localctx, 2, RULE_queryParameter);
 		try {
-			State = 43;
+			State = 47;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case T__2:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 39; top();
+				State = 43; top();
 				}
 				break;
 			case T__3:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 40; skip();
+				State = 44; skip();
+				}
+				break;
+			case T__6:
+				EnterOuterAlt(_localctx, 3);
+				{
+				State = 45; filter();
 				}
 				break;
 			case T__4:
-				EnterOuterAlt(_localctx, 3);
-				{
-				State = 41; filter();
-				}
-				break;
-			case T__5:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 42; orderBy();
+				State = 46; orderBy();
 				}
 				break;
 			default:
@@ -287,8 +288,8 @@ public partial class QueryFilteringParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 45; Match(T__2);
-			State = 46; _localctx.count = Match(INT);
+			State = 49; Match(T__2);
+			State = 50; _localctx.count = Match(INT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -332,55 +333,8 @@ public partial class QueryFilteringParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 48; Match(T__3);
-			State = 49; _localctx.count = Match(INT);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class FilterContext : ParserRuleContext {
-		public FilterExpressionContext expression;
-		public FilterExpressionContext filterExpression() {
-			return GetRuleContext<FilterExpressionContext>(0);
-		}
-		public FilterContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_filter; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterFilter(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitFilter(this);
-		}
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitFilter(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public FilterContext filter() {
-		FilterContext _localctx = new FilterContext(Context, State);
-		EnterRule(_localctx, 8, RULE_filter);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 51; Match(T__4);
-			State = 52; _localctx.expression = filterExpression();
+			State = 52; Match(T__3);
+			State = 53; _localctx.count = Match(INT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -422,91 +376,12 @@ public partial class QueryFilteringParser : Parser {
 	[RuleVersion(0)]
 	public OrderByContext orderBy() {
 		OrderByContext _localctx = new OrderByContext(Context, State);
-		EnterRule(_localctx, 10, RULE_orderBy);
+		EnterRule(_localctx, 8, RULE_orderBy);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 54; Match(T__5);
-			State = 55; _localctx.expression = orderByExpression();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class FilterExpressionContext : ParserRuleContext {
-		public AtomContext[] atom() {
-			return GetRuleContexts<AtomContext>();
-		}
-		public AtomContext atom(int i) {
-			return GetRuleContext<AtomContext>(i);
-		}
-		public ITerminalNode[] OR() { return GetTokens(QueryFilteringParser.OR); }
-		public ITerminalNode OR(int i) {
-			return GetToken(QueryFilteringParser.OR, i);
-		}
-		public ITerminalNode[] AND() { return GetTokens(QueryFilteringParser.AND); }
-		public ITerminalNode AND(int i) {
-			return GetToken(QueryFilteringParser.AND, i);
-		}
-		public FilterExpressionContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_filterExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterFilterExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitFilterExpression(this);
-		}
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitFilterExpression(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public FilterExpressionContext filterExpression() {
-		FilterExpressionContext _localctx = new FilterExpressionContext(Context, State);
-		EnterRule(_localctx, 12, RULE_filterExpression);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 57; atom();
-			State = 62;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==OR || _la==AND) {
-				{
-				{
-				State = 58;
-				_la = TokenStream.LA(1);
-				if ( !(_la==OR || _la==AND) ) {
-				ErrorHandler.RecoverInline(this);
-				}
-				else {
-					ErrorHandler.ReportMatch(this);
-				    Consume();
-				}
-				State = 59; atom();
-				}
-				}
-				State = 64;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
+			State = 55; Match(T__4);
+			State = 56; _localctx.expression = orderByExpression();
 			}
 		}
 		catch (RecognitionException re) {
@@ -550,218 +425,26 @@ public partial class QueryFilteringParser : Parser {
 	[RuleVersion(0)]
 	public OrderByExpressionContext orderByExpression() {
 		OrderByExpressionContext _localctx = new OrderByExpressionContext(Context, State);
-		EnterRule(_localctx, 14, RULE_orderByExpression);
+		EnterRule(_localctx, 10, RULE_orderByExpression);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 65; orderByProperty(true);
-			State = 70;
+			State = 58; orderByProperty(true);
+			State = 63;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while (_la==T__6) {
+			while (_la==T__5) {
 				{
 				{
-				State = 66; Match(T__6);
-				State = 67; orderByProperty(false);
+				State = 59; Match(T__5);
+				State = 60; orderByProperty(false);
 				}
 				}
-				State = 72;
+				State = 65;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class AtomContext : ParserRuleContext {
-		public IToken not;
-		public BoolExpressionContext boolExpr;
-		public FilterExpressionContext filterExpr;
-		public BoolExpressionContext boolExpression() {
-			return GetRuleContext<BoolExpressionContext>(0);
-		}
-		public FilterExpressionContext filterExpression() {
-			return GetRuleContext<FilterExpressionContext>(0);
-		}
-		public ITerminalNode NOT() { return GetToken(QueryFilteringParser.NOT, 0); }
-		public AtomContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_atom; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterAtom(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitAtom(this);
-		}
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitAtom(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public AtomContext atom() {
-		AtomContext _localctx = new AtomContext(Context, State);
-		EnterRule(_localctx, 16, RULE_atom);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 74;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==NOT) {
-				{
-				State = 73; _localctx.not = Match(NOT);
-				}
-			}
-
-			State = 81;
-			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case PROPERTYACCESS:
-				{
-				State = 76; _localctx.boolExpr = boolExpression();
-				}
-				break;
-			case T__7:
-				{
-				State = 77; Match(T__7);
-				State = 78; _localctx.filterExpr = filterExpression();
-				State = 79; Match(T__8);
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class BoolExpressionContext : ParserRuleContext {
-		public PropertyContext left;
-		public IToken operation;
-		public ConstantContext right;
-		public PropertyContext property() {
-			return GetRuleContext<PropertyContext>(0);
-		}
-		public ConstantContext constant() {
-			return GetRuleContext<ConstantContext>(0);
-		}
-		public ITerminalNode EQUALS() { return GetToken(QueryFilteringParser.EQUALS, 0); }
-		public ITerminalNode NOTEQUALS() { return GetToken(QueryFilteringParser.NOTEQUALS, 0); }
-		public ITerminalNode GREATERTHAN() { return GetToken(QueryFilteringParser.GREATERTHAN, 0); }
-		public ITerminalNode GREATERTHANOREQUAL() { return GetToken(QueryFilteringParser.GREATERTHANOREQUAL, 0); }
-		public ITerminalNode LESSTHAN() { return GetToken(QueryFilteringParser.LESSTHAN, 0); }
-		public ITerminalNode LESSTHANOREQUAL() { return GetToken(QueryFilteringParser.LESSTHANOREQUAL, 0); }
-		public BoolExpressionContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_boolExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterBoolExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitBoolExpression(this);
-		}
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitBoolExpression(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public BoolExpressionContext boolExpression() {
-		BoolExpressionContext _localctx = new BoolExpressionContext(Context, State);
-		EnterRule(_localctx, 18, RULE_boolExpression);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 83; _localctx.left = property();
-			State = 84;
-			_localctx.operation = TokenStream.LT(1);
-			_la = TokenStream.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << EQUALS) | (1L << NOTEQUALS) | (1L << GREATERTHAN) | (1L << GREATERTHANOREQUAL) | (1L << LESSTHAN) | (1L << LESSTHANOREQUAL))) != 0)) ) {
-				_localctx.operation = ErrorHandler.RecoverInline(this);
-			}
-			else {
-				ErrorHandler.ReportMatch(this);
-			    Consume();
-			}
-			State = 85; _localctx.right = constant();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class PropertyContext : ParserRuleContext {
-		public IToken value;
-		public ITerminalNode PROPERTYACCESS() { return GetToken(QueryFilteringParser.PROPERTYACCESS, 0); }
-		public PropertyContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_property; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterProperty(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitProperty(this);
-		}
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitProperty(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public PropertyContext property() {
-		PropertyContext _localctx = new PropertyContext(Context, State);
-		EnterRule(_localctx, 20, RULE_property);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 87; _localctx.value = Match(PROPERTYACCESS);
 			}
 		}
 		catch (RecognitionException re) {
@@ -807,13 +490,13 @@ public partial class QueryFilteringParser : Parser {
 	[RuleVersion(0)]
 	public OrderByPropertyContext orderByProperty(bool firstSort) {
 		OrderByPropertyContext _localctx = new OrderByPropertyContext(Context, State, firstSort);
-		EnterRule(_localctx, 22, RULE_orderByProperty);
+		EnterRule(_localctx, 12, RULE_orderByProperty);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 89; _localctx.value = Match(PROPERTYACCESS);
-			State = 90;
+			State = 66; _localctx.value = Match(PROPERTYACCESS);
+			State = 67;
 			_localctx.op = TokenStream.LT(1);
 			_la = TokenStream.LA(1);
 			if ( !(_la==ASC || _la==DESC) ) {
@@ -823,6 +506,422 @@ public partial class QueryFilteringParser : Parser {
 				ErrorHandler.ReportMatch(this);
 			    Consume();
 			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class FilterContext : ParserRuleContext {
+		public FilterExpressionContext expression;
+		public FilterExpressionContext filterExpression() {
+			return GetRuleContext<FilterExpressionContext>(0);
+		}
+		public FilterContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_filter; } }
+		public override void EnterRule(IParseTreeListener listener) {
+			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
+			if (typedListener != null) typedListener.EnterFilter(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
+			if (typedListener != null) typedListener.ExitFilter(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFilter(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public FilterContext filter() {
+		FilterContext _localctx = new FilterContext(Context, State);
+		EnterRule(_localctx, 14, RULE_filter);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 69; Match(T__6);
+			State = 70; _localctx.expression = filterExpression();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class FilterExpressionContext : ParserRuleContext {
+		public FilterAtomContext[] filterAtom() {
+			return GetRuleContexts<FilterAtomContext>();
+		}
+		public FilterAtomContext filterAtom(int i) {
+			return GetRuleContext<FilterAtomContext>(i);
+		}
+		public ITerminalNode[] OR() { return GetTokens(QueryFilteringParser.OR); }
+		public ITerminalNode OR(int i) {
+			return GetToken(QueryFilteringParser.OR, i);
+		}
+		public ITerminalNode[] AND() { return GetTokens(QueryFilteringParser.AND); }
+		public ITerminalNode AND(int i) {
+			return GetToken(QueryFilteringParser.AND, i);
+		}
+		public FilterExpressionContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_filterExpression; } }
+		public override void EnterRule(IParseTreeListener listener) {
+			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
+			if (typedListener != null) typedListener.EnterFilterExpression(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
+			if (typedListener != null) typedListener.ExitFilterExpression(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFilterExpression(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public FilterExpressionContext filterExpression() {
+		FilterExpressionContext _localctx = new FilterExpressionContext(Context, State);
+		EnterRule(_localctx, 16, RULE_filterExpression);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 72; filterAtom();
+			State = 77;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			while (_la==OR || _la==AND) {
+				{
+				{
+				State = 73;
+				_la = TokenStream.LA(1);
+				if ( !(_la==OR || _la==AND) ) {
+				ErrorHandler.RecoverInline(this);
+				}
+				else {
+					ErrorHandler.ReportMatch(this);
+				    Consume();
+				}
+				State = 74; filterAtom();
+				}
+				}
+				State = 79;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class FilterAtomContext : ParserRuleContext {
+		public IToken not;
+		public BoolExpressionContext boolExpr;
+		public FilterExpressionContext filterExpr;
+		public BoolExpressionContext boolExpression() {
+			return GetRuleContext<BoolExpressionContext>(0);
+		}
+		public FilterExpressionContext filterExpression() {
+			return GetRuleContext<FilterExpressionContext>(0);
+		}
+		public ITerminalNode NOT() { return GetToken(QueryFilteringParser.NOT, 0); }
+		public FilterAtomContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_filterAtom; } }
+		public override void EnterRule(IParseTreeListener listener) {
+			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
+			if (typedListener != null) typedListener.EnterFilterAtom(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
+			if (typedListener != null) typedListener.ExitFilterAtom(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFilterAtom(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public FilterAtomContext filterAtom() {
+		FilterAtomContext _localctx = new FilterAtomContext(Context, State);
+		EnterRule(_localctx, 18, RULE_filterAtom);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 81;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			if (_la==NOT) {
+				{
+				State = 80; _localctx.not = Match(NOT);
+				}
+			}
+
+			State = 88;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case INT:
+			case LONG:
+			case DOUBLE:
+			case FLOAT:
+			case DECIMAL:
+			case BOOL:
+			case GUID:
+			case NULL:
+			case STRING:
+			case PROPERTYACCESS:
+			case TOUPPER:
+			case TOLOWER:
+			case STARTSWITH:
+			case ENDSWITH:
+				{
+				State = 83; _localctx.boolExpr = boolExpression();
+				}
+				break;
+			case T__7:
+				{
+				State = 84; Match(T__7);
+				State = 85; _localctx.filterExpr = filterExpression();
+				State = 86; Match(T__8);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class BoolExpressionContext : ParserRuleContext {
+		public AtomContext left;
+		public IToken operation;
+		public AtomContext right;
+		public AtomContext[] atom() {
+			return GetRuleContexts<AtomContext>();
+		}
+		public AtomContext atom(int i) {
+			return GetRuleContext<AtomContext>(i);
+		}
+		public ITerminalNode EQUALS() { return GetToken(QueryFilteringParser.EQUALS, 0); }
+		public ITerminalNode NOTEQUALS() { return GetToken(QueryFilteringParser.NOTEQUALS, 0); }
+		public ITerminalNode GREATERTHAN() { return GetToken(QueryFilteringParser.GREATERTHAN, 0); }
+		public ITerminalNode GREATERTHANOREQUAL() { return GetToken(QueryFilteringParser.GREATERTHANOREQUAL, 0); }
+		public ITerminalNode LESSTHAN() { return GetToken(QueryFilteringParser.LESSTHAN, 0); }
+		public ITerminalNode LESSTHANOREQUAL() { return GetToken(QueryFilteringParser.LESSTHANOREQUAL, 0); }
+		public BoolExpressionContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_boolExpression; } }
+		public override void EnterRule(IParseTreeListener listener) {
+			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
+			if (typedListener != null) typedListener.EnterBoolExpression(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
+			if (typedListener != null) typedListener.ExitBoolExpression(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitBoolExpression(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public BoolExpressionContext boolExpression() {
+		BoolExpressionContext _localctx = new BoolExpressionContext(Context, State);
+		EnterRule(_localctx, 20, RULE_boolExpression);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 90; _localctx.left = atom();
+			State = 91;
+			_localctx.operation = TokenStream.LT(1);
+			_la = TokenStream.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << EQUALS) | (1L << NOTEQUALS) | (1L << GREATERTHAN) | (1L << GREATERTHANOREQUAL) | (1L << LESSTHAN) | (1L << LESSTHANOREQUAL))) != 0)) ) {
+				_localctx.operation = ErrorHandler.RecoverInline(this);
+			}
+			else {
+				ErrorHandler.ReportMatch(this);
+			    Consume();
+			}
+			State = 92; _localctx.right = atom();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class AtomContext : ParserRuleContext {
+		public PropertyContext propertyValue;
+		public ConstantContext constantValue;
+		public FunctionContext functionValue;
+		public PropertyContext property() {
+			return GetRuleContext<PropertyContext>(0);
+		}
+		public ConstantContext constant() {
+			return GetRuleContext<ConstantContext>(0);
+		}
+		public FunctionContext function() {
+			return GetRuleContext<FunctionContext>(0);
+		}
+		public AtomContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_atom; } }
+		public override void EnterRule(IParseTreeListener listener) {
+			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
+			if (typedListener != null) typedListener.EnterAtom(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
+			if (typedListener != null) typedListener.ExitAtom(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAtom(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public AtomContext atom() {
+		AtomContext _localctx = new AtomContext(Context, State);
+		EnterRule(_localctx, 22, RULE_atom);
+		try {
+			State = 97;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case PROPERTYACCESS:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 94; _localctx.propertyValue = property();
+				}
+				break;
+			case INT:
+			case LONG:
+			case DOUBLE:
+			case FLOAT:
+			case DECIMAL:
+			case BOOL:
+			case GUID:
+			case NULL:
+			case STRING:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 95; _localctx.constantValue = constant();
+				}
+				break;
+			case TOUPPER:
+			case TOLOWER:
+			case STARTSWITH:
+			case ENDSWITH:
+				EnterOuterAlt(_localctx, 3);
+				{
+				State = 96; _localctx.functionValue = function();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class PropertyContext : ParserRuleContext {
+		public IToken value;
+		public ITerminalNode PROPERTYACCESS() { return GetToken(QueryFilteringParser.PROPERTYACCESS, 0); }
+		public PropertyContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_property; } }
+		public override void EnterRule(IParseTreeListener listener) {
+			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
+			if (typedListener != null) typedListener.EnterProperty(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
+			if (typedListener != null) typedListener.ExitProperty(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitProperty(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public PropertyContext property() {
+		PropertyContext _localctx = new PropertyContext(Context, State);
+		EnterRule(_localctx, 24, RULE_property);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 99; _localctx.value = Match(PROPERTYACCESS);
 			}
 		}
 		catch (RecognitionException re) {
@@ -870,12 +969,12 @@ public partial class QueryFilteringParser : Parser {
 	[RuleVersion(0)]
 	public ConstantContext constant() {
 		ConstantContext _localctx = new ConstantContext(Context, State);
-		EnterRule(_localctx, 24, RULE_constant);
+		EnterRule(_localctx, 26, RULE_constant);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 92;
+			State = 101;
 			_localctx.value = TokenStream.LT(1);
 			_la = TokenStream.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << INT) | (1L << LONG) | (1L << DOUBLE) | (1L << FLOAT) | (1L << DECIMAL) | (1L << BOOL) | (1L << GUID) | (1L << NULL) | (1L << STRING))) != 0)) ) {
@@ -898,81 +997,178 @@ public partial class QueryFilteringParser : Parser {
 		return _localctx;
 	}
 
+	public partial class FunctionContext : ParserRuleContext {
+		public IToken value;
+		public AtomContext[] atom() {
+			return GetRuleContexts<AtomContext>();
+		}
+		public AtomContext atom(int i) {
+			return GetRuleContext<AtomContext>(i);
+		}
+		public ITerminalNode TOUPPER() { return GetToken(QueryFilteringParser.TOUPPER, 0); }
+		public ITerminalNode TOLOWER() { return GetToken(QueryFilteringParser.TOLOWER, 0); }
+		public ITerminalNode STARTSWITH() { return GetToken(QueryFilteringParser.STARTSWITH, 0); }
+		public ITerminalNode ENDSWITH() { return GetToken(QueryFilteringParser.ENDSWITH, 0); }
+		public FunctionContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_function; } }
+		public override void EnterRule(IParseTreeListener listener) {
+			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
+			if (typedListener != null) typedListener.EnterFunction(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
+			if (typedListener != null) typedListener.ExitFunction(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFunction(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public FunctionContext function() {
+		FunctionContext _localctx = new FunctionContext(Context, State);
+		EnterRule(_localctx, 28, RULE_function);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 103;
+			_localctx.value = TokenStream.LT(1);
+			_la = TokenStream.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << TOUPPER) | (1L << TOLOWER) | (1L << STARTSWITH) | (1L << ENDSWITH))) != 0)) ) {
+				_localctx.value = ErrorHandler.RecoverInline(this);
+			}
+			else {
+				ErrorHandler.ReportMatch(this);
+			    Consume();
+			}
+			State = 104; Match(T__7);
+			State = 105; atom();
+			State = 110;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			while (_la==T__5) {
+				{
+				{
+				State = 106; Match(T__5);
+				State = 107; atom();
+				}
+				}
+				State = 112;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			}
+			State = 113; Match(T__8);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
 	private static char[] _serializedATN = {
 		'\x3', '\x608B', '\xA72A', '\x8133', '\xB9ED', '\x417C', '\x3BE7', '\x7786', 
-		'\x5964', '\x3', '\"', '\x61', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
-		'\t', '\x3', '\x4', '\x4', '\t', '\x4', '\x4', '\x5', '\t', '\x5', '\x4', 
-		'\x6', '\t', '\x6', '\x4', '\a', '\t', '\a', '\x4', '\b', '\t', '\b', 
-		'\x4', '\t', '\t', '\t', '\x4', '\n', '\t', '\n', '\x4', '\v', '\t', '\v', 
-		'\x4', '\f', '\t', '\f', '\x4', '\r', '\t', '\r', '\x4', '\xE', '\t', 
-		'\xE', '\x3', '\x2', '\x5', '\x2', '\x1E', '\n', '\x2', '\x3', '\x2', 
-		'\x3', '\x2', '\x3', '\x2', '\a', '\x2', '#', '\n', '\x2', '\f', '\x2', 
-		'\xE', '\x2', '&', '\v', '\x2', '\x5', '\x2', '(', '\n', '\x2', '\x3', 
-		'\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x5', '\x3', '.', '\n', 
-		'\x3', '\x3', '\x4', '\x3', '\x4', '\x3', '\x4', '\x3', '\x5', '\x3', 
-		'\x5', '\x3', '\x5', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', 
-		'\a', '\x3', '\a', '\x3', '\a', '\x3', '\b', '\x3', '\b', '\x3', '\b', 
-		'\a', '\b', '?', '\n', '\b', '\f', '\b', '\xE', '\b', '\x42', '\v', '\b', 
-		'\x3', '\t', '\x3', '\t', '\x3', '\t', '\a', '\t', 'G', '\n', '\t', '\f', 
-		'\t', '\xE', '\t', 'J', '\v', '\t', '\x3', '\n', '\x5', '\n', 'M', '\n', 
-		'\n', '\x3', '\n', '\x3', '\n', '\x3', '\n', '\x3', '\n', '\x3', '\n', 
-		'\x5', '\n', 'T', '\n', '\n', '\x3', '\v', '\x3', '\v', '\x3', '\v', '\x3', 
-		'\v', '\x3', '\f', '\x3', '\f', '\x3', '\r', '\x3', '\r', '\x3', '\r', 
-		'\x3', '\xE', '\x3', '\xE', '\x3', '\xE', '\x2', '\x2', '\xF', '\x2', 
+		'\x5964', '\x3', '%', 'v', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', '\t', 
+		'\x3', '\x4', '\x4', '\t', '\x4', '\x4', '\x5', '\t', '\x5', '\x4', '\x6', 
+		'\t', '\x6', '\x4', '\a', '\t', '\a', '\x4', '\b', '\t', '\b', '\x4', 
+		'\t', '\t', '\t', '\x4', '\n', '\t', '\n', '\x4', '\v', '\t', '\v', '\x4', 
+		'\f', '\t', '\f', '\x4', '\r', '\t', '\r', '\x4', '\xE', '\t', '\xE', 
+		'\x4', '\xF', '\t', '\xF', '\x4', '\x10', '\t', '\x10', '\x3', '\x2', 
+		'\x5', '\x2', '\"', '\n', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', 
+		'\a', '\x2', '\'', '\n', '\x2', '\f', '\x2', '\xE', '\x2', '*', '\v', 
+		'\x2', '\x5', '\x2', ',', '\n', '\x2', '\x3', '\x3', '\x3', '\x3', '\x3', 
+		'\x3', '\x3', '\x3', '\x5', '\x3', '\x32', '\n', '\x3', '\x3', '\x4', 
+		'\x3', '\x4', '\x3', '\x4', '\x3', '\x5', '\x3', '\x5', '\x3', '\x5', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\a', '\x3', '\a', '\x3', 
+		'\a', '\a', '\a', '@', '\n', '\a', '\f', '\a', '\xE', '\a', '\x43', '\v', 
+		'\a', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\t', '\x3', '\t', 
+		'\x3', '\t', '\x3', '\n', '\x3', '\n', '\x3', '\n', '\a', '\n', 'N', '\n', 
+		'\n', '\f', '\n', '\xE', '\n', 'Q', '\v', '\n', '\x3', '\v', '\x5', '\v', 
+		'T', '\n', '\v', '\x3', '\v', '\x3', '\v', '\x3', '\v', '\x3', '\v', '\x3', 
+		'\v', '\x5', '\v', '[', '\n', '\v', '\x3', '\f', '\x3', '\f', '\x3', '\f', 
+		'\x3', '\f', '\x3', '\r', '\x3', '\r', '\x3', '\r', '\x5', '\r', '\x64', 
+		'\n', '\r', '\x3', '\xE', '\x3', '\xE', '\x3', '\xF', '\x3', '\xF', '\x3', 
+		'\x10', '\x3', '\x10', '\x3', '\x10', '\x3', '\x10', '\x3', '\x10', '\a', 
+		'\x10', 'o', '\n', '\x10', '\f', '\x10', '\xE', '\x10', 'r', '\v', '\x10', 
+		'\x3', '\x10', '\x3', '\x10', '\x3', '\x10', '\x2', '\x2', '\x11', '\x2', 
 		'\x4', '\x6', '\b', '\n', '\f', '\xE', '\x10', '\x12', '\x14', '\x16', 
-		'\x18', '\x1A', '\x2', '\x6', '\x3', '\x2', '\f', '\r', '\x3', '\x2', 
-		'\xF', '\x14', '\x3', '\x2', '\x1F', ' ', '\x4', '\x2', '\x15', '\x1C', 
-		'!', '!', '\x2', ']', '\x2', '\'', '\x3', '\x2', '\x2', '\x2', '\x4', 
-		'-', '\x3', '\x2', '\x2', '\x2', '\x6', '/', '\x3', '\x2', '\x2', '\x2', 
-		'\b', '\x32', '\x3', '\x2', '\x2', '\x2', '\n', '\x35', '\x3', '\x2', 
-		'\x2', '\x2', '\f', '\x38', '\x3', '\x2', '\x2', '\x2', '\xE', ';', '\x3', 
-		'\x2', '\x2', '\x2', '\x10', '\x43', '\x3', '\x2', '\x2', '\x2', '\x12', 
-		'L', '\x3', '\x2', '\x2', '\x2', '\x14', 'U', '\x3', '\x2', '\x2', '\x2', 
-		'\x16', 'Y', '\x3', '\x2', '\x2', '\x2', '\x18', '[', '\x3', '\x2', '\x2', 
-		'\x2', '\x1A', '^', '\x3', '\x2', '\x2', '\x2', '\x1C', '\x1E', '\a', 
-		'\x3', '\x2', '\x2', '\x1D', '\x1C', '\x3', '\x2', '\x2', '\x2', '\x1D', 
-		'\x1E', '\x3', '\x2', '\x2', '\x2', '\x1E', '\x1F', '\x3', '\x2', '\x2', 
-		'\x2', '\x1F', '$', '\x5', '\x4', '\x3', '\x2', ' ', '!', '\a', '\x4', 
-		'\x2', '\x2', '!', '#', '\x5', '\x4', '\x3', '\x2', '\"', ' ', '\x3', 
-		'\x2', '\x2', '\x2', '#', '&', '\x3', '\x2', '\x2', '\x2', '$', '\"', 
-		'\x3', '\x2', '\x2', '\x2', '$', '%', '\x3', '\x2', '\x2', '\x2', '%', 
-		'(', '\x3', '\x2', '\x2', '\x2', '&', '$', '\x3', '\x2', '\x2', '\x2', 
-		'\'', '\x1D', '\x3', '\x2', '\x2', '\x2', '\'', '(', '\x3', '\x2', '\x2', 
-		'\x2', '(', '\x3', '\x3', '\x2', '\x2', '\x2', ')', '.', '\x5', '\x6', 
-		'\x4', '\x2', '*', '.', '\x5', '\b', '\x5', '\x2', '+', '.', '\x5', '\n', 
-		'\x6', '\x2', ',', '.', '\x5', '\f', '\a', '\x2', '-', ')', '\x3', '\x2', 
-		'\x2', '\x2', '-', '*', '\x3', '\x2', '\x2', '\x2', '-', '+', '\x3', '\x2', 
-		'\x2', '\x2', '-', ',', '\x3', '\x2', '\x2', '\x2', '.', '\x5', '\x3', 
-		'\x2', '\x2', '\x2', '/', '\x30', '\a', '\x5', '\x2', '\x2', '\x30', '\x31', 
-		'\a', '\x15', '\x2', '\x2', '\x31', '\a', '\x3', '\x2', '\x2', '\x2', 
-		'\x32', '\x33', '\a', '\x6', '\x2', '\x2', '\x33', '\x34', '\a', '\x15', 
-		'\x2', '\x2', '\x34', '\t', '\x3', '\x2', '\x2', '\x2', '\x35', '\x36', 
-		'\a', '\a', '\x2', '\x2', '\x36', '\x37', '\x5', '\xE', '\b', '\x2', '\x37', 
-		'\v', '\x3', '\x2', '\x2', '\x2', '\x38', '\x39', '\a', '\b', '\x2', '\x2', 
-		'\x39', ':', '\x5', '\x10', '\t', '\x2', ':', '\r', '\x3', '\x2', '\x2', 
-		'\x2', ';', '@', '\x5', '\x12', '\n', '\x2', '<', '=', '\t', '\x2', '\x2', 
-		'\x2', '=', '?', '\x5', '\x12', '\n', '\x2', '>', '<', '\x3', '\x2', '\x2', 
-		'\x2', '?', '\x42', '\x3', '\x2', '\x2', '\x2', '@', '>', '\x3', '\x2', 
-		'\x2', '\x2', '@', '\x41', '\x3', '\x2', '\x2', '\x2', '\x41', '\xF', 
-		'\x3', '\x2', '\x2', '\x2', '\x42', '@', '\x3', '\x2', '\x2', '\x2', '\x43', 
-		'H', '\x5', '\x18', '\r', '\x2', '\x44', '\x45', '\a', '\t', '\x2', '\x2', 
-		'\x45', 'G', '\x5', '\x18', '\r', '\x2', '\x46', '\x44', '\x3', '\x2', 
-		'\x2', '\x2', 'G', 'J', '\x3', '\x2', '\x2', '\x2', 'H', '\x46', '\x3', 
-		'\x2', '\x2', '\x2', 'H', 'I', '\x3', '\x2', '\x2', '\x2', 'I', '\x11', 
-		'\x3', '\x2', '\x2', '\x2', 'J', 'H', '\x3', '\x2', '\x2', '\x2', 'K', 
-		'M', '\a', '\xE', '\x2', '\x2', 'L', 'K', '\x3', '\x2', '\x2', '\x2', 
-		'L', 'M', '\x3', '\x2', '\x2', '\x2', 'M', 'S', '\x3', '\x2', '\x2', '\x2', 
-		'N', 'T', '\x5', '\x14', '\v', '\x2', 'O', 'P', '\a', '\n', '\x2', '\x2', 
-		'P', 'Q', '\x5', '\xE', '\b', '\x2', 'Q', 'R', '\a', '\v', '\x2', '\x2', 
-		'R', 'T', '\x3', '\x2', '\x2', '\x2', 'S', 'N', '\x3', '\x2', '\x2', '\x2', 
-		'S', 'O', '\x3', '\x2', '\x2', '\x2', 'T', '\x13', '\x3', '\x2', '\x2', 
-		'\x2', 'U', 'V', '\x5', '\x16', '\f', '\x2', 'V', 'W', '\t', '\x3', '\x2', 
-		'\x2', 'W', 'X', '\x5', '\x1A', '\xE', '\x2', 'X', '\x15', '\x3', '\x2', 
-		'\x2', '\x2', 'Y', 'Z', '\a', '\x1E', '\x2', '\x2', 'Z', '\x17', '\x3', 
-		'\x2', '\x2', '\x2', '[', '\\', '\a', '\x1E', '\x2', '\x2', '\\', ']', 
-		'\t', '\x4', '\x2', '\x2', ']', '\x19', '\x3', '\x2', '\x2', '\x2', '^', 
-		'_', '\t', '\x5', '\x2', '\x2', '_', '\x1B', '\x3', '\x2', '\x2', '\x2', 
-		'\n', '\x1D', '$', '\'', '-', '@', 'H', 'L', 'S',
+		'\x18', '\x1A', '\x1C', '\x1E', '\x2', '\a', '\x3', '\x2', '$', '%', '\x3', 
+		'\x2', '\f', '\r', '\x3', '\x2', '\xF', '\x14', '\x3', '\x2', '\x15', 
+		'\x1D', '\x3', '\x2', '\x1F', '\"', '\x2', 's', '\x2', '+', '\x3', '\x2', 
+		'\x2', '\x2', '\x4', '\x31', '\x3', '\x2', '\x2', '\x2', '\x6', '\x33', 
+		'\x3', '\x2', '\x2', '\x2', '\b', '\x36', '\x3', '\x2', '\x2', '\x2', 
+		'\n', '\x39', '\x3', '\x2', '\x2', '\x2', '\f', '<', '\x3', '\x2', '\x2', 
+		'\x2', '\xE', '\x44', '\x3', '\x2', '\x2', '\x2', '\x10', 'G', '\x3', 
+		'\x2', '\x2', '\x2', '\x12', 'J', '\x3', '\x2', '\x2', '\x2', '\x14', 
+		'S', '\x3', '\x2', '\x2', '\x2', '\x16', '\\', '\x3', '\x2', '\x2', '\x2', 
+		'\x18', '\x63', '\x3', '\x2', '\x2', '\x2', '\x1A', '\x65', '\x3', '\x2', 
+		'\x2', '\x2', '\x1C', 'g', '\x3', '\x2', '\x2', '\x2', '\x1E', 'i', '\x3', 
+		'\x2', '\x2', '\x2', ' ', '\"', '\a', '\x3', '\x2', '\x2', '!', ' ', '\x3', 
+		'\x2', '\x2', '\x2', '!', '\"', '\x3', '\x2', '\x2', '\x2', '\"', '#', 
+		'\x3', '\x2', '\x2', '\x2', '#', '(', '\x5', '\x4', '\x3', '\x2', '$', 
+		'%', '\a', '\x4', '\x2', '\x2', '%', '\'', '\x5', '\x4', '\x3', '\x2', 
+		'&', '$', '\x3', '\x2', '\x2', '\x2', '\'', '*', '\x3', '\x2', '\x2', 
+		'\x2', '(', '&', '\x3', '\x2', '\x2', '\x2', '(', ')', '\x3', '\x2', '\x2', 
+		'\x2', ')', ',', '\x3', '\x2', '\x2', '\x2', '*', '(', '\x3', '\x2', '\x2', 
+		'\x2', '+', '!', '\x3', '\x2', '\x2', '\x2', '+', ',', '\x3', '\x2', '\x2', 
+		'\x2', ',', '\x3', '\x3', '\x2', '\x2', '\x2', '-', '\x32', '\x5', '\x6', 
+		'\x4', '\x2', '.', '\x32', '\x5', '\b', '\x5', '\x2', '/', '\x32', '\x5', 
+		'\x10', '\t', '\x2', '\x30', '\x32', '\x5', '\n', '\x6', '\x2', '\x31', 
+		'-', '\x3', '\x2', '\x2', '\x2', '\x31', '.', '\x3', '\x2', '\x2', '\x2', 
+		'\x31', '/', '\x3', '\x2', '\x2', '\x2', '\x31', '\x30', '\x3', '\x2', 
+		'\x2', '\x2', '\x32', '\x5', '\x3', '\x2', '\x2', '\x2', '\x33', '\x34', 
+		'\a', '\x5', '\x2', '\x2', '\x34', '\x35', '\a', '\x15', '\x2', '\x2', 
+		'\x35', '\a', '\x3', '\x2', '\x2', '\x2', '\x36', '\x37', '\a', '\x6', 
+		'\x2', '\x2', '\x37', '\x38', '\a', '\x15', '\x2', '\x2', '\x38', '\t', 
+		'\x3', '\x2', '\x2', '\x2', '\x39', ':', '\a', '\a', '\x2', '\x2', ':', 
+		';', '\x5', '\f', '\a', '\x2', ';', '\v', '\x3', '\x2', '\x2', '\x2', 
+		'<', '\x41', '\x5', '\xE', '\b', '\x2', '=', '>', '\a', '\b', '\x2', '\x2', 
+		'>', '@', '\x5', '\xE', '\b', '\x2', '?', '=', '\x3', '\x2', '\x2', '\x2', 
+		'@', '\x43', '\x3', '\x2', '\x2', '\x2', '\x41', '?', '\x3', '\x2', '\x2', 
+		'\x2', '\x41', '\x42', '\x3', '\x2', '\x2', '\x2', '\x42', '\r', '\x3', 
+		'\x2', '\x2', '\x2', '\x43', '\x41', '\x3', '\x2', '\x2', '\x2', '\x44', 
+		'\x45', '\a', '\x1E', '\x2', '\x2', '\x45', '\x46', '\t', '\x2', '\x2', 
+		'\x2', '\x46', '\xF', '\x3', '\x2', '\x2', '\x2', 'G', 'H', '\a', '\t', 
+		'\x2', '\x2', 'H', 'I', '\x5', '\x12', '\n', '\x2', 'I', '\x11', '\x3', 
+		'\x2', '\x2', '\x2', 'J', 'O', '\x5', '\x14', '\v', '\x2', 'K', 'L', '\t', 
+		'\x3', '\x2', '\x2', 'L', 'N', '\x5', '\x14', '\v', '\x2', 'M', 'K', '\x3', 
+		'\x2', '\x2', '\x2', 'N', 'Q', '\x3', '\x2', '\x2', '\x2', 'O', 'M', '\x3', 
+		'\x2', '\x2', '\x2', 'O', 'P', '\x3', '\x2', '\x2', '\x2', 'P', '\x13', 
+		'\x3', '\x2', '\x2', '\x2', 'Q', 'O', '\x3', '\x2', '\x2', '\x2', 'R', 
+		'T', '\a', '\xE', '\x2', '\x2', 'S', 'R', '\x3', '\x2', '\x2', '\x2', 
+		'S', 'T', '\x3', '\x2', '\x2', '\x2', 'T', 'Z', '\x3', '\x2', '\x2', '\x2', 
+		'U', '[', '\x5', '\x16', '\f', '\x2', 'V', 'W', '\a', '\n', '\x2', '\x2', 
+		'W', 'X', '\x5', '\x12', '\n', '\x2', 'X', 'Y', '\a', '\v', '\x2', '\x2', 
+		'Y', '[', '\x3', '\x2', '\x2', '\x2', 'Z', 'U', '\x3', '\x2', '\x2', '\x2', 
+		'Z', 'V', '\x3', '\x2', '\x2', '\x2', '[', '\x15', '\x3', '\x2', '\x2', 
+		'\x2', '\\', ']', '\x5', '\x18', '\r', '\x2', ']', '^', '\t', '\x4', '\x2', 
+		'\x2', '^', '_', '\x5', '\x18', '\r', '\x2', '_', '\x17', '\x3', '\x2', 
+		'\x2', '\x2', '`', '\x64', '\x5', '\x1A', '\xE', '\x2', '\x61', '\x64', 
+		'\x5', '\x1C', '\xF', '\x2', '\x62', '\x64', '\x5', '\x1E', '\x10', '\x2', 
+		'\x63', '`', '\x3', '\x2', '\x2', '\x2', '\x63', '\x61', '\x3', '\x2', 
+		'\x2', '\x2', '\x63', '\x62', '\x3', '\x2', '\x2', '\x2', '\x64', '\x19', 
+		'\x3', '\x2', '\x2', '\x2', '\x65', '\x66', '\a', '\x1E', '\x2', '\x2', 
+		'\x66', '\x1B', '\x3', '\x2', '\x2', '\x2', 'g', 'h', '\t', '\x5', '\x2', 
+		'\x2', 'h', '\x1D', '\x3', '\x2', '\x2', '\x2', 'i', 'j', '\t', '\x6', 
+		'\x2', '\x2', 'j', 'k', '\a', '\n', '\x2', '\x2', 'k', 'p', '\x5', '\x18', 
+		'\r', '\x2', 'l', 'm', '\a', '\b', '\x2', '\x2', 'm', 'o', '\x5', '\x18', 
+		'\r', '\x2', 'n', 'l', '\x3', '\x2', '\x2', '\x2', 'o', 'r', '\x3', '\x2', 
+		'\x2', '\x2', 'p', 'n', '\x3', '\x2', '\x2', '\x2', 'p', 'q', '\x3', '\x2', 
+		'\x2', '\x2', 'q', 's', '\x3', '\x2', '\x2', '\x2', 'r', 'p', '\x3', '\x2', 
+		'\x2', '\x2', 's', 't', '\a', '\v', '\x2', '\x2', 't', '\x1F', '\x3', 
+		'\x2', '\x2', '\x2', '\f', '!', '(', '+', '\x31', '\x41', 'O', 'S', 'Z', 
+		'\x63', 'p',
 	};
 
 	public static readonly ATN _ATN =
