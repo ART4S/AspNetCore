@@ -140,12 +140,18 @@ namespace QueryFiltering.Visitors
 
         public override BaseNode VisitFunction(QueryFilteringParser.FunctionContext context)
         {
-            var parameters = context.atom().Select(x => x.Accept(this));
+            var parameters = context.atom().Select(x => x.Accept(this)).ToArray();
 
             switch (context.value.Type)
             {
                 case QueryFilteringParser.TOUPPER:
-                    return new ToUpperNode(parameters.ToArray());
+                    return new ToUpperNode(parameters);
+                case QueryFilteringParser.TOLOWER:
+                    return new ToLowerNode(parameters);
+                case QueryFilteringParser.STARTSWITH:
+                    return new StartsWithNode(parameters);
+                case QueryFilteringParser.ENDSWITH:
+                    return new EndsWithNode(parameters);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(context.value.Type));
             }

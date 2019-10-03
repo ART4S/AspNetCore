@@ -5,17 +5,17 @@ using System.Linq.Expressions;
 
 namespace QueryFiltering.Nodes.Functions
 {
-    internal class ToUpperNode : FunctionNode
+    internal class StartsWithNode : FunctionNode
     {
-        public ToUpperNode(BaseNode[] parameters) : base(parameters)
+        public StartsWithNode(BaseNode[] parameters) : base(parameters)
         {
         }
 
         public override Expression BuildExpression()
         {
             return Expression.Call(
-                Parameters[0].BuildExpression(), 
-                ReflectionCache.ToUpper, 
+                Parameters[0].BuildExpression(),
+                ReflectionCache.StartsWith,
                 Parameters.Skip(1).Select(x => x.BuildExpression()));
         }
     }

@@ -1,4 +1,5 @@
-﻿using QueryFiltering.Tests.Model;
+﻿using System;
+using QueryFiltering.Tests.Model;
 using System.Linq;
 using Xunit;
 
@@ -343,28 +344,28 @@ namespace QueryFiltering.Tests
         {
             var testObjects = new[]
             {
-                new TestObject(){StringValue = "validString"},
-                new TestObject(){StringValue = "invalidString"}
+                new TestObject(){StringValue = "match"},
+                new TestObject(){StringValue = "notMatch"}
             }.AsQueryable();
 
             var expected = testObjects
-                .Where(x => x.StringValue == "validString")
+                .Where(x => x.StringValue == "match")
                 .ToList();
 
             var actual = testObjects
-                .ApplyQuery("$filter=StringValue eq 'validString'")
+                .ApplyQuery("$filter=StringValue eq 'match'")
                 .ToList();
 
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void ApplyQuery_FilterStringValueEqualsEmptyString_FilteredOneObject()
+        public void Filter_StringValueEqualsEmptyString_FilteredOneObject()
         {
             var testObjects = new[]
             {
                 new TestObject(){StringValue = ""},
-                new TestObject(){StringValue = "invalidString"}
+                new TestObject(){StringValue = "notMatch"}
             }.AsQueryable();
 
             var expected = testObjects
@@ -373,6 +374,132 @@ namespace QueryFiltering.Tests
 
             var actual = testObjects
                 .ApplyQuery("$filter=StringValue eq ''")
+                .ToList();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void Filter_StringValueStartsWithSomeValue_FilteredOneObject()
+        {
+            var testObjects = new[]
+            {
+                new TestObject(){StringValue = "match"},
+                new TestObject(){StringValue = "notMatch"}
+            }.AsQueryable();
+
+            var expected = testObjects
+                .Where(x => x.StringValue.StartsWith("match"))
+                .ToList();
+
+            var actual = testObjects
+                .ApplyQuery("$filter=startswith(StringValue, 'match') eq true")
+                .ToList();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void Filter_StringValueEqualsNull_FilteredOneObject()
+        {
+            var testObjects = new[]
+            {
+                new TestObject(),
+                new TestObject(){StringValue = "notMatch"}
+            }.AsQueryable();
+
+            var expected = testObjects
+                .Where(x => x.StringValue == null)
+                .ToList();
+
+            var actual = testObjects
+                .ApplyQuery("$filter=StringValue eq null")
+                .ToList();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void Filter_StringValueNotEqualsSomeString_FilteredOneObject()
+        {
+            var testObjects = new[]
+            {
+                new TestObject(){StringValue = "notMatch"},
+                new TestObject(){StringValue = "match"}
+            }.AsQueryable();
+
+            var expected = testObjects
+                .Where(x => !(x.StringValue == "notMatch"))
+                .ToList();
+
+            var actual = testObjects
+                .ApplyQuery("$filter=not StringValue eq 'notMatch'")
+                .ToList();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void Filter_GuidValueEqualsSomeValue_FilteredOneObject()
+        {
+            var testGuid = Guid.NewGuid();
+
+            var testObjects = new[]
+            {
+                new TestObject(){GuidValue = testGuid},
+                new TestObject()
+            }.AsQueryable();
+
+            var expected = testObjects
+                .Where(x => x.GuidValue == testGuid)
+                .ToList();
+
+            var actual = testObjects
+                .ApplyQuery($"$filter=GuidValue eq {testGuid}")
+                .ToList();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void Filter_NullableIntValueEqualsSomeValue_FilteredOneObject()
+        {
+            var testGuid = Guid.NewGuid();
+
+            var testObjects = new[]
+            {
+                new TestObject(){NullableIntValue = 1},
+                new TestObject()
+            }.AsQueryable();
+
+            var expected = testObjects
+                .Where(x => x.NullableIntValue == 1)
+                .ToList();
+
+            var actual = testObjects
+                .ApplyQuery("$filter=NullableIntValue eq 1")
+                .ToList();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void Filter_NullableIntValueEqualsNull_FilteredOneObject()
+        {
+            var testGuid = Guid.NewGuid();
+
+            var testObjects = new[]
+            {
+                new TestObject(){NullableIntValue = null},
+                new TestObject()
+            }.AsQueryable();
+
+            var expected = testObjects
+                .Where(x => x.NullableIntValue == null)
+                .ToList();
+
+            var actual = testObjects
+                .ApplyQuery("$filter=NullableIntValue eq null")
                 .ToList();
 
             Assert.Equal(expected, actual);

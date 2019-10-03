@@ -49,9 +49,24 @@ namespace QueryFiltering.Infrastructure
                 .GetMethods(BindingFlags.Public | BindingFlags.Static)
                 .First(x => x.Name == n && x.GetParameters().Length == 2));
 
-        public static MethodInfo ToUpper => Methods.GetOrAdd("Where",
+        public static MethodInfo ToUpper => Methods.GetOrAdd("ToUpper",
             n => typeof(string)
                 .GetMethods(BindingFlags.Public)
                 .First(x => x.Name == n && x.GetParameters().Length == 0));
+
+        public static MethodInfo ToLower => Methods.GetOrAdd("ToLower",
+            n => typeof(string)
+                .GetMethods()
+                .First(x => x.Name == n && x.GetParameters().Length == 0));
+
+        public static MethodInfo StartsWith => Methods.GetOrAdd("StartsWith",
+            n => typeof(string)
+                .GetMethods()
+                .First(x => x.Name == n && x.GetParameters()[0].ParameterType == typeof(string)));
+
+        public static MethodInfo EndsWith => Methods.GetOrAdd("EndsWith",
+            n => typeof(string)
+                .GetMethods()
+                .First(x => x.Name == n && x.GetParameters()[0].ParameterType == typeof(string)));
     }
 }

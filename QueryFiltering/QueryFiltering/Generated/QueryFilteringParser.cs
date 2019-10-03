@@ -38,9 +38,10 @@ public partial class QueryFilteringParser : Parser {
 	public const int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		OR=10, AND=11, NOT=12, EQUALS=13, NOTEQUALS=14, GREATERTHAN=15, GREATERTHANOREQUAL=16, 
-		LESSTHAN=17, LESSTHANOREQUAL=18, INT=19, LONG=20, DOUBLE=21, FLOAT=22, 
-		DECIMAL=23, BOOL=24, GUID=25, NULL=26, STRING=27, PROPERTYACCESS=28, TOUPPER=29, 
-		TOLOWER=30, STARTSWITH=31, ENDSWITH=32, WHITESPACE=33, ASC=34, DESC=35;
+		LESSTHAN=17, LESSTHANOREQUAL=18, TOUPPER=19, TOLOWER=20, STARTSWITH=21, 
+		ENDSWITH=22, INT=23, LONG=24, DOUBLE=25, FLOAT=26, DECIMAL=27, BOOL=28, 
+		GUID=29, NULL=30, STRING=31, PROPERTYACCESS=32, WHITESPACE=33, ASC=34, 
+		DESC=35;
 	public const int
 		RULE_query = 0, RULE_queryParameter = 1, RULE_top = 2, RULE_skip = 3, 
 		RULE_orderBy = 4, RULE_orderByExpression = 5, RULE_orderByProperty = 6, 
@@ -55,16 +56,16 @@ public partial class QueryFilteringParser : Parser {
 	private static readonly string[] _LiteralNames = {
 		null, "'?'", "'&'", "'$top='", "'$skip='", "'$orderBy='", "','", "'$filter='", 
 		"'('", "')'", "'or'", "'and'", "'not'", "'eq'", "'ne'", "'gt'", "'ge'", 
-		"'lt'", "'le'", null, null, null, null, null, null, null, "'null'", null, 
-		null, "'toupper'", "'tolower'", "'startswith'", "'endswith'", null, "'asc'", 
-		"'desk'"
+		"'lt'", "'le'", "'toupper'", "'tolower'", "'startswith'", "'endswith'", 
+		null, null, null, null, null, null, null, "'null'", null, null, null, 
+		"'asc'", "'desk'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, null, null, null, null, null, null, null, null, null, "OR", "AND", 
 		"NOT", "EQUALS", "NOTEQUALS", "GREATERTHAN", "GREATERTHANOREQUAL", "LESSTHAN", 
-		"LESSTHANOREQUAL", "INT", "LONG", "DOUBLE", "FLOAT", "DECIMAL", "BOOL", 
-		"GUID", "NULL", "STRING", "PROPERTYACCESS", "TOUPPER", "TOLOWER", "STARTSWITH", 
-		"ENDSWITH", "WHITESPACE", "ASC", "DESC"
+		"LESSTHANOREQUAL", "TOUPPER", "TOLOWER", "STARTSWITH", "ENDSWITH", "INT", 
+		"LONG", "DOUBLE", "FLOAT", "DECIMAL", "BOOL", "GUID", "NULL", "STRING", 
+		"PROPERTYACCESS", "WHITESPACE", "ASC", "DESC"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -110,14 +111,6 @@ public partial class QueryFilteringParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_query; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterQuery(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitQuery(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitQuery(this);
@@ -196,14 +189,6 @@ public partial class QueryFilteringParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_queryParameter; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterQueryParameter(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitQueryParameter(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitQueryParameter(this);
@@ -266,14 +251,6 @@ public partial class QueryFilteringParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_top; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterTop(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitTop(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitTop(this);
@@ -311,14 +288,6 @@ public partial class QueryFilteringParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_skip; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterSkip(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitSkip(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitSkip(this);
@@ -358,14 +327,6 @@ public partial class QueryFilteringParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_orderBy; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterOrderBy(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitOrderBy(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitOrderBy(this);
@@ -407,14 +368,6 @@ public partial class QueryFilteringParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_orderByExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterOrderByExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitOrderByExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitOrderByExpression(this);
@@ -472,14 +425,6 @@ public partial class QueryFilteringParser : Parser {
 			this.firstSort = firstSort;
 		}
 		public override int RuleIndex { get { return RULE_orderByProperty; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterOrderByProperty(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitOrderByProperty(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitOrderByProperty(this);
@@ -529,14 +474,6 @@ public partial class QueryFilteringParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_filter; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterFilter(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitFilter(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitFilter(this);
@@ -586,14 +523,6 @@ public partial class QueryFilteringParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_filterExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterFilterExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitFilterExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitFilterExpression(this);
@@ -661,14 +590,6 @@ public partial class QueryFilteringParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_filterAtom; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterFilterAtom(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitFilterAtom(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitFilterAtom(this);
@@ -696,6 +617,10 @@ public partial class QueryFilteringParser : Parser {
 			State = 88;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
+			case TOUPPER:
+			case TOLOWER:
+			case STARTSWITH:
+			case ENDSWITH:
 			case INT:
 			case LONG:
 			case DOUBLE:
@@ -706,10 +631,6 @@ public partial class QueryFilteringParser : Parser {
 			case NULL:
 			case STRING:
 			case PROPERTYACCESS:
-			case TOUPPER:
-			case TOLOWER:
-			case STARTSWITH:
-			case ENDSWITH:
 				{
 				State = 83; _localctx.boolExpr = boolExpression();
 				}
@@ -758,14 +679,6 @@ public partial class QueryFilteringParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_boolExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterBoolExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitBoolExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitBoolExpression(this);
@@ -824,14 +737,6 @@ public partial class QueryFilteringParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_atom; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterAtom(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitAtom(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitAtom(this);
@@ -899,14 +804,6 @@ public partial class QueryFilteringParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_property; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterProperty(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitProperty(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitProperty(this);
@@ -951,14 +848,6 @@ public partial class QueryFilteringParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_constant; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterConstant(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitConstant(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitConstant(this);
@@ -1014,14 +903,6 @@ public partial class QueryFilteringParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_function; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.EnterFunction(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQueryFilteringListener typedListener = listener as IQueryFilteringListener;
-			if (typedListener != null) typedListener.ExitFunction(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQueryFilteringVisitor<TResult> typedVisitor = visitor as IQueryFilteringVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitFunction(this);
@@ -1104,8 +985,8 @@ public partial class QueryFilteringParser : Parser {
 		'\x3', '\x10', '\x3', '\x10', '\x3', '\x10', '\x2', '\x2', '\x11', '\x2', 
 		'\x4', '\x6', '\b', '\n', '\f', '\xE', '\x10', '\x12', '\x14', '\x16', 
 		'\x18', '\x1A', '\x1C', '\x1E', '\x2', '\a', '\x3', '\x2', '$', '%', '\x3', 
-		'\x2', '\f', '\r', '\x3', '\x2', '\xF', '\x14', '\x3', '\x2', '\x15', 
-		'\x1D', '\x3', '\x2', '\x1F', '\"', '\x2', 's', '\x2', '+', '\x3', '\x2', 
+		'\x2', '\f', '\r', '\x3', '\x2', '\xF', '\x14', '\x3', '\x2', '\x19', 
+		'!', '\x3', '\x2', '\x15', '\x18', '\x2', 's', '\x2', '+', '\x3', '\x2', 
 		'\x2', '\x2', '\x4', '\x31', '\x3', '\x2', '\x2', '\x2', '\x6', '\x33', 
 		'\x3', '\x2', '\x2', '\x2', '\b', '\x36', '\x3', '\x2', '\x2', '\x2', 
 		'\n', '\x39', '\x3', '\x2', '\x2', '\x2', '\f', '<', '\x3', '\x2', '\x2', 
@@ -1128,9 +1009,9 @@ public partial class QueryFilteringParser : Parser {
 		'-', '\x3', '\x2', '\x2', '\x2', '\x31', '.', '\x3', '\x2', '\x2', '\x2', 
 		'\x31', '/', '\x3', '\x2', '\x2', '\x2', '\x31', '\x30', '\x3', '\x2', 
 		'\x2', '\x2', '\x32', '\x5', '\x3', '\x2', '\x2', '\x2', '\x33', '\x34', 
-		'\a', '\x5', '\x2', '\x2', '\x34', '\x35', '\a', '\x15', '\x2', '\x2', 
+		'\a', '\x5', '\x2', '\x2', '\x34', '\x35', '\a', '\x19', '\x2', '\x2', 
 		'\x35', '\a', '\x3', '\x2', '\x2', '\x2', '\x36', '\x37', '\a', '\x6', 
-		'\x2', '\x2', '\x37', '\x38', '\a', '\x15', '\x2', '\x2', '\x38', '\t', 
+		'\x2', '\x2', '\x37', '\x38', '\a', '\x19', '\x2', '\x2', '\x38', '\t', 
 		'\x3', '\x2', '\x2', '\x2', '\x39', ':', '\a', '\a', '\x2', '\x2', ':', 
 		';', '\x5', '\f', '\a', '\x2', ';', '\v', '\x3', '\x2', '\x2', '\x2', 
 		'<', '\x41', '\x5', '\xE', '\b', '\x2', '=', '>', '\a', '\b', '\x2', '\x2', 
@@ -1138,7 +1019,7 @@ public partial class QueryFilteringParser : Parser {
 		'@', '\x43', '\x3', '\x2', '\x2', '\x2', '\x41', '?', '\x3', '\x2', '\x2', 
 		'\x2', '\x41', '\x42', '\x3', '\x2', '\x2', '\x2', '\x42', '\r', '\x3', 
 		'\x2', '\x2', '\x2', '\x43', '\x41', '\x3', '\x2', '\x2', '\x2', '\x44', 
-		'\x45', '\a', '\x1E', '\x2', '\x2', '\x45', '\x46', '\t', '\x2', '\x2', 
+		'\x45', '\a', '\"', '\x2', '\x2', '\x45', '\x46', '\t', '\x2', '\x2', 
 		'\x2', '\x46', '\xF', '\x3', '\x2', '\x2', '\x2', 'G', 'H', '\a', '\t', 
 		'\x2', '\x2', 'H', 'I', '\x5', '\x12', '\n', '\x2', 'I', '\x11', '\x3', 
 		'\x2', '\x2', '\x2', 'J', 'O', '\x5', '\x14', '\v', '\x2', 'K', 'L', '\t', 
@@ -1158,7 +1039,7 @@ public partial class QueryFilteringParser : Parser {
 		'\x5', '\x1C', '\xF', '\x2', '\x62', '\x64', '\x5', '\x1E', '\x10', '\x2', 
 		'\x63', '`', '\x3', '\x2', '\x2', '\x2', '\x63', '\x61', '\x3', '\x2', 
 		'\x2', '\x2', '\x63', '\x62', '\x3', '\x2', '\x2', '\x2', '\x64', '\x19', 
-		'\x3', '\x2', '\x2', '\x2', '\x65', '\x66', '\a', '\x1E', '\x2', '\x2', 
+		'\x3', '\x2', '\x2', '\x2', '\x65', '\x66', '\a', '\"', '\x2', '\x2', 
 		'\x66', '\x1B', '\x3', '\x2', '\x2', '\x2', 'g', 'h', '\t', '\x5', '\x2', 
 		'\x2', 'h', '\x1D', '\x3', '\x2', '\x2', '\x2', 'i', 'j', '\t', '\x6', 
 		'\x2', '\x2', 'j', 'k', '\a', '\n', '\x2', '\x2', 'k', 'p', '\x5', '\x18', 
