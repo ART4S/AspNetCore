@@ -50,9 +50,9 @@ boolExpression
     ;
 
 atom
-    :   propertyValue=property
-    |   constantValue=constant
-    |   functionValue=function
+    :   propertyRule=property
+    |   constantRule=constant
+    |   functionRule=function
     ; 
 
 property
@@ -60,7 +60,7 @@ property
     ;
 
 constant
-    : value=(INT|LONG|DOUBLE|FLOAT|DECIMAL|BOOL|NULL|GUID|STRING)
+    : value=(INT|LONG|DOUBLE|FLOAT|DECIMAL|BOOL|NULL|GUID|STRING|DATETIME)
     ;
 
 function
@@ -102,6 +102,22 @@ LESSTHANOREQUAL
     :   'le'
     ;
 
+TOUPPER
+    :   'toupper'
+    ;
+
+TOLOWER
+    :   'tolower'
+    ;
+
+STARTSWITH
+    :   'startswith'
+    ;
+	
+ENDSWITH
+    :   'endswith'
+    ;
+
 INT
     :    '-'? NUMBER+
     ;
@@ -134,28 +150,16 @@ NULL
     :   'null'
     ;
 
+DATETIME
+    :	'datetime\'' NUMBER+ '-' NUMBER+ '-' NUMBER+ ('T' NUMBER+ ':' NUMBER+ (':' NUMBER+ ('.' NUMBER+)*)* ('Z')?)? '\''
+    ;
+
 STRING
     :   '\'' ( ESC | ~('\''|'\\') )* '\''
     ;
 
 PROPERTYACCESS
     :   (PROPERTY ('.' PROPERTY)*)
-    ;
-
-TOUPPER
-    :   'toupper'
-    ;
-
-TOLOWER
-    :   'tolower'
-    ;
-
-STARTSWITH
-    :   'startswith'
-    ;
-	
-ENDSWITH
-    :   'endswith'
     ;
 
 WHITESPACE 
@@ -167,7 +171,7 @@ ASC
     ;
 
 DESC
-    :   'desk'
+    :   'desc'
     ;
 
 fragment ESC

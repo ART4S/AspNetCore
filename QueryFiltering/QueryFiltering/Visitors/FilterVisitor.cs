@@ -133,6 +133,8 @@ namespace QueryFiltering.Visitors
                     return new NullNode();
                 case QueryFilteringLexer.STRING:
                     return new StringNode(context.value.Text);
+                case QueryFilteringLexer.DATETIME:
+                    return new DateTimeNode(context.value.Text);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(context.value.Type));
             }

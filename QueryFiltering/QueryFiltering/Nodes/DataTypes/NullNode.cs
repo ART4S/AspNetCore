@@ -5,7 +5,7 @@ namespace QueryFiltering.Nodes.DataTypes
 {
     internal class NullNode : BaseNode
     {
-        public override Expression BuildExpression()
+        public override Expression CreateExpression()
         {
             return Expression.Constant(null);
         }

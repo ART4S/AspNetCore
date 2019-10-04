@@ -17,5 +17,7 @@ namespace QueryFiltering.Tests.Model
         public Guid GuidValue { get; set; }
 
         public int? NullableIntValue { get; set; }
+
+        public DateTime DateTimeValue { get; set; }
     }
 }

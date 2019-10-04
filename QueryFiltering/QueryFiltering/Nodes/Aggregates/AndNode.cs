@@ -9,9 +9,9 @@ namespace QueryFiltering.Nodes.Aggregates
         {
         }
 
-        public override Expression BuildExpression()
+        public override Expression CreateExpression()
         {
-            return Expression.AndAlso(Left.BuildExpression(), Right.BuildExpression());
+            return Expression.AndAlso(Left.CreateExpression(), Right.CreateExpression());
         }
     }
 }

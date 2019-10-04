@@ -9,7 +9,7 @@ namespace QueryFiltering.Nodes.DataTypes
         {
         }
 
-        public override Expression BuildExpression()
+        public override Expression CreateExpression()
         {
             return Expression.Constant(long.Parse(Value.Replace("l","")));
         }

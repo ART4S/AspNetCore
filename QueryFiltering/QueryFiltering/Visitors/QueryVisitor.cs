@@ -67,7 +67,7 @@ namespace QueryFiltering.Visitors
                 .MakeGenericMethod(typeof(Func<,>)
                     .MakeGenericType(_elementType, typeof(bool)));
 
-            var expression = lambda.Invoke(null, new object[] { tree.BuildExpression(), new ParameterExpression[] { _parameter } });
+            var expression = lambda.Invoke(null, new object[] { tree.CreateExpression(), new ParameterExpression[] { _parameter } });
 
             var where = ReflectionCache.Where
                 .MakeGenericMethod(_elementType);

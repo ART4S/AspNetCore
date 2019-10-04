@@ -11,12 +11,12 @@ namespace QueryFiltering.Nodes.Functions
         {
         }
 
-        public override Expression BuildExpression()
+        public override Expression CreateExpression()
         {
             return Expression.Call(
-                Parameters[0].BuildExpression(),
+                Parameters[0].CreateExpression(),
                 ReflectionCache.ToLower,
-                Parameters.Skip(1).Select(x => x.BuildExpression()));
+                Parameters.Skip(1).Select(x => x.CreateExpression()));
         }
     }
 }

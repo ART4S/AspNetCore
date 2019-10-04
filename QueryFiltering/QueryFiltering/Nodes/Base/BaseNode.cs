@@ -4,6 +4,6 @@ namespace QueryFiltering.Nodes.Base
 {
     internal abstract class BaseNode
     {
-        public abstract Expression BuildExpression();
+        public abstract Expression CreateExpression();
     }
 }

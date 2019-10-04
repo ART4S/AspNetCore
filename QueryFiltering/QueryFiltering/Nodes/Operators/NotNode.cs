@@ -12,9 +12,9 @@ namespace QueryFiltering.Nodes.Operators
             _node = node;
         }
 
-        public override Expression BuildExpression()
+        public override Expression CreateExpression()
         {
-            return Expression.Not(_node.BuildExpression());
+            return Expression.Not(_node.CreateExpression());
         }
     }
 }

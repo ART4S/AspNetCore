@@ -51,7 +51,7 @@ namespace QueryFiltering.Infrastructure
 
         public static MethodInfo ToUpper => Methods.GetOrAdd("ToUpper",
             n => typeof(string)
-                .GetMethods(BindingFlags.Public)
+                .GetMethods()
                 .First(x => x.Name == n && x.GetParameters().Length == 0));
 
         public static MethodInfo ToLower => Methods.GetOrAdd("ToLower",

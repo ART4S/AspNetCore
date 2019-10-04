@@ -40,8 +40,8 @@ public partial class QueryFilteringParser : Parser {
 		OR=10, AND=11, NOT=12, EQUALS=13, NOTEQUALS=14, GREATERTHAN=15, GREATERTHANOREQUAL=16, 
 		LESSTHAN=17, LESSTHANOREQUAL=18, TOUPPER=19, TOLOWER=20, STARTSWITH=21, 
 		ENDSWITH=22, INT=23, LONG=24, DOUBLE=25, FLOAT=26, DECIMAL=27, BOOL=28, 
-		GUID=29, NULL=30, STRING=31, PROPERTYACCESS=32, WHITESPACE=33, ASC=34, 
-		DESC=35;
+		GUID=29, NULL=30, DATETIME=31, STRING=32, PROPERTYACCESS=33, WHITESPACE=34, 
+		ASC=35, DESC=36;
 	public const int
 		RULE_query = 0, RULE_queryParameter = 1, RULE_top = 2, RULE_skip = 3, 
 		RULE_orderBy = 4, RULE_orderByExpression = 5, RULE_orderByProperty = 6, 
@@ -58,14 +58,14 @@ public partial class QueryFilteringParser : Parser {
 		"'('", "')'", "'or'", "'and'", "'not'", "'eq'", "'ne'", "'gt'", "'ge'", 
 		"'lt'", "'le'", "'toupper'", "'tolower'", "'startswith'", "'endswith'", 
 		null, null, null, null, null, null, null, "'null'", null, null, null, 
-		"'asc'", "'desk'"
+		null, "'asc'", "'desc'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, null, null, null, null, null, null, null, null, null, "OR", "AND", 
 		"NOT", "EQUALS", "NOTEQUALS", "GREATERTHAN", "GREATERTHANOREQUAL", "LESSTHAN", 
 		"LESSTHANOREQUAL", "TOUPPER", "TOLOWER", "STARTSWITH", "ENDSWITH", "INT", 
-		"LONG", "DOUBLE", "FLOAT", "DECIMAL", "BOOL", "GUID", "NULL", "STRING", 
-		"PROPERTYACCESS", "WHITESPACE", "ASC", "DESC"
+		"LONG", "DOUBLE", "FLOAT", "DECIMAL", "BOOL", "GUID", "NULL", "DATETIME", 
+		"STRING", "PROPERTYACCESS", "WHITESPACE", "ASC", "DESC"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -629,6 +629,7 @@ public partial class QueryFilteringParser : Parser {
 			case BOOL:
 			case GUID:
 			case NULL:
+			case DATETIME:
 			case STRING:
 			case PROPERTYACCESS:
 				{
@@ -766,6 +767,7 @@ public partial class QueryFilteringParser : Parser {
 			case BOOL:
 			case GUID:
 			case NULL:
+			case DATETIME:
 			case STRING:
 				EnterOuterAlt(_localctx, 2);
 				{
@@ -843,6 +845,7 @@ public partial class QueryFilteringParser : Parser {
 		public ITerminalNode NULL() { return GetToken(QueryFilteringParser.NULL, 0); }
 		public ITerminalNode GUID() { return GetToken(QueryFilteringParser.GUID, 0); }
 		public ITerminalNode STRING() { return GetToken(QueryFilteringParser.STRING, 0); }
+		public ITerminalNode DATETIME() { return GetToken(QueryFilteringParser.DATETIME, 0); }
 		public ConstantContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -866,7 +869,7 @@ public partial class QueryFilteringParser : Parser {
 			State = 101;
 			_localctx.value = TokenStream.LT(1);
 			_la = TokenStream.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << INT) | (1L << LONG) | (1L << DOUBLE) | (1L << FLOAT) | (1L << DECIMAL) | (1L << BOOL) | (1L << GUID) | (1L << NULL) | (1L << STRING))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << INT) | (1L << LONG) | (1L << DOUBLE) | (1L << FLOAT) | (1L << DECIMAL) | (1L << BOOL) | (1L << GUID) | (1L << NULL) | (1L << DATETIME) | (1L << STRING))) != 0)) ) {
 				_localctx.value = ErrorHandler.RecoverInline(this);
 			}
 			else {
@@ -960,7 +963,7 @@ public partial class QueryFilteringParser : Parser {
 
 	private static char[] _serializedATN = {
 		'\x3', '\x608B', '\xA72A', '\x8133', '\xB9ED', '\x417C', '\x3BE7', '\x7786', 
-		'\x5964', '\x3', '%', 'v', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', '\t', 
+		'\x5964', '\x3', '&', 'v', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', '\t', 
 		'\x3', '\x4', '\x4', '\t', '\x4', '\x4', '\x5', '\t', '\x5', '\x4', '\x6', 
 		'\t', '\x6', '\x4', '\a', '\t', '\a', '\x4', '\b', '\t', '\b', '\x4', 
 		'\t', '\t', '\t', '\x4', '\n', '\t', '\n', '\x4', '\v', '\t', '\v', '\x4', 
@@ -984,9 +987,9 @@ public partial class QueryFilteringParser : Parser {
 		'\x10', 'o', '\n', '\x10', '\f', '\x10', '\xE', '\x10', 'r', '\v', '\x10', 
 		'\x3', '\x10', '\x3', '\x10', '\x3', '\x10', '\x2', '\x2', '\x11', '\x2', 
 		'\x4', '\x6', '\b', '\n', '\f', '\xE', '\x10', '\x12', '\x14', '\x16', 
-		'\x18', '\x1A', '\x1C', '\x1E', '\x2', '\a', '\x3', '\x2', '$', '%', '\x3', 
+		'\x18', '\x1A', '\x1C', '\x1E', '\x2', '\a', '\x3', '\x2', '%', '&', '\x3', 
 		'\x2', '\f', '\r', '\x3', '\x2', '\xF', '\x14', '\x3', '\x2', '\x19', 
-		'!', '\x3', '\x2', '\x15', '\x18', '\x2', 's', '\x2', '+', '\x3', '\x2', 
+		'\"', '\x3', '\x2', '\x15', '\x18', '\x2', 's', '\x2', '+', '\x3', '\x2', 
 		'\x2', '\x2', '\x4', '\x31', '\x3', '\x2', '\x2', '\x2', '\x6', '\x33', 
 		'\x3', '\x2', '\x2', '\x2', '\b', '\x36', '\x3', '\x2', '\x2', '\x2', 
 		'\n', '\x39', '\x3', '\x2', '\x2', '\x2', '\f', '<', '\x3', '\x2', '\x2', 
@@ -1019,37 +1022,36 @@ public partial class QueryFilteringParser : Parser {
 		'@', '\x43', '\x3', '\x2', '\x2', '\x2', '\x41', '?', '\x3', '\x2', '\x2', 
 		'\x2', '\x41', '\x42', '\x3', '\x2', '\x2', '\x2', '\x42', '\r', '\x3', 
 		'\x2', '\x2', '\x2', '\x43', '\x41', '\x3', '\x2', '\x2', '\x2', '\x44', 
-		'\x45', '\a', '\"', '\x2', '\x2', '\x45', '\x46', '\t', '\x2', '\x2', 
-		'\x2', '\x46', '\xF', '\x3', '\x2', '\x2', '\x2', 'G', 'H', '\a', '\t', 
-		'\x2', '\x2', 'H', 'I', '\x5', '\x12', '\n', '\x2', 'I', '\x11', '\x3', 
-		'\x2', '\x2', '\x2', 'J', 'O', '\x5', '\x14', '\v', '\x2', 'K', 'L', '\t', 
-		'\x3', '\x2', '\x2', 'L', 'N', '\x5', '\x14', '\v', '\x2', 'M', 'K', '\x3', 
-		'\x2', '\x2', '\x2', 'N', 'Q', '\x3', '\x2', '\x2', '\x2', 'O', 'M', '\x3', 
-		'\x2', '\x2', '\x2', 'O', 'P', '\x3', '\x2', '\x2', '\x2', 'P', '\x13', 
-		'\x3', '\x2', '\x2', '\x2', 'Q', 'O', '\x3', '\x2', '\x2', '\x2', 'R', 
-		'T', '\a', '\xE', '\x2', '\x2', 'S', 'R', '\x3', '\x2', '\x2', '\x2', 
-		'S', 'T', '\x3', '\x2', '\x2', '\x2', 'T', 'Z', '\x3', '\x2', '\x2', '\x2', 
-		'U', '[', '\x5', '\x16', '\f', '\x2', 'V', 'W', '\a', '\n', '\x2', '\x2', 
-		'W', 'X', '\x5', '\x12', '\n', '\x2', 'X', 'Y', '\a', '\v', '\x2', '\x2', 
-		'Y', '[', '\x3', '\x2', '\x2', '\x2', 'Z', 'U', '\x3', '\x2', '\x2', '\x2', 
-		'Z', 'V', '\x3', '\x2', '\x2', '\x2', '[', '\x15', '\x3', '\x2', '\x2', 
-		'\x2', '\\', ']', '\x5', '\x18', '\r', '\x2', ']', '^', '\t', '\x4', '\x2', 
-		'\x2', '^', '_', '\x5', '\x18', '\r', '\x2', '_', '\x17', '\x3', '\x2', 
-		'\x2', '\x2', '`', '\x64', '\x5', '\x1A', '\xE', '\x2', '\x61', '\x64', 
-		'\x5', '\x1C', '\xF', '\x2', '\x62', '\x64', '\x5', '\x1E', '\x10', '\x2', 
-		'\x63', '`', '\x3', '\x2', '\x2', '\x2', '\x63', '\x61', '\x3', '\x2', 
-		'\x2', '\x2', '\x63', '\x62', '\x3', '\x2', '\x2', '\x2', '\x64', '\x19', 
-		'\x3', '\x2', '\x2', '\x2', '\x65', '\x66', '\a', '\"', '\x2', '\x2', 
-		'\x66', '\x1B', '\x3', '\x2', '\x2', '\x2', 'g', 'h', '\t', '\x5', '\x2', 
-		'\x2', 'h', '\x1D', '\x3', '\x2', '\x2', '\x2', 'i', 'j', '\t', '\x6', 
-		'\x2', '\x2', 'j', 'k', '\a', '\n', '\x2', '\x2', 'k', 'p', '\x5', '\x18', 
-		'\r', '\x2', 'l', 'm', '\a', '\b', '\x2', '\x2', 'm', 'o', '\x5', '\x18', 
-		'\r', '\x2', 'n', 'l', '\x3', '\x2', '\x2', '\x2', 'o', 'r', '\x3', '\x2', 
-		'\x2', '\x2', 'p', 'n', '\x3', '\x2', '\x2', '\x2', 'p', 'q', '\x3', '\x2', 
-		'\x2', '\x2', 'q', 's', '\x3', '\x2', '\x2', '\x2', 'r', 'p', '\x3', '\x2', 
-		'\x2', '\x2', 's', 't', '\a', '\v', '\x2', '\x2', 't', '\x1F', '\x3', 
-		'\x2', '\x2', '\x2', '\f', '!', '(', '+', '\x31', '\x41', 'O', 'S', 'Z', 
-		'\x63', 'p',
+		'\x45', '\a', '#', '\x2', '\x2', '\x45', '\x46', '\t', '\x2', '\x2', '\x2', 
+		'\x46', '\xF', '\x3', '\x2', '\x2', '\x2', 'G', 'H', '\a', '\t', '\x2', 
+		'\x2', 'H', 'I', '\x5', '\x12', '\n', '\x2', 'I', '\x11', '\x3', '\x2', 
+		'\x2', '\x2', 'J', 'O', '\x5', '\x14', '\v', '\x2', 'K', 'L', '\t', '\x3', 
+		'\x2', '\x2', 'L', 'N', '\x5', '\x14', '\v', '\x2', 'M', 'K', '\x3', '\x2', 
+		'\x2', '\x2', 'N', 'Q', '\x3', '\x2', '\x2', '\x2', 'O', 'M', '\x3', '\x2', 
+		'\x2', '\x2', 'O', 'P', '\x3', '\x2', '\x2', '\x2', 'P', '\x13', '\x3', 
+		'\x2', '\x2', '\x2', 'Q', 'O', '\x3', '\x2', '\x2', '\x2', 'R', 'T', '\a', 
+		'\xE', '\x2', '\x2', 'S', 'R', '\x3', '\x2', '\x2', '\x2', 'S', 'T', '\x3', 
+		'\x2', '\x2', '\x2', 'T', 'Z', '\x3', '\x2', '\x2', '\x2', 'U', '[', '\x5', 
+		'\x16', '\f', '\x2', 'V', 'W', '\a', '\n', '\x2', '\x2', 'W', 'X', '\x5', 
+		'\x12', '\n', '\x2', 'X', 'Y', '\a', '\v', '\x2', '\x2', 'Y', '[', '\x3', 
+		'\x2', '\x2', '\x2', 'Z', 'U', '\x3', '\x2', '\x2', '\x2', 'Z', 'V', '\x3', 
+		'\x2', '\x2', '\x2', '[', '\x15', '\x3', '\x2', '\x2', '\x2', '\\', ']', 
+		'\x5', '\x18', '\r', '\x2', ']', '^', '\t', '\x4', '\x2', '\x2', '^', 
+		'_', '\x5', '\x18', '\r', '\x2', '_', '\x17', '\x3', '\x2', '\x2', '\x2', 
+		'`', '\x64', '\x5', '\x1A', '\xE', '\x2', '\x61', '\x64', '\x5', '\x1C', 
+		'\xF', '\x2', '\x62', '\x64', '\x5', '\x1E', '\x10', '\x2', '\x63', '`', 
+		'\x3', '\x2', '\x2', '\x2', '\x63', '\x61', '\x3', '\x2', '\x2', '\x2', 
+		'\x63', '\x62', '\x3', '\x2', '\x2', '\x2', '\x64', '\x19', '\x3', '\x2', 
+		'\x2', '\x2', '\x65', '\x66', '\a', '#', '\x2', '\x2', '\x66', '\x1B', 
+		'\x3', '\x2', '\x2', '\x2', 'g', 'h', '\t', '\x5', '\x2', '\x2', 'h', 
+		'\x1D', '\x3', '\x2', '\x2', '\x2', 'i', 'j', '\t', '\x6', '\x2', '\x2', 
+		'j', 'k', '\a', '\n', '\x2', '\x2', 'k', 'p', '\x5', '\x18', '\r', '\x2', 
+		'l', 'm', '\a', '\b', '\x2', '\x2', 'm', 'o', '\x5', '\x18', '\r', '\x2', 
+		'n', 'l', '\x3', '\x2', '\x2', '\x2', 'o', 'r', '\x3', '\x2', '\x2', '\x2', 
+		'p', 'n', '\x3', '\x2', '\x2', '\x2', 'p', 'q', '\x3', '\x2', '\x2', '\x2', 
+		'q', 's', '\x3', '\x2', '\x2', '\x2', 'r', 'p', '\x3', '\x2', '\x2', '\x2', 
+		's', 't', '\a', '\v', '\x2', '\x2', 't', '\x1F', '\x3', '\x2', '\x2', 
+		'\x2', '\f', '!', '(', '+', '\x31', '\x41', 'O', 'S', 'Z', '\x63', 'p',
 	};
 
 	public static readonly ATN _ATN =

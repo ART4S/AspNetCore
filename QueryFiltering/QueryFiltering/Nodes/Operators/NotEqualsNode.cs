@@ -3,15 +3,15 @@ using System.Linq.Expressions;
 
 namespace QueryFiltering.Nodes.Operators
 {
-    internal class NotEqualsNode : AggregateNode
+    internal class NotEqualsNode : OperationNode
     {
         public NotEqualsNode(BaseNode left, BaseNode right) : base(left, right)
         {
         }
 
-        public override Expression BuildExpression()
+        protected override Expression CreateConcrete(Expression left, Expression right)
         {
-            return Expression.NotEqual(Left.BuildExpression(), Right.BuildExpression());
+            return Expression.NotEqual(left, right);
         }
     }
 }

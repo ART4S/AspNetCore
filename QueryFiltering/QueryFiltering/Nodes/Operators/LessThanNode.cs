@@ -3,15 +3,15 @@ using System.Linq.Expressions;
 
 namespace QueryFiltering.Nodes.Operators
 {
-    internal class LessThanNode : AggregateNode
+    internal class LessThanNode : OperationNode
     {
         public LessThanNode(BaseNode left, BaseNode right) : base(left, right)
         {
         }
 
-        public override Expression BuildExpression()
+        protected override Expression CreateConcrete(Expression left, Expression right)
         {
-            return Expression.LessThan(Left.BuildExpression(), Right.BuildExpression());
+            return Expression.LessThan(left, right);
         }
     }
 }
