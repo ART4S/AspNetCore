@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using QueryFiltering.Tests.Model;
 using System.Linq;
 using Xunit;
@@ -449,6 +450,21 @@ namespace QueryFiltering.Tests
 
             var expected = testObjects.Where(x => x.DateTimeValue == testDateTime).ToList();
             var actual = testObjects.ApplyQuery("$filter=DateTimeValue eq datetime'2000-01-01'").ToList();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void Filter_InnerObjectIntValueEqualsSomeValue_ReturnsFilteredOne()
+        {
+            var testObjects = new[]
+            {
+                new TestObject(){InnerObject = new InnerObject(){IntValue = 1}},
+                new TestObject()
+            }.AsQueryable();
+
+            var expected = testObjects.Where(x => x.InnerObject != null && x.InnerObject.IntValue == 1).ToList();
+            var actual = testObjects.ApplyQuery("$filter=InnerObject ne null and InnerObject.IntValue eq 1").ToList();
 
             Assert.Equal(expected, actual);
         }

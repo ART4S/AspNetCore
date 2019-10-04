@@ -19,5 +19,7 @@ namespace QueryFiltering.Tests.Model
         public int? NullableIntValue { get; set; }
 
         public DateTime DateTimeValue { get; set; }
+
+        public InnerObject InnerObject { get; set; }
     }
 }

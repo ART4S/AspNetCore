@@ -33,16 +33,14 @@ namespace QueryFiltering.Visitors
 
         public override BaseNode VisitFilterExpression(QueryFilteringParser.FilterExpressionContext context)
         {
-            var children = context.children.Reverse().ToArray();
+            BaseNode resultNode = context.children[0].Accept(this);
 
-            BaseNode resultNode = children[0].Accept(this);
-
-            for (int i = 1; i < children.Length; i += 2)
+            for (int i = 1; i < context.children.Count; i += 2)
             {
                 var left = resultNode;
-                var right = children[i + 1].Accept(this);
+                var right = context.children[i + 1].Accept(this);
 
-                var aggregateNode = (ITerminalNode)children[i];
+                var aggregateNode = (ITerminalNode)context.children[i];
 
                 switch (aggregateNode.Symbol.Type)
                 {
