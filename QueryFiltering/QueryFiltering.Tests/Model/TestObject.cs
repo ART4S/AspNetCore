@@ -6,9 +6,13 @@ namespace QueryFiltering.Tests.Model
     {
         public int IntValue { get; set; }
 
+        public long LongValue { get; set; }
+
         public double DoubleValue { get; set; }
 
         public decimal DecimalValue { get; set; }
+
+        public float FloatValue { get; set; }
 
         public bool BoolValue { get; set; }
 
