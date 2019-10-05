@@ -3,6 +3,7 @@ using QueryFiltering.Nodes;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace QueryFiltering.Visitors
 {
@@ -24,19 +25,29 @@ namespace QueryFiltering.Visitors
 
         public override object VisitSelectExpression(QueryFilteringParser.SelectExpressionContext context)
         {
-            var properties = context.PROPERTYACCESS().Select(x => x.Symbol.Text).ToHashSet();
-            var anonymousType = ReflectionUtils.CreateAnonymousTypeFromSourceType(_parameter.Type, properties);
+            var properties = context.PROPERTYACCESS()
+                .Select(x => x.Symbol.Text)
+                .ToHashSet();
 
-            var method = ReflectionCache.Select.MakeGenericMethod(_parameter.Type, anonymousType);
+            var existingProperties = _parameter.Type
+                .GetCashedProperties()
+                .Where(p => properties.Contains(p.Name))
+                .ToDictionary(p => p.Name, p => p.PropertyType);
 
-            var body = Expression.New(
-                anonymousType.GetConstructors().Single(), 
-                properties.Select(x => new PropertyNode(x, _parameter).CreateExpression()));
+            var dynamicType = ReflectionUtils.CreateDynamicType(existingProperties);
+
+            var propExpressions = properties.ToDictionary(x => x, x => new PropertyNode(x, _parameter).CreateExpression());
+
+            var body = Expression.MemberInit(
+                Expression.New(dynamicType.GetConstructors().Single()), 
+                dynamicType.GetFields().Select(f => Expression.Bind(f, propExpressions[f.Name])));
 
             var lambda = ReflectionCache.Lambda.MakeGenericMethod(
-                typeof(Func<,>).MakeGenericType(_parameter.Type, anonymousType));
+                typeof(Func<,>).MakeGenericType(_parameter.Type, dynamicType));
 
             var expression = lambda.Invoke(null, new object[] {body, new ParameterExpression[] {_parameter}});
+
+            var method = ReflectionCache.Select.MakeGenericMethod(_parameter.Type, dynamicType);
 
             return method.Invoke(null, new [] {_sourceQueryable, expression });
         }

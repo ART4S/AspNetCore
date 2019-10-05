@@ -516,7 +516,7 @@ public partial class QueryFilteringParser : Parser {
 	public partial class OrderByAtomContext : ParserRuleContext {
 		public bool isFirstSort;
 		public IToken value;
-		public IToken op;
+		public IToken sortType;
 		public ITerminalNode PROPERTYACCESS() { return GetToken(QueryFilteringParser.PROPERTYACCESS, 0); }
 		public ITerminalNode ASC() { return GetToken(QueryFilteringParser.ASC, 0); }
 		public ITerminalNode DESC() { return GetToken(QueryFilteringParser.DESC, 0); }
@@ -544,10 +544,10 @@ public partial class QueryFilteringParser : Parser {
 			{
 			State = 82; _localctx.value = Match(PROPERTYACCESS);
 			State = 83;
-			_localctx.op = TokenStream.LT(1);
+			_localctx.sortType = TokenStream.LT(1);
 			_la = TokenStream.LA(1);
 			if ( !(_la==ASC || _la==DESC) ) {
-				_localctx.op = ErrorHandler.RecoverInline(this);
+				_localctx.sortType = ErrorHandler.RecoverInline(this);
 			}
 			else {
 				ErrorHandler.ReportMatch(this);

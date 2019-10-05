@@ -14,9 +14,9 @@ namespace QueryFiltering
             return (IQueryable<T>) ApplyQueryImpl(sourceQueryable, query);
         }
 
-        public static IQueryable ApplyQuery(this IQueryable sourceQueryable, string query)
+        public static IQueryable<dynamic> ApplyQuery(this IQueryable<dynamic> sourceQueryable, string query)
         {
-            return (IQueryable) ApplyQueryImpl(sourceQueryable, query);
+            return (IQueryable<dynamic>) ApplyQueryImpl(sourceQueryable, query);
         }
 
         private static object ApplyQueryImpl(IQueryable sourceQueryable, string query)

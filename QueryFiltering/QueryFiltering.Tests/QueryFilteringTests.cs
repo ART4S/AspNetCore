@@ -426,7 +426,21 @@ namespace QueryFiltering.Tests
 
         #region Select
 
-        // in future
+        [Fact]
+        public void Select_IntValue_ReturnsOneWithOneProperty()
+        {
+            IQueryable<dynamic> testObjects = new[]
+            {
+                new TestObject(){IntValue = 1, DoubleValue = 1},
+            }.AsQueryable();
+
+            var actual = testObjects.ApplyQuery("$select=IntValue").ToList();
+
+            Assert.Single(actual);
+            Assert.IsNotType<TestObject>(actual[0]);
+            Assert.True(actual[0].GetType().GetFields().Length == 1);
+            Assert.True(actual[0].GetType().GetFields()[0].Name == "IntValue");
+        }
 
         #endregion
     }

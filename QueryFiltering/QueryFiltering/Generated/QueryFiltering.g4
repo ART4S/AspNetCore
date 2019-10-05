@@ -39,7 +39,7 @@ orderByExpression
 
 orderByAtom[bool isFirstSort]
     :   value=PROPERTYACCESS 
-        op=(ASC|DESC)
+        sortType=(ASC|DESC)
     ;
 
 filter
