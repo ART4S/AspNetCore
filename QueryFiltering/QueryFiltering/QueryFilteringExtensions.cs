@@ -11,6 +11,16 @@ namespace QueryFiltering
     {
         public static IQueryable<T> ApplyQuery<T>(this IQueryable<T> sourceQueryable, string query)
         {
+            return (IQueryable<T>) ApplyQueryImpl(sourceQueryable, query);
+        }
+
+        public static IQueryable ApplyQuery(this IQueryable sourceQueryable, string query)
+        {
+            return (IQueryable) ApplyQueryImpl(sourceQueryable, query);
+        }
+
+        private static object ApplyQueryImpl(IQueryable sourceQueryable, string query)
+        {
             if (sourceQueryable == null) throw new ArgumentNullException(nameof(sourceQueryable));
             if (query == null) throw new ArgumentNullException(nameof(query));
 
@@ -20,10 +30,9 @@ namespace QueryFiltering
                         new AntlrInputStream(query))));
 
             var visitor = new QueryVisitor(sourceQueryable);
-
             var resultQueryable = parser.query().Accept(visitor);
 
-            return (IQueryable<T>) resultQueryable;
+            return resultQueryable;
         }
     }
 }

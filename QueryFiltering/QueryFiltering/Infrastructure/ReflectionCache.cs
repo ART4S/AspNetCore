@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -7,6 +8,7 @@ namespace QueryFiltering.Infrastructure
 {
     internal static class ReflectionCache
     {
+        private static readonly ConcurrentDictionary<Type, PropertyInfo[]> Properties = new ConcurrentDictionary<Type, PropertyInfo[]>();
         private static readonly ConcurrentDictionary<string, MethodInfo> Methods = new ConcurrentDictionary<string, MethodInfo>();
 
         public static MethodInfo Lambda => Methods.GetOrAdd("Lambda",
@@ -30,6 +32,9 @@ namespace QueryFiltering.Infrastructure
         public static MethodInfo Take => Methods.GetOrAdd("Take",
             n => typeof(Queryable).GetMethods().First(x => x.Name == n && x.GetParameters().Length == 2));
 
+        public static MethodInfo Select => Methods.GetOrAdd("Select",
+            n => typeof(Queryable).GetMethods().First(x => x.Name == n && x.GetParameters().Length == 2));
+
         public static MethodInfo Where => Methods.GetOrAdd("Where",
             n => typeof(Queryable).GetMethods().First(x => x.Name == n && x.GetParameters().Length == 2));
 
@@ -44,5 +49,8 @@ namespace QueryFiltering.Infrastructure
 
         public static MethodInfo EndsWith => Methods.GetOrAdd("EndsWith",
             n => typeof(string).GetMethods().First(x => x.Name == n && x.GetParameters()[0].ParameterType == typeof(string)));
+
+        public static PropertyInfo[] GetCashedProperties(this Type sourceType) 
+            => Properties.GetOrAdd(sourceType, t => t.GetProperties());
     }
 }

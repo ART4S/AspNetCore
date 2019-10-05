@@ -13,9 +13,9 @@ namespace QueryFiltering.Nodes.Base
             var left = Left.CreateExpression();
             var right = Expression.Convert(Right.CreateExpression(), left.Type);
 
-            return CreateConcrete(left, right);
+            return CreateExpressionImpl(left, right);
         }
 
-        protected abstract Expression CreateConcrete(Expression left, Expression right);
+        protected abstract Expression CreateExpressionImpl(Expression left, Expression right);
     }
 }

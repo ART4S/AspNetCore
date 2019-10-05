@@ -10,7 +10,7 @@ query
     ;
 
 queryParameter
-    :   top|skip|filter|orderBy
+    :   top|skip|select|filter|orderBy
     ;
 
 top
@@ -21,24 +21,33 @@ skip
     :   '$skip='count=INT
     ;
 
+select
+    :   '$select=' expression=selectExpression
+    ;
+
+selectExpression
+    :   PROPERTYACCESS (',' PROPERTYACCESS)*
+    ;
+
 orderBy
-    : '$orderBy=' expression=orderByExpression
+    :   '$orderBy=' expression=orderByExpression
     ;
 
 orderByExpression
-    :   orderByProperty[true] (',' orderByProperty[false])*
+    :   orderByAtom[true] (',' orderByAtom[false])*
     ;
 
-orderByProperty[bool firstSort]
-    :   value=PROPERTYACCESS op=(ASC|DESC)
+orderByAtom[bool isFirstSort]
+    :   value=PROPERTYACCESS 
+        op=(ASC|DESC)
     ;
 
 filter
-    : '$filter=' expression=filterExpression
+    :   '$filter=' expression=filterExpression
     ;
 
 filterExpression	
-    :	filterAtom ((OR|AND) filterAtom)*
+    :   filterAtom ((OR|AND) filterAtom)*
     ;
 
 filterAtom
@@ -46,7 +55,9 @@ filterAtom
     ;
 
 boolExpression
-    : left=atom operation=(EQUALS|NOTEQUALS|GREATERTHAN|GREATERTHANOREQUAL|LESSTHAN|LESSTHANOREQUAL) right=atom
+    :   left=atom 
+        operation=(EQUALS|NOTEQUALS|GREATERTHAN|GREATERTHANOREQUAL|LESSTHAN|LESSTHANOREQUAL) 
+        right=atom
     ;
 
 atom
@@ -56,11 +67,11 @@ atom
     ; 
 
 property
-    : value=PROPERTYACCESS
+    :   value=PROPERTYACCESS
     ;
 
 constant
-    : value=(INT|LONG|DOUBLE|FLOAT|DECIMAL|BOOL|NULL|GUID|STRING|DATETIME)
+    :   value=(INT|LONG|DOUBLE|FLOAT|DECIMAL|BOOL|NULL|GUID|STRING|DATETIME)
     ;
 
 function
@@ -119,11 +130,11 @@ ENDSWITH
     ;
 
 INT
-    :    '-'? NUMBER+
+    :   '-'? NUMBER+
     ;
 
 LONG
-    :	'-'? NUMBER+ 'l'
+    :   '-'? NUMBER+ 'l'
     ;
 
 DOUBLE
@@ -143,7 +154,7 @@ BOOL
     ;
 
 GUID
-    :   HEX_PAIR HEX_PAIR HEX_PAIR HEX_PAIR '-' HEX_PAIR HEX_PAIR '-' HEX_PAIR HEX_PAIR '-' HEX_PAIR HEX_PAIR '-' HEX_PAIR HEX_PAIR HEX_PAIR HEX_PAIR HEX_PAIR HEX_PAIR
+    :   HEX HEX HEX HEX HEX HEX HEX HEX '-' HEX HEX HEX HEX '-' HEX HEX HEX HEX '-' HEX HEX HEX HEX '-' HEX HEX HEX HEX HEX HEX HEX HEX HEX HEX HEX HEX
     ;
 
 NULL
@@ -182,22 +193,18 @@ fragment UNICODE
     :   '\\' 'u' HEX HEX HEX HEX
     ;
 
-fragment HEX_PAIR
-    : HEX HEX
-    ;
-
 fragment HEX
-    : [0-9a-fA-F] 
+    :   [0-9a-fA-F] 
     ;
 
 fragment PROPERTY
-    : LETTER (LETTER|NUMBER|'_')*
+    :   LETTER (LETTER|NUMBER|'_')*
     ;
 
 fragment NUMBER
-    : [0-9]
+    :   [0-9]
     ;
 
 fragment LETTER
-    : [a-zA-Z]
+    :   [a-zA-Z]
     ;

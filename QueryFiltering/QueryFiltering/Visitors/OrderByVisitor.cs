@@ -7,13 +7,11 @@ namespace QueryFiltering.Visitors
     internal class OrderByVisitor : QueryFilteringBaseVisitor<object>
     {
         private object _sourceQueryable;
-        private readonly Type _elementType;
         private readonly ParameterExpression _parameter;
 
-        public OrderByVisitor(object sourceQueryable, Type elementType, ParameterExpression parameter)
+        public OrderByVisitor(object sourceQueryable, ParameterExpression parameter)
         {
             _sourceQueryable = sourceQueryable;
-            _elementType = elementType;
             _parameter = parameter;
         }
 
@@ -24,7 +22,7 @@ namespace QueryFiltering.Visitors
 
         public override object VisitOrderByExpression(QueryFilteringParser.OrderByExpressionContext context)
         {
-            foreach (var orderProperty in context.orderByProperty())
+            foreach (var orderProperty in context.orderByAtom())
             {
                 _sourceQueryable = orderProperty.Accept(this);
             }
@@ -32,7 +30,7 @@ namespace QueryFiltering.Visitors
             return _sourceQueryable;
         }
 
-        public override object VisitOrderByProperty(QueryFilteringParser.OrderByPropertyContext context)
+        public override object VisitOrderByAtom(QueryFilteringParser.OrderByAtomContext context)
         {
             MemberExpression property = null;
 
@@ -49,14 +47,14 @@ namespace QueryFiltering.Visitors
             }
 
             var lambda = ReflectionCache.Lambda.MakeGenericMethod(
-                typeof(Func<,>).MakeGenericType(_elementType, property.Type));
+                typeof(Func<,>).MakeGenericType(_parameter.Type, property.Type));
 
             var expression = lambda.Invoke(null, new object[] { property, new ParameterExpression[] { _parameter } });
             
             var orderBy = (context.op.Type == QueryFilteringLexer.ASC ? 
-                    context.firstSort ? ReflectionCache.OrderBy : ReflectionCache.ThenBy : 
-                    context.firstSort ? ReflectionCache.OrderByDescending : ReflectionCache.ThenByDescending)
-                .MakeGenericMethod(_elementType, property.Type);
+                    context.isFirstSort ? ReflectionCache.OrderBy : ReflectionCache.ThenBy : 
+                    context.isFirstSort ? ReflectionCache.OrderByDescending : ReflectionCache.ThenByDescending)
+                .MakeGenericMethod(_parameter.Type, property.Type);
 
             return orderBy.Invoke(null, new[] { _sourceQueryable, expression });
         }

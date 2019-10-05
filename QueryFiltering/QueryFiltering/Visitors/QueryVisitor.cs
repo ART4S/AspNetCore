@@ -8,13 +8,11 @@ namespace QueryFiltering.Visitors
     internal class QueryVisitor : QueryFilteringBaseVisitor<object>
     {
         private object _sourceQueryable;
-        private readonly Type _elementType;
         private readonly ParameterExpression _parameter;
 
         public QueryVisitor(IQueryable sourceQueryable)
         {
             _sourceQueryable = sourceQueryable;
-            _elementType = sourceQueryable.ElementType;
             _parameter = Expression.Parameter(sourceQueryable.ElementType);
         }
 
@@ -43,7 +41,7 @@ namespace QueryFiltering.Visitors
             var count = context.Accept(new TopVisitor());
 
             var take = ReflectionCache.Take
-                .MakeGenericMethod(_elementType);
+                .MakeGenericMethod(_parameter.Type);
 
             return take.Invoke(null, new[] { _sourceQueryable, count });
         }
@@ -53,7 +51,7 @@ namespace QueryFiltering.Visitors
             var count = context.Accept(new SkipVisitor());
 
             var skip = ReflectionCache.Skip
-                .MakeGenericMethod(_elementType);
+                .MakeGenericMethod(_parameter.Type);
 
             return skip.Invoke(null, new[] { _sourceQueryable, count });
         }
@@ -65,19 +63,25 @@ namespace QueryFiltering.Visitors
 
             var lambda = ReflectionCache.Lambda
                 .MakeGenericMethod(typeof(Func<,>)
-                    .MakeGenericType(_elementType, typeof(bool)));
+                    .MakeGenericType(_parameter.Type, typeof(bool)));
 
             var expression = lambda.Invoke(null, new object[] { tree.CreateExpression(), new ParameterExpression[] { _parameter } });
 
             var where = ReflectionCache.Where
-                .MakeGenericMethod(_elementType);
+                .MakeGenericMethod(_parameter.Type);
 
             return where.Invoke(null, new[] { _sourceQueryable, expression });
         }
 
         public override object VisitOrderBy(QueryFilteringParser.OrderByContext context)
         {
-            var visitor = new OrderByVisitor(_sourceQueryable, _elementType, _parameter);
+            var visitor = new OrderByVisitor(_sourceQueryable, _parameter);
+            return context.Accept(visitor);
+        }
+
+        public override object VisitSelect(QueryFilteringParser.SelectContext context)
+        {
+            var visitor = new SelectVisitor(_sourceQueryable, _parameter);
             return context.Accept(visitor);
         }
     }

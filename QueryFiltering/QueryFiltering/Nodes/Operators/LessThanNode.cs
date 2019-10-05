@@ -9,7 +9,7 @@ namespace QueryFiltering.Nodes.Operators
         {
         }
 
-        protected override Expression CreateConcrete(Expression left, Expression right)
+        protected override Expression CreateExpressionImpl(Expression left, Expression right)
         {
             return Expression.LessThan(left, right);
         }
