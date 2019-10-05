@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using QueryFiltering.Tests.Model;
+﻿using QueryFiltering.Tests.Model;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -24,8 +23,11 @@ namespace QueryFiltering.Tests
 
         #region Top
 
-        [Fact]
-        public void Top_1_ReturnsOne()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public void Top_Count_ReturnsOne(int count)
         {
             var testObjects = new[]
             {
@@ -33,22 +35,8 @@ namespace QueryFiltering.Tests
                 new TestObject(),
             }.AsQueryable();
 
-            var expected = testObjects.Take(1).ToList();
-            var actual = testObjects.ApplyQuery("$top=1").ToList();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void Top_NegativeNumber_ReturnsZero()
-        {
-            var testObjects = new[]
-            {
-                new TestObject()
-            }.AsQueryable();
-
-            var expected = testObjects.Take(-1).ToList();
-            var actual = testObjects.ApplyQuery("$top=-1").ToList();
+            var expected = testObjects.Take(count).ToList();
+            var actual = testObjects.ApplyQuery($"$top={count}").ToList();
 
             Assert.Equal(expected, actual);
         }
@@ -57,8 +45,11 @@ namespace QueryFiltering.Tests
 
         #region Skip
 
-        [Fact]
-        public void Skip_1_ReturnsOne()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public void Skip_Count_ReturnsOne(int count)
         {
             var testObjects = new[]
             {
@@ -66,22 +57,8 @@ namespace QueryFiltering.Tests
                 new TestObject(),
             }.AsQueryable();
 
-            var expected = testObjects.Skip(1).ToList();
-            var actual = testObjects.ApplyQuery("$skip=1").ToList();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void Skip_NegativeNumber_ReturnsSameObjects()
-        {
-            var testObjects = new[]
-            {
-                new TestObject()
-            }.AsQueryable();
-
-            var expected = testObjects.Skip(-1).ToList();
-            var actual = testObjects.ApplyQuery("$skip=-1").ToList();
+            var expected = testObjects.Skip(count).ToList();
+            var actual = testObjects.ApplyQuery($"$skip={count}").ToList();
 
             Assert.Equal(expected, actual);
         }
@@ -152,152 +129,171 @@ namespace QueryFiltering.Tests
 
         #region Filter
 
-        [Fact]
-        public void Filter_IntValueEqualsMaxValue_ReturnsFilteredOne()
+        [Theory]
+        [InlineData(int.MaxValue)]
+        [InlineData(int.MinValue)]
+        public void Filter_IntValueEqualsValue_ReturnsFilteredOne(int value)
         {
             var testObjects = new[]
             {
-                new TestObject(){IntValue = int.MaxValue},
+                new TestObject(){IntValue = value},
                 new TestObject()
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.IntValue == int.MaxValue).ToList();
-            var actual = testObjects.ApplyQuery($"$filter=IntValue eq {int.MaxValue}").ToList();
+            var expected = testObjects.Where(x => x.IntValue == value).ToList();
+            var actual = testObjects.ApplyQuery($"$filter=IntValue eq {value}").ToList();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(1.00)]
+        [InlineData(-1.00)]
+        public void Filter_DoubleValueEqualsValue_ReturnsFilteredOne(int value)
+        {
+            var testObjects = new[]
+            {
+                new TestObject(){DoubleValue = value},
+                new TestObject()
+            }.AsQueryable();
+
+            var expected = testObjects.Where(x => x.DoubleValue == value).ToList();
+            var actual = testObjects.ApplyQuery($"$filter=DoubleValue eq {value}d").ToList();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void Filter_BoolValueEqualsValue_ReturnsFilteredOne(bool value)
+        {
+            var testObjects = new[]
+            {
+                new TestObject(){BoolValue = value},
+                new TestObject(){BoolValue = !value}
+            }.AsQueryable();
+
+            var expected = testObjects.Where(x => x.BoolValue == value).ToList();
+            var actual = testObjects.ApplyQuery($"$filter=BoolValue eq {value.ToString().ToLower()}").ToList();
+
+            Assert.Equal(expected, actual);
+        }
+
+
+        [Theory]
+        [InlineData(1.00)]
+        [InlineData(-1.00)]
+        public void Filter_DecimalValueEqualsValue_ReturnsFilteredOne(decimal value)
+        {
+            var testObjects = new[]
+            {
+                new TestObject(){DecimalValue = value},
+                new TestObject()
+            }.AsQueryable();
+
+            var expected = testObjects.Where(x => x.DecimalValue == value).ToList();
+            var actual = testObjects.ApplyQuery($"$filter=DecimalValue eq {value}m").ToList();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("notEmptyString")]
+        [InlineData("")]
+        public void Filter_StringValueEqualsValue_ReturnsFilteredOne(string value)
+        {
+            var testObjects = new[]
+            {
+                new TestObject(){StringValue = value},
+                new TestObject()
+            }.AsQueryable();
+
+            var expected = testObjects.Where(x => x.StringValue == value).ToList();
+            var actual = testObjects.ApplyQuery($"$filter=StringValue eq '{value}'").ToList();
 
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void Filter_IntValueEqualsMinValue_ReturnsFilteredOne()
-        {
-            var testObjects = new[]
-            {
-                new TestObject(){IntValue = int.MinValue},
-                new TestObject()
-            }.AsQueryable();
-
-            var expected = testObjects.Where(x => x.IntValue == int.MinValue).ToList();
-            var actual = testObjects.ApplyQuery($"$filter=IntValue eq {int.MinValue}").ToList();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void Filter_DoubleValueEqualsPositiveNumber_ReturnsFilteredOne()
-        {
-            var testObjects = new[]
-            {
-                new TestObject(){DoubleValue = 1},
-                new TestObject()
-            }.AsQueryable();
-
-            var expected = testObjects.Where(x => x.DoubleValue == 1).ToList();
-            var actual = testObjects.ApplyQuery("$filter=DoubleValue eq 1.00d").ToList();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void Filter_DoubleValueEqualsNegativeNumber_ReturnsFilteredOne()
-        {
-            var testObjects = new[]
-            {
-                new TestObject(){DoubleValue = -1},
-                new TestObject()
-            }.AsQueryable();
-
-            var expected = testObjects.Where(x => x.DoubleValue == -1).ToList();
-            var actual = testObjects.ApplyQuery("$filter=DoubleValue eq -1.00d").ToList();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void Filter_BoolValueEqualsTrue_ReturnsFilteredOne()
-        {
-            var testObjects = new[]
-            {
-                new TestObject(){BoolValue = true},
-                new TestObject()
-            }.AsQueryable();
-
-            var expected = testObjects.Where(x => x.BoolValue).ToList();
-            var actual = testObjects.ApplyQuery("$filter=BoolValue eq true").ToList();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void Filter_BoolValueEqualsFalse_ReturnsFilteredOne()
+        public void Filter_StringValueEqualsNull_ReturnsFilteredOne()
         {
             var testObjects = new[]
             {
                 new TestObject(),
-                new TestObject(){BoolValue = true}
+                new TestObject(){StringValue = "notMatch"}
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.BoolValue == false).ToList();
-            var actual = testObjects.ApplyQuery("$filter=BoolValue eq false").ToList();
+            var expected = testObjects.Where(x => x.StringValue == null).ToList();
+            var actual = testObjects.ApplyQuery("$filter=StringValue eq null").ToList();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("2ec37a3c-1529-4298-a1da-30472b68e6a5")]
+        [InlineData("00000000-0000-0000-0000-000000000000")]
+        public void Filter_GuidValueEqualsValue_ReturnsFilteredOne(string value)
+        {
+            var testGuid = Guid.Parse(value);
+            var testObjects = new[]
+            {
+                new TestObject(){GuidValue = testGuid},
+                new TestObject()
+            }.AsQueryable();
+
+            var expected = testObjects.Where(x => x.GuidValue == testGuid).ToList();
+            var actual = testObjects.ApplyQuery($"$filter=GuidValue eq {testGuid}").ToList();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(-1)]
+        public void Filter_NullableIntValueEqualsValue_ReturnsFilteredOne(int? value)
+        {
+            var testObjects = new[]
+            {
+                new TestObject(){NullableIntValue = value},
+                new TestObject()
+            }.AsQueryable();
+
+            var expected = testObjects.Where(x => x.NullableIntValue == value).ToList();
+            var actual = testObjects.ApplyQuery($"$filter=NullableIntValue eq {value}").ToList();
 
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void Filter_DecimalValueEqualsPositiveNumber_ReturnsFilteredOne()
+        public void Filter_NullableIntValueEqualsNull_ReturnsFilteredOne()
         {
             var testObjects = new[]
             {
-                new TestObject(){DecimalValue = 1},
+                new TestObject(){NullableIntValue = null},
                 new TestObject()
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.DecimalValue == 1).ToList();
-            var actual = testObjects.ApplyQuery("$filter=DecimalValue eq 1m").ToList();
+            var expected = testObjects.Where(x => x.NullableIntValue == null).ToList();
+            var actual = testObjects.ApplyQuery("$filter=NullableIntValue eq null").ToList();
 
             Assert.Equal(expected, actual);
         }
 
-        [Fact]
-        public void Filter_DecimalValueEqualsNegativeNumber_ReturnsFilteredOne()
+        [Theory]
+        [InlineData("2000-01-01")]
+        [InlineData("2000-01-01T12:59")]
+        public void Filter_DateTimeValueEqualsValue_ReturnsFilteredOne(string value)
         {
+            var testDateTime = DateTime.Parse(value);
             var testObjects = new[]
             {
-                new TestObject(){DecimalValue = -1},
+                new TestObject(){DateTimeValue = testDateTime},
                 new TestObject()
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.DecimalValue == -1).ToList();
-            var actual = testObjects.ApplyQuery("$filter=DecimalValue eq -1.0m").ToList();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void Filter_StringValueEqualsNotEmptyString_ReturnsFilteredOne()
-        {
-            var testObjects = new[]
-            {
-                new TestObject(){StringValue = "match"},
-                new TestObject()
-            }.AsQueryable();
-
-            var expected = testObjects.Where(x => x.StringValue == "match").ToList();
-            var actual = testObjects.ApplyQuery("$filter=StringValue eq 'match'").ToList();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void Filter_StringValueEqualsEmptyString_ReturnsFilteredOne()
-        {
-            var testObjects = new[]
-            {
-                new TestObject(){StringValue = string.Empty},
-                new TestObject()
-            }.AsQueryable();
-
-            var expected = testObjects.Where(x => x.StringValue == string.Empty).ToList();
-            var actual = testObjects.ApplyQuery("$filter=StringValue eq ''").ToList();
+            var expected = testObjects.Where(x => x.DateTimeValue == testDateTime).ToList();
+            var actual = testObjects.ApplyQuery($"$filter=DateTimeValue eq datetime'{value}'").ToList();
 
             Assert.Equal(expected, actual);
         }
@@ -363,21 +359,6 @@ namespace QueryFiltering.Tests
         }
 
         [Fact]
-        public void Filter_StringValueEqualsNull_ReturnsFilteredOne()
-        {
-            var testObjects = new[]
-            {
-                new TestObject(),
-                new TestObject(){StringValue = "notMatch"}
-            }.AsQueryable();
-
-            var expected = testObjects.Where(x => x.StringValue == null).ToList();
-            var actual = testObjects.ApplyQuery("$filter=StringValue eq null").ToList();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
         public void Filter_StringValueNotEqualsSomeString_ReturnsFilteredOne()
         {
             var testObjects = new[]
@@ -393,69 +374,7 @@ namespace QueryFiltering.Tests
         }
 
         [Fact]
-        public void Filter_GuidValueEqualsSomeValue_ReturnsFilteredOne()
-        {
-            var testGuid = Guid.NewGuid();
-            var testObjects = new[]
-            {
-                new TestObject(){GuidValue = testGuid},
-                new TestObject()
-            }.AsQueryable();
-
-            var expected = testObjects.Where(x => x.GuidValue == testGuid).ToList();
-            var actual = testObjects.ApplyQuery($"$filter=GuidValue eq {testGuid}").ToList();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void Filter_NullableIntValueEqualsSomeValue_ReturnsFilteredOne()
-        {
-            var testObjects = new[]
-            {
-                new TestObject(){NullableIntValue = 1},
-                new TestObject()
-            }.AsQueryable();
-
-            var expected = testObjects.Where(x => x.NullableIntValue == 1).ToList();
-            var actual = testObjects.ApplyQuery("$filter=NullableIntValue eq 1").ToList();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void Filter_NullableIntValueEqualsNull_ReturnsFilteredOne()
-        {
-            var testObjects = new[]
-            {
-                new TestObject(){NullableIntValue = null},
-                new TestObject(){NullableIntValue = 0}
-            }.AsQueryable();
-
-            var expected = testObjects.Where(x => x.NullableIntValue == null).ToList();
-            var actual = testObjects.ApplyQuery("$filter=NullableIntValue eq null").ToList();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void Filter_DateTimeValueEqualsSomeValue_ReturnsFilteredOne()
-        {
-            var testDateTime = new DateTime(2000, 1, 1);
-            var testObjects = new[]
-            {
-                new TestObject(){DateTimeValue = testDateTime},
-                new TestObject()
-            }.AsQueryable();
-
-            var expected = testObjects.Where(x => x.DateTimeValue == testDateTime).ToList();
-            var actual = testObjects.ApplyQuery("$filter=DateTimeValue eq datetime'2000-01-01'").ToList();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void Filter_InnerObjectIntValueEqualsSomeValue_ReturnsFilteredOne()
+        public void Filter_InnerObjectIntValueEqualsValue_ReturnsFilteredOne()
         {
             var testObjects = new[]
             {

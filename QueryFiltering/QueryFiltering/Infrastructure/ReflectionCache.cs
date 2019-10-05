@@ -10,63 +10,39 @@ namespace QueryFiltering.Infrastructure
         private static readonly ConcurrentDictionary<string, MethodInfo> Methods = new ConcurrentDictionary<string, MethodInfo>();
 
         public static MethodInfo Lambda => Methods.GetOrAdd("Lambda",
-            n => typeof(Expression)
-                .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == n));
+            n => typeof(Expression).GetMethods().First(x => x.Name == n));
 
         public static MethodInfo OrderBy => Methods.GetOrAdd("OrderBy",
-            n => typeof(Queryable)
-                .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == n && x.GetParameters().Length == 2));
+            n => typeof(Queryable).GetMethods().First(x => x.Name == n && x.GetParameters().Length == 2));
 
         public static MethodInfo OrderByDescending => Methods.GetOrAdd("OrderByDescending",
-            n => typeof(Queryable)
-                .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == n && x.GetParameters().Length == 2));
+            n => typeof(Queryable).GetMethods().First(x => x.Name == n && x.GetParameters().Length == 2));
 
         public static MethodInfo ThenBy => Methods.GetOrAdd("ThenBy",
-            n => typeof(Queryable)
-                .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == n && x.GetParameters().Length == 2));
+            n => typeof(Queryable).GetMethods().First(x => x.Name == n && x.GetParameters().Length == 2));
 
         public static MethodInfo ThenByDescending => Methods.GetOrAdd("ThenByDescending",
-            n => typeof(Queryable)
-                .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == n && x.GetParameters().Length == 2));
+            n => typeof(Queryable).GetMethods().First(x => x.Name == n && x.GetParameters().Length == 2));
 
         public static MethodInfo Skip => Methods.GetOrAdd("Skip",
-            n => typeof(Queryable)
-                .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == n && x.GetParameters().Length == 2));
+            n => typeof(Queryable).GetMethods().First(x => x.Name == n && x.GetParameters().Length == 2));
 
         public static MethodInfo Take => Methods.GetOrAdd("Take",
-            n => typeof(Queryable)
-                .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == n && x.GetParameters().Length == 2));
+            n => typeof(Queryable).GetMethods().First(x => x.Name == n && x.GetParameters().Length == 2));
 
         public static MethodInfo Where => Methods.GetOrAdd("Where",
-            n => typeof(Queryable)
-                .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == n && x.GetParameters().Length == 2));
+            n => typeof(Queryable).GetMethods().First(x => x.Name == n && x.GetParameters().Length == 2));
 
         public static MethodInfo ToUpper => Methods.GetOrAdd("ToUpper",
-            n => typeof(string)
-                .GetMethods()
-                .First(x => x.Name == n && x.GetParameters().Length == 0));
+            n => typeof(string).GetMethods().First(x => x.Name == n && x.GetParameters().Length == 0));
 
         public static MethodInfo ToLower => Methods.GetOrAdd("ToLower",
-            n => typeof(string)
-                .GetMethods()
-                .First(x => x.Name == n && x.GetParameters().Length == 0));
+            n => typeof(string).GetMethods().First(x => x.Name == n && x.GetParameters().Length == 0));
 
         public static MethodInfo StartsWith => Methods.GetOrAdd("StartsWith",
-            n => typeof(string)
-                .GetMethods()
-                .First(x => x.Name == n && x.GetParameters()[0].ParameterType == typeof(string)));
+            n => typeof(string).GetMethods().First(x => x.Name == n && x.GetParameters()[0].ParameterType == typeof(string)));
 
         public static MethodInfo EndsWith => Methods.GetOrAdd("EndsWith",
-            n => typeof(string)
-                .GetMethods()
-                .First(x => x.Name == n && x.GetParameters()[0].ParameterType == typeof(string)));
+            n => typeof(string).GetMethods().First(x => x.Name == n && x.GetParameters()[0].ParameterType == typeof(string)));
     }
 }
