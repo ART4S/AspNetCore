@@ -56,18 +56,6 @@ public interface IQueryFilteringVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitSkip([NotNull] QueryFilteringParser.SkipContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QueryFilteringParser.select"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitSelect([NotNull] QueryFilteringParser.SelectContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="QueryFilteringParser.selectExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitSelectExpression([NotNull] QueryFilteringParser.SelectExpressionContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="QueryFilteringParser.orderBy"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -85,6 +73,18 @@ public interface IQueryFilteringVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitOrderByAtom([NotNull] QueryFilteringParser.OrderByAtomContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QueryFilteringParser.select"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSelect([NotNull] QueryFilteringParser.SelectContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QueryFilteringParser.selectExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSelectExpression([NotNull] QueryFilteringParser.SelectExpressionContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QueryFilteringParser.filter"/>.
 	/// </summary>

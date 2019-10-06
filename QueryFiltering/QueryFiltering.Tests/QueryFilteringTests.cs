@@ -115,11 +115,37 @@ namespace QueryFiltering.Tests
 
             var expected = testObjects
                 .OrderBy(x => x.IntValue)
-                .ThenBy(x => x.DoubleValue)
+                .ThenByDescending(x => x.DoubleValue)
                 .ToList();
 
             var actual = testObjects
-                .ApplyQuery("$orderBy=IntValue, DoubleValue")
+                .ApplyQuery("$orderBy=IntValue, DoubleValue desc")
+                .ToList();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void OrderBy_InnerObjectIntValueByAscThenDoubleValueByDesc_ReturnsOrdered()
+        {
+            var testObjects = new[]
+            {
+                new TestObject(){InnerObject = new InnerObject(){IntValue = 4}, DoubleValue = 1},
+                new TestObject(){InnerObject = new InnerObject(){IntValue = 3}, DoubleValue = 6},
+                new TestObject(){InnerObject = new InnerObject(){IntValue = 2}, DoubleValue = 4},
+                new TestObject(){InnerObject = new InnerObject(){IntValue = 2}, DoubleValue = 3},
+                new TestObject(){InnerObject = new InnerObject(){IntValue = 2}, DoubleValue = 5},
+                new TestObject(){InnerObject = new InnerObject(){IntValue = 2}, DoubleValue = 2},
+                new TestObject(){InnerObject = new InnerObject(){IntValue = 1}, DoubleValue = 7},
+            }.AsQueryable();
+
+            var expected = testObjects
+                .OrderBy(x => x.InnerObject.IntValue)
+                .ThenByDescending(x => x.DoubleValue)
+                .ToList();
+
+            var actual = testObjects
+                .ApplyQuery("$orderBy=InnerObject.IntValue, DoubleValue desc")
                 .ToList();
 
             Assert.Equal(expected, actual);
@@ -427,14 +453,14 @@ namespace QueryFiltering.Tests
         #region Select
 
         [Fact]
-        public void Select_IntValue_ReturnsOneWithOneProperty()
+        public void Select_OneProperty_ReturnsOneWithOneProperty()
         {
-            IQueryable<dynamic> testObjects = new[]
+            var testObjects = new[]
             {
                 new TestObject(){IntValue = 1, DoubleValue = 1},
             }.AsQueryable();
 
-            var actual = testObjects.ApplyQuery("$select=IntValue").ToList();
+            var actual = testObjects.ApplyQueryAsDynamic("$select=IntValue").ToList();
 
             Assert.Single(actual);
             Assert.IsNotType<TestObject>(actual[0]);

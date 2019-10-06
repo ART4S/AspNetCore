@@ -3,7 +3,6 @@ using QueryFiltering.Nodes;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 
 namespace QueryFiltering.Visitors
 {
@@ -29,12 +28,12 @@ namespace QueryFiltering.Visitors
                 .Select(x => x.Symbol.Text)
                 .ToHashSet();
 
-            var existingProperties = _parameter.Type
+            var typeProperties = _parameter.Type
                 .GetCashedProperties()
                 .Where(p => properties.Contains(p.Name))
                 .ToDictionary(p => p.Name, p => p.PropertyType);
 
-            var dynamicType = ReflectionUtils.CreateDynamicType(existingProperties);
+            var dynamicType = DynamicTypeBuilder.CreateDynamicType(typeProperties);
 
             var propExpressions = properties.ToDictionary(x => x, x => new PropertyNode(x, _parameter).CreateExpression());
 
@@ -47,9 +46,10 @@ namespace QueryFiltering.Visitors
 
             var expression = lambda.Invoke(null, new object[] {body, new ParameterExpression[] {_parameter}});
 
-            var method = ReflectionCache.Select.MakeGenericMethod(_parameter.Type, dynamicType);
+            var select = ReflectionCache.Select
+                .MakeGenericMethod(_parameter.Type, dynamicType);
 
-            return method.Invoke(null, new [] {_sourceQueryable, expression });
+            return select.Invoke(null, new [] {_sourceQueryable, expression });
         }
     }
 }

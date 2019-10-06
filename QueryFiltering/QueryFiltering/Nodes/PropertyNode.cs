@@ -1,4 +1,5 @@
 ﻿using QueryFiltering.Nodes.Base;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace QueryFiltering.Nodes
@@ -14,21 +15,10 @@ namespace QueryFiltering.Nodes
 
         public override Expression CreateExpression()
         {
-            MemberExpression property = null;
-
-            foreach (var propertyName in Value.Split("."))
-            {
-                if (property == null)
-                {
-                    property = Expression.Property(_parameter, propertyName);
-                }
-                else
-                {
-                    property = Expression.Property(property, propertyName);
-                }
-            }
-
-            return property;
+            return Value.Split(".").Aggregate<string, MemberExpression>(null, 
+                (current, propertyName) => current == null ? 
+                    Expression.Property(_parameter, propertyName) : 
+                    Expression.Property(current, propertyName));
         }
     }
 }

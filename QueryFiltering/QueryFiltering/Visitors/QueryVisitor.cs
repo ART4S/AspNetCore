@@ -1,6 +1,4 @@
-﻿using QueryFiltering.Infrastructure;
-using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Linq.Expressions;
 
 namespace QueryFiltering.Visitors
@@ -38,39 +36,20 @@ namespace QueryFiltering.Visitors
 
         public override object VisitTop(QueryFilteringParser.TopContext context)
         {
-            var count = context.Accept(new TopVisitor());
-
-            var take = ReflectionCache.Take
-                .MakeGenericMethod(_parameter.Type);
-
-            return take.Invoke(null, new[] { _sourceQueryable, count });
+            var visitor = new TopVisitor(_sourceQueryable, _parameter);
+            return context.Accept(visitor);
         }
 
         public override object VisitSkip(QueryFilteringParser.SkipContext context)
         {
-            var count = context.Accept(new SkipVisitor());
-
-            var skip = ReflectionCache.Skip
-                .MakeGenericMethod(_parameter.Type);
-
-            return skip.Invoke(null, new[] { _sourceQueryable, count });
+            var visitor = new SkipVisitor(_sourceQueryable, _parameter);
+            return context.Accept(visitor);
         }
 
         public override object VisitFilter(QueryFilteringParser.FilterContext context)
         {
-            var visitor = new FilterVisitor(_parameter);
-            var tree = context.Accept(visitor);
-
-            var lambda = ReflectionCache.Lambda
-                .MakeGenericMethod(typeof(Func<,>)
-                    .MakeGenericType(_parameter.Type, typeof(bool)));
-
-            var expression = lambda.Invoke(null, new object[] { tree.CreateExpression(), new ParameterExpression[] { _parameter } });
-
-            var where = ReflectionCache.Where
-                .MakeGenericMethod(_parameter.Type);
-
-            return where.Invoke(null, new[] { _sourceQueryable, expression });
+            var visitor = new FilterVisitor(_sourceQueryable, _parameter);
+            return context.Accept(visitor);
         }
 
         public override object VisitOrderBy(QueryFilteringParser.OrderByContext context)

@@ -1,4 +1,5 @@
 ﻿using QueryFiltering.Infrastructure;
+using QueryFiltering.Nodes;
 using System;
 using System.Linq.Expressions;
 
@@ -22,9 +23,9 @@ namespace QueryFiltering.Visitors
 
         public override object VisitOrderByExpression(QueryFilteringParser.OrderByExpressionContext context)
         {
-            foreach (var orderProperty in context.orderByAtom())
+            foreach (var atom in context.orderByAtom())
             {
-                _sourceQueryable = orderProperty.Accept(this);
+                _sourceQueryable = atom.Accept(this);
             }
 
             return _sourceQueryable;
@@ -32,27 +33,15 @@ namespace QueryFiltering.Visitors
 
         public override object VisitOrderByAtom(QueryFilteringParser.OrderByAtomContext context)
         {
-            MemberExpression property = null;
-
-            foreach (var propName in context.value.Text.Split("."))
-            {
-                if (property == null)
-                {
-                    property = Expression.Property(_parameter, propName);
-                }
-                else
-                {
-                    property = Expression.Property(property, propName);
-                }
-            }
+            var property = new PropertyNode(context.propertyName.Text, _parameter).CreateExpression();
 
             var lambda = ReflectionCache.Lambda.MakeGenericMethod(
                 typeof(Func<,>).MakeGenericType(_parameter.Type, property.Type));
 
             var expression = lambda.Invoke(null, new object[] { property, new ParameterExpression[] { _parameter } });
             
-            var orderBy = (context.sortType.Type == QueryFilteringLexer.ASC ? 
-                    context.isFirstSort ? ReflectionCache.OrderBy : ReflectionCache.ThenBy : 
+            var orderBy = (context.sortType == null || context.sortType.Type == QueryFilteringLexer.ASC ?
+                    context.isFirstSort ? ReflectionCache.OrderBy : ReflectionCache.ThenBy :
                     context.isFirstSort ? ReflectionCache.OrderByDescending : ReflectionCache.ThenByDescending)
                 .MakeGenericMethod(_parameter.Type, property.Type);
 

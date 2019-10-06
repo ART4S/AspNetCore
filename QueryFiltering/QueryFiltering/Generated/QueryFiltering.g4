@@ -10,7 +10,7 @@ query
     ;
 
 queryParameter
-    :   top|skip|select|filter|orderBy
+    :   top|skip|orderBy|select|filter
     ;
 
 top
@@ -19,14 +19,6 @@ top
 
 skip
     :   '$skip='count=INT
-    ;
-
-select
-    :   '$select=' expression=selectExpression
-    ;
-
-selectExpression
-    :   PROPERTYACCESS (',' PROPERTYACCESS)*
     ;
 
 orderBy
@@ -38,8 +30,15 @@ orderByExpression
     ;
 
 orderByAtom[bool isFirstSort]
-    :   value=PROPERTYACCESS 
-        sortType=(ASC|DESC)
+    :   propertyName=PROPERTYACCESS sortType=(ASC|DESC)?
+    ;
+
+select
+    :   '$select=' expression=selectExpression
+    ;
+
+selectExpression
+    :   PROPERTYACCESS (',' PROPERTYACCESS)*
     ;
 
 filter
@@ -61,9 +60,7 @@ boolExpression
     ;
 
 atom
-    :   propertyRule=property
-    |   constantRule=constant
-    |   functionRule=function
+    :   property|constant|function
     ; 
 
 property
@@ -111,6 +108,14 @@ LESSTHAN
 
 LESSTHANOREQUAL
     :   'le'
+    ;
+
+ASC
+    :   'asc'
+    ;
+
+DESC
+    :   'desc'
     ;
 
 TOUPPER
@@ -175,14 +180,6 @@ PROPERTYACCESS
 
 WHITESPACE 
     :   [ \t\r\n]+ -> skip
-    ;
-
-ASC
-    :   'asc'
-    ;
-
-DESC
-    :   'desc'
     ;
 
 fragment ESC

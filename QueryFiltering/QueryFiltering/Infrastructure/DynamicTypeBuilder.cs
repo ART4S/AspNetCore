@@ -7,32 +7,32 @@ using System.Reflection.Emit;
 
 namespace QueryFiltering.Infrastructure
 {
-    public static class ReflectionUtils
+    public static class DynamicTypeBuilder
     {
         private static readonly ConcurrentDictionary<string, Type> DynamicTypes = new ConcurrentDictionary<string, Type>();
 
-        private static readonly ModuleBuilder DynamicTypeBuilder = AssemblyBuilder
+        private static readonly ModuleBuilder ModelBuilder = AssemblyBuilder
             .DefineDynamicAssembly(new AssemblyName { Name = "DynamicTypeAssembly" }, AssemblyBuilderAccess.Run)
             .DefineDynamicModule("DynamicTypeModule");
 
-        public static Type CreateDynamicType(IDictionary<string, Type> properties)
+        public static Type CreateDynamicType(IDictionary<string, Type> fields)
         {
-            if (properties.Count == 0)
+            if (fields.Count == 0)
             {
-                throw new ArgumentException(nameof(properties));
+                throw new ArgumentException(nameof(fields));
             }
 
             return DynamicTypes.GetOrAdd(
-                GetKey(properties), 
+                GetKey(fields), 
                 key =>
                 {
-                    var typeBuilder = DynamicTypeBuilder.DefineType(
+                    var typeBuilder = ModelBuilder.DefineType(
                         key,
                         TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.Serializable);
 
-                    foreach (var property in properties)
+                    foreach (var field in fields)
                     {
-                        typeBuilder.DefineField(property.Key, property.Value, FieldAttributes.Public);
+                        typeBuilder.DefineField(field.Key, field.Value, FieldAttributes.Public);
                     }
 
                     return typeBuilder.CreateType();
@@ -41,10 +41,7 @@ namespace QueryFiltering.Infrastructure
 
         private static string GetKey(IDictionary<string, Type> properties)
         {
-            return string.Join(", ", properties
-                    .OrderBy(x => x.Value)
-                    .ThenBy(x => x.Key)
-                    .Select(x => $"[{x.Key} : {x.Value}]"));
+            return $"[{string.Join(", ", properties.OrderBy(x => x.Value).ThenBy(x => x.Key).Select(x => $"{x.Key}: {x.Value}"))}]";
         }
     }
 }

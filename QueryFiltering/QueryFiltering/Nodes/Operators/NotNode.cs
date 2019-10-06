@@ -1,5 +1,5 @@
-﻿using System.Linq.Expressions;
-using QueryFiltering.Nodes.Base;
+﻿using QueryFiltering.Nodes.Base;
+using System.Linq.Expressions;
 
 namespace QueryFiltering.Nodes.Operators
 {
@@ -14,7 +14,13 @@ namespace QueryFiltering.Nodes.Operators
 
         public override Expression CreateExpression()
         {
-            return Expression.Not(_node.CreateExpression());
+            var expression = _node.CreateExpression();
+            if (expression.Type != typeof(bool))
+            {
+                expression = Expression.Convert(expression, typeof(bool));
+            }
+
+            return Expression.Not(expression);
         }
     }
 }
