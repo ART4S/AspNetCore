@@ -11,7 +11,12 @@ namespace QueryFiltering.Nodes.Base
         public override Expression CreateExpression()
         {
             var left = Left.CreateExpression();
-            var right = Expression.Convert(Right.CreateExpression(), left.Type);
+            var right = Right.CreateExpression();
+
+            if (left.Type != right.Type)
+            {
+                right = Expression.Convert(right, left.Type);
+            }
 
             return CreateExpressionImpl(left, right);
         }
