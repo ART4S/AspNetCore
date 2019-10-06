@@ -15,8 +15,8 @@ namespace QueryFiltering.Tests
                 new TestObject()
             }.AsQueryable();
 
-            var actual = testObjects.ApplyQuery("");
             var expected = testObjects;
+            var actual = testObjects.ApplyQuery("");
 
             Assert.Same(expected, actual);
         }
@@ -35,8 +35,8 @@ namespace QueryFiltering.Tests
                 new TestObject(),
             }.AsQueryable();
 
-            var expected = testObjects.Take(count).ToList();
-            var actual = testObjects.ApplyQuery($"$top={count}").ToList();
+            var expected = testObjects.Take(count);
+            var actual = testObjects.ApplyQuery($"$top={count}");
 
             Assert.Equal(expected, actual);
         }
@@ -57,8 +57,8 @@ namespace QueryFiltering.Tests
                 new TestObject(),
             }.AsQueryable();
 
-            var expected = testObjects.Skip(count).ToList();
-            var actual = testObjects.ApplyQuery($"$skip={count}").ToList();
+            var expected = testObjects.Skip(count);
+            var actual = testObjects.ApplyQuery($"$skip={count}");
 
             Assert.Equal(expected, actual);
         }
@@ -77,8 +77,8 @@ namespace QueryFiltering.Tests
                 new TestObject(){IntValue = 1},
             }.AsQueryable();
 
-            var expected = testObjects.OrderBy(x => x.IntValue).ToList();
-            var actual = testObjects.ApplyQuery("$orderBy=IntValue").ToList();
+            var expected = testObjects.OrderBy(x => x.IntValue);
+            var actual = testObjects.ApplyQuery("$orderBy=IntValue");
 
             Assert.Equal(expected, actual);
         }
@@ -93,8 +93,8 @@ namespace QueryFiltering.Tests
                 new TestObject(){IntValue = 3},
             }.AsQueryable();
 
-            var expected = testObjects.OrderByDescending(x => x.IntValue).ToList();
-            var actual = testObjects.ApplyQuery("$orderBy=IntValue desc").ToList();
+            var expected = testObjects.OrderByDescending(x => x.IntValue);
+            var actual = testObjects.ApplyQuery("$orderBy=IntValue desc");
 
             Assert.Equal(expected, actual);
         }
@@ -113,14 +113,8 @@ namespace QueryFiltering.Tests
                 new TestObject(){IntValue = 1, DoubleValue = 7},
             }.AsQueryable();
 
-            var expected = testObjects
-                .OrderBy(x => x.IntValue)
-                .ThenByDescending(x => x.DoubleValue)
-                .ToList();
-
-            var actual = testObjects
-                .ApplyQuery("$orderBy=IntValue, DoubleValue desc")
-                .ToList();
+            var expected = testObjects.OrderBy(x => x.IntValue).ThenByDescending(x => x.DoubleValue);
+            var actual = testObjects.ApplyQuery("$orderBy=IntValue, DoubleValue desc");
 
             Assert.Equal(expected, actual);
         }
@@ -139,14 +133,8 @@ namespace QueryFiltering.Tests
                 new TestObject(){InnerObject = new InnerObject(){IntValue = 1}, DoubleValue = 7},
             }.AsQueryable();
 
-            var expected = testObjects
-                .OrderBy(x => x.InnerObject.IntValue)
-                .ThenByDescending(x => x.DoubleValue)
-                .ToList();
-
-            var actual = testObjects
-                .ApplyQuery("$orderBy=InnerObject.IntValue, DoubleValue desc")
-                .ToList();
+            var expected = testObjects.OrderBy(x => x.InnerObject.IntValue).ThenByDescending(x => x.DoubleValue);
+            var actual = testObjects.ApplyQuery("$orderBy=InnerObject.IntValue, DoubleValue desc");
 
             Assert.Equal(expected, actual);
         }
@@ -166,8 +154,8 @@ namespace QueryFiltering.Tests
                 new TestObject()
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.IntValue == value).ToList();
-            var actual = testObjects.ApplyQuery($"$filter=IntValue eq {value}").ToList();
+            var expected = testObjects.Where(x => x.IntValue == value);
+            var actual = testObjects.ApplyQuery($"$filter=IntValue eq {value}");
 
             Assert.Equal(expected, actual);
         }
@@ -183,8 +171,8 @@ namespace QueryFiltering.Tests
                 new TestObject()
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.LongValue == value).ToList();
-            var actual = testObjects.ApplyQuery($"$filter=LongValue eq {value}l").ToList();
+            var expected = testObjects.Where(x => x.LongValue == value);
+            var actual = testObjects.ApplyQuery($"$filter=LongValue eq {value}l");
 
             Assert.Equal(expected, actual);
         }
@@ -200,8 +188,8 @@ namespace QueryFiltering.Tests
                 new TestObject()
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.DoubleValue == value).ToList();
-            var actual = testObjects.ApplyQuery($"$filter=DoubleValue eq {value}d").ToList();
+            var expected = testObjects.Where(x => x.DoubleValue == value);
+            var actual = testObjects.ApplyQuery($"$filter=DoubleValue eq {value}d");
 
             Assert.Equal(expected, actual);
         }
@@ -217,8 +205,8 @@ namespace QueryFiltering.Tests
                 new TestObject(){BoolValue = !value}
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.BoolValue == value).ToList();
-            var actual = testObjects.ApplyQuery($"$filter=BoolValue eq {value.ToString().ToLower()}").ToList();
+            var expected = testObjects.Where(x => x.BoolValue == value);
+            var actual = testObjects.ApplyQuery($"$filter=BoolValue eq {value.ToString().ToLower()}");
 
             Assert.Equal(expected, actual);
         }
@@ -235,8 +223,8 @@ namespace QueryFiltering.Tests
                 new TestObject()
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.DecimalValue == value).ToList();
-            var actual = testObjects.ApplyQuery($"$filter=DecimalValue eq {value}m").ToList();
+            var expected = testObjects.Where(x => x.DecimalValue == value);
+            var actual = testObjects.ApplyQuery($"$filter=DecimalValue eq {value}m");
 
             Assert.Equal(expected, actual);
         }
@@ -252,8 +240,8 @@ namespace QueryFiltering.Tests
                 new TestObject()
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.FloatValue == value).ToList();
-            var actual = testObjects.ApplyQuery($"$filter=FloatValue eq {value}m").ToList();
+            var expected = testObjects.Where(x => x.FloatValue == value);
+            var actual = testObjects.ApplyQuery($"$filter=FloatValue eq {value}m");
 
             Assert.Equal(expected, actual);
         }
@@ -270,8 +258,8 @@ namespace QueryFiltering.Tests
                 new TestObject()
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.GuidValue == testGuid).ToList();
-            var actual = testObjects.ApplyQuery($"$filter=GuidValue eq {testGuid}").ToList();
+            var expected = testObjects.Where(x => x.GuidValue == testGuid);
+            var actual = testObjects.ApplyQuery($"$filter=GuidValue eq {testGuid}");
 
             Assert.Equal(expected, actual);
         }
@@ -288,8 +276,8 @@ namespace QueryFiltering.Tests
                 new TestObject()
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.DateTimeValue == testDateTime).ToList();
-            var actual = testObjects.ApplyQuery($"$filter=DateTimeValue eq datetime'{value}'").ToList();
+            var expected = testObjects.Where(x => x.DateTimeValue == testDateTime);
+            var actual = testObjects.ApplyQuery($"$filter=DateTimeValue eq datetime'{value}'");
 
             Assert.Equal(expected, actual);
         }
@@ -305,8 +293,8 @@ namespace QueryFiltering.Tests
                 new TestObject()
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.StringValue == value).ToList();
-            var actual = testObjects.ApplyQuery($"$filter=StringValue eq '{value}'").ToList();
+            var expected = testObjects.Where(x => x.StringValue == value);
+            var actual = testObjects.ApplyQuery($"$filter=StringValue eq '{value}'");
 
             Assert.Equal(expected, actual);
         }
@@ -320,8 +308,8 @@ namespace QueryFiltering.Tests
                 new TestObject(){StringValue = "notMatch"}
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.StringValue == null).ToList();
-            var actual = testObjects.ApplyQuery("$filter=StringValue eq null").ToList();
+            var expected = testObjects.Where(x => x.StringValue == null);
+            var actual = testObjects.ApplyQuery("$filter=StringValue eq null");
 
             Assert.Equal(expected, actual);
         }
@@ -337,8 +325,8 @@ namespace QueryFiltering.Tests
                 new TestObject()
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.NullableIntValue == value).ToList();
-            var actual = testObjects.ApplyQuery($"$filter=NullableIntValue eq {value}").ToList();
+            var expected = testObjects.Where(x => x.NullableIntValue == value);
+            var actual = testObjects.ApplyQuery($"$filter=NullableIntValue eq {value}");
 
             Assert.Equal(expected, actual);
         }
@@ -352,8 +340,8 @@ namespace QueryFiltering.Tests
                 new TestObject()
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.NullableIntValue == null).ToList();
-            var actual = testObjects.ApplyQuery("$filter=NullableIntValue eq null").ToList();
+            var expected = testObjects.Where(x => x.NullableIntValue == null);
+            var actual = testObjects.ApplyQuery("$filter=NullableIntValue eq null");
 
             Assert.Equal(expected, actual);
         }
@@ -367,8 +355,8 @@ namespace QueryFiltering.Tests
                 new TestObject(){StringValue = "notMatch"}
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.StringValue.StartsWith("match")).ToList();
-            var actual = testObjects.ApplyQuery("$filter=startswith(StringValue, 'match') eq true").ToList();
+            var expected = testObjects.Where(x => x.StringValue.StartsWith("match"));
+            var actual = testObjects.ApplyQuery("$filter=startswith(StringValue, 'match') eq true");
 
             Assert.Equal(expected, actual);
         }
@@ -382,8 +370,8 @@ namespace QueryFiltering.Tests
                 new TestObject(){StringValue = "notMatch"}
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.StringValue.EndsWith("match")).ToList();
-            var actual = testObjects.ApplyQuery("$filter=endswith(StringValue, 'match') eq true").ToList();
+            var expected = testObjects.Where(x => x.StringValue.EndsWith("match"));
+            var actual = testObjects.ApplyQuery("$filter=endswith(StringValue, 'match') eq true");
 
             Assert.Equal(expected, actual);
         }
@@ -397,8 +385,8 @@ namespace QueryFiltering.Tests
                 new TestObject(){StringValue = "notMatch"}
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.StringValue.ToUpper() == "MATCH").ToList();
-            var actual = testObjects.ApplyQuery("$filter=toupper(StringValue) eq 'MATCH'").ToList();
+            var expected = testObjects.Where(x => x.StringValue.ToUpper() == "MATCH");
+            var actual = testObjects.ApplyQuery("$filter=toupper(StringValue) eq 'MATCH'");
 
             Assert.Equal(expected, actual);
         }
@@ -412,8 +400,8 @@ namespace QueryFiltering.Tests
                 new TestObject(){StringValue = "notMatch"}
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.StringValue.ToLower() == "match").ToList();
-            var actual = testObjects.ApplyQuery("$filter=tolower(StringValue) eq 'match'").ToList();
+            var expected = testObjects.Where(x => x.StringValue.ToLower() == "match");
+            var actual = testObjects.ApplyQuery("$filter=tolower(StringValue) eq 'match'");
 
             Assert.Equal(expected, actual);
         }
@@ -427,8 +415,8 @@ namespace QueryFiltering.Tests
                 new TestObject(){StringValue = "notMatch"},
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => !(x.StringValue == "notMatch")).ToList();
-            var actual = testObjects.ApplyQuery("$filter=not StringValue eq 'notMatch'").ToList();
+            var expected = testObjects.Where(x => !(x.StringValue == "notMatch"));
+            var actual = testObjects.ApplyQuery("$filter=not StringValue eq 'notMatch'");
 
             Assert.Equal(expected, actual);
         }
@@ -442,8 +430,8 @@ namespace QueryFiltering.Tests
                 new TestObject()
             }.AsQueryable();
 
-            var expected = testObjects.Where(x => x.InnerObject != null && x.InnerObject.IntValue == 1).ToList();
-            var actual = testObjects.ApplyQuery("$filter=InnerObject ne null and InnerObject.IntValue eq 1").ToList();
+            var expected = testObjects.Where(x => x.InnerObject != null && x.InnerObject.IntValue == 1);
+            var actual = testObjects.ApplyQuery("$filter=InnerObject ne null and InnerObject.IntValue eq 1");
 
             Assert.Equal(expected, actual);
         }
@@ -460,12 +448,12 @@ namespace QueryFiltering.Tests
                 new TestObject(){IntValue = 1, DoubleValue = 1},
             }.AsQueryable();
 
-            var actual = testObjects.ApplyQueryAsDynamic("$select=IntValue").ToList();
+            var actual = testObjects.ApplyQueryAsDynamic("$select=IntValue");
 
             Assert.Single(actual);
-            Assert.IsNotType<TestObject>(actual[0]);
-            Assert.True(actual[0].GetType().GetFields().Length == 1);
-            Assert.True(actual[0].GetType().GetFields()[0].Name == "IntValue");
+            Assert.IsNotType<TestObject>(actual.First());
+            Assert.True(actual.First().GetType().GetFields().Length == 1);
+            Assert.True(actual.First().GetType().GetFields()[0].Name == "IntValue");
         }
 
         #endregion
