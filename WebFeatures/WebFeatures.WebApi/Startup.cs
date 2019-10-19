@@ -1,10 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using System.Net;
+using System.Threading.Tasks;
+using WebFeatures.QueryFiltering.Exceptions;
 using WebFeatures.WebApi.Configuration;
-using WebFeatures.WebApi.Middlewares;
+using ValidationException = WebFeatures.Application.Infrastructure.Exceptions.ValidationException;
 
 namespace WebFeatures.WebApi
 {
@@ -35,12 +40,12 @@ namespace WebFeatures.WebApi
             services.AddAutomapper();
             services.AddDataProtection();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllers();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
 
-            services.AddSwagger();
+            //services.AddSwagger();
         }
 
         /// <summary>
@@ -48,17 +53,52 @@ namespace WebFeatures.WebApi
         /// </summary>
         public void Configure(IApplicationBuilder app)
         {
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            app.UseExceptionHandler(errorApp =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebFeatures v1");
+                errorApp.Run(context =>
+                {
+                    context.Response.StatusCode = 500;
+                    context.Response.ContentType = "text/html";
+
+                    var responseBody = "Внутренняя ошибка сервера";
+
+                    var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+
+                    if (exceptionHandlerPathFeature?.Error is ValidationException validationEx)
+                    {
+                        context.Response.ContentType = "application/json";
+                        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                        responseBody = JsonConvert.SerializeObject(validationEx.Fail);
+                    }
+
+                    if (exceptionHandlerPathFeature?.Error is FilteringException filteringEx)
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                        responseBody = filteringEx.Message;
+                    }
+
+                    context.Response.WriteAsync(responseBody);
+                    return Task.CompletedTask;
+                });
             });
 
-            app.UseHttpsRedirection();
+            app.UseRouting();
+
+            //app.UseSwagger(); https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1275
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebFeatures v1");
+            //});
+
             app.UseAuthentication();
-            app.UseMvc();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

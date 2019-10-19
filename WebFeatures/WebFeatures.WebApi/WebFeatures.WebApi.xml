@@ -148,27 +148,6 @@
             Зарегистрировать нового пользователя
             </summary>
         </member>
-        <member name="T:WebFeatures.WebApi.Middlewares.ExceptionHandlerMiddleware">
-            <summary>
-            Обработчик ошибок сервера
-            </summary>
-        </member>
-        <member name="T:WebFeatures.WebApi.Program">
-            <summary>
-            Стартовый класс приложения
-            </summary>
-        </member>
-        <member name="M:WebFeatures.WebApi.Program.Main(System.String[])">
-            <summary>
-            Точка входа в приложение
-            </summary>
-            <param name="args">Аргументы командной строки</param>
-        </member>
-        <member name="M:WebFeatures.WebApi.Program.CreateWebHostBuilder(System.String[])">
-            <summary>
-            Настройка хоста
-            </summary>
-        </member>
         <member name="T:WebFeatures.WebApi.Startup">
             <summary>
             Конфигуратор приложения
