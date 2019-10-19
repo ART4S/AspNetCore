@@ -45,6 +45,30 @@ namespace WebFeatures.DataContext.Sql.Migrations
                     b.ToTable("Blogs");
                 });
 
+            modelBuilder.Entity("WebFeatures.Domian.Entities.Model.ContactDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("ContactDetailses");
+                });
+
             modelBuilder.Entity("WebFeatures.Domian.Entities.Model.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -107,6 +131,45 @@ namespace WebFeatures.DataContext.Sql.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("WebFeatures.Domian.Entities.Model.ContactDetails", b =>
+                {
+                    b.HasOne("WebFeatures.Domian.Entities.Model.User", "User")
+                        .WithOne("ContactDetails")
+                        .HasForeignKey("WebFeatures.Domian.Entities.Model.ContactDetails", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsOne("WebFeatures.Domian.ValueObjects.Address", "Address", b1 =>
+                        {
+                            b1.Property<int>("ContactDetailsId")
+                                .ValueGeneratedOnAdd()
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<string>("City")
+                                .IsRequired();
+
+                            b1.Property<string>("Country")
+                                .IsRequired();
+
+                            b1.Property<string>("State")
+                                .IsRequired();
+
+                            b1.Property<string>("Street")
+                                .IsRequired();
+
+                            b1.Property<string>("ZipCode")
+                                .IsRequired();
+
+                            b1.HasKey("ContactDetailsId");
+
+                            b1.ToTable("ContactDetailses");
+
+                            b1.HasOne("WebFeatures.Domian.Entities.Model.ContactDetails")
+                                .WithOne("Address")
+                                .HasForeignKey("WebFeatures.Domian.ValueObjects.Address", "ContactDetailsId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+                });
+
             modelBuilder.Entity("WebFeatures.Domian.Entities.Model.Post", b =>
                 {
                     b.HasOne("WebFeatures.Domian.Entities.Model.Blog", "Blog")
@@ -117,30 +180,6 @@ namespace WebFeatures.DataContext.Sql.Migrations
                     b.HasOne("WebFeatures.Domian.Entities.Model.Blog")
                         .WithMany("Posts")
                         .HasForeignKey("BlogId1");
-                });
-
-            modelBuilder.Entity("WebFeatures.Domian.Entities.Model.User", b =>
-                {
-                    b.OwnsOne("WebFeatures.Domian.ValueObjects.ContactDetails", "ContactDetails", b1 =>
-                        {
-                            b1.Property<int>("UserId")
-                                .ValueGeneratedOnAdd()
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<string>("Email")
-                                .IsRequired();
-
-                            b1.Property<string>("PhoneNumber");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Users");
-
-                            b1.HasOne("WebFeatures.Domian.Entities.Model.User")
-                                .WithOne("ContactDetails")
-                                .HasForeignKey("WebFeatures.Domian.ValueObjects.ContactDetails", "UserId")
-                                .OnDelete(DeleteBehavior.Cascade);
-                        });
                 });
 #pragma warning restore 612, 618
         }

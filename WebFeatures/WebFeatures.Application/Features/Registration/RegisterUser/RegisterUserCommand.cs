@@ -3,7 +3,7 @@ using WebFeatures.Application.Pipeline.Abstractions;
 
 namespace WebFeatures.Application.Features.Registration.RegisterUser
 {
-    public class RegisterUserCommand : ICommand<Result>
+    public class RegisterUserCommand : ICommand<Unit>
     {
         public string Name { get; set; }
         public string Password { get; set; }

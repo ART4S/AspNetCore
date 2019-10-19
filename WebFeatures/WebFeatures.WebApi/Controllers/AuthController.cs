@@ -18,16 +18,14 @@ namespace WebFeatures.WebApi.Controllers
         /// <summary>
         /// Войти в систему
         /// </summary>
-        [HttpPost("[action]")]
+        [HttpPost("login")]
         [AllowAnonymous]
         public IActionResult Login([FromBody, Required] LoginCommand command)
         {
-            var result = Mediator.Send(command);
-            if (!result.IsSuccess)
-                return ResultResponse(result);
+            var claims = Mediator.Send(command);
 
             var claimsIdentity = new ClaimsIdentity(
-                result.SuccessValue, CookieAuthenticationDefaults.AuthenticationScheme);
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
@@ -45,7 +43,7 @@ namespace WebFeatures.WebApi.Controllers
         /// <summary>
         /// Выйти из системы
         /// </summary>
-        [HttpPost("[action]")]
+        [HttpPost("logout")]
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).Wait();

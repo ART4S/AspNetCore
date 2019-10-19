@@ -17,9 +17,7 @@ namespace WebFeatures.DataContext.Sql.Migrations
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: false),
-                    ContactDetails_Email = table.Column<string>(nullable: false),
-                    ContactDetails_PhoneNumber = table.Column<string>(nullable: true)
+                    PasswordHash = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,6 +51,34 @@ namespace WebFeatures.DataContext.Sql.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContactDetailses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    Address_Street = table.Column<string>(nullable: false),
+                    Address_City = table.Column<string>(nullable: false),
+                    Address_State = table.Column<string>(nullable: false),
+                    Address_Country = table.Column<string>(nullable: false),
+                    Address_ZipCode = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContactDetailses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContactDetailses_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,6 +122,12 @@ namespace WebFeatures.DataContext.Sql.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ContactDetailses_UserId",
+                table: "ContactDetailses",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Posts_BlogId",
                 table: "Posts",
                 column: "BlogId");
@@ -108,6 +140,9 @@ namespace WebFeatures.DataContext.Sql.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ContactDetailses");
+
             migrationBuilder.DropTable(
                 name: "Posts");
 

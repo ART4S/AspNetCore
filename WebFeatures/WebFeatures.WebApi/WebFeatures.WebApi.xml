@@ -24,24 +24,24 @@
             Расширения для конфигурации сервисов приложения
             </summary>
         </member>
-        <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddAppContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddAppContext(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Добавить контекст данных
             </summary>
         </member>
-        <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddHandlers(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddPipeline(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Добавить обработчики запросов
             </summary>
         </member>
         <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddCommandPipeline(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Добавить pipeline для команд
+            Добавить обработчики для команд
             </summary>
         </member>
         <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddQueryPipeline(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Добавить pipeline для запросов
+            Добавить обработчики для запросов
             </summary>
         </member>
         <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddValidators(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
@@ -51,12 +51,12 @@
         </member>
         <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddAutomapper(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Добавить профили Automapper
+            Добавить профили automapper
             </summary>
         </member>
-        <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddInfrastructure(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Добавить инфраструктурные сервисы приложения
+            Добавить swagger
             </summary>
         </member>
         <member name="T:WebFeatures.WebApi.Controllers.AuthController">
@@ -84,26 +84,12 @@
             Посредник для отправки запроса подходящим обработчикам
             </summary>
         </member>
-        <member name="M:WebFeatures.WebApi.Controllers.Base.BaseController.ResultResponse``2(WebFeatures.Application.Infrastructure.Results.Result{``0,``1})">
-            <summary>
-            Ответ с результатом
-            </summary>
-            <typeparam name="TSuccess">Тип успешного результата</typeparam>
-            <typeparam name="TFailure">Тип результата с ошибкой</typeparam>
-            <param name="result">Результат выполнения запроса/команды</param>
-        </member>
-        <member name="M:WebFeatures.WebApi.Controllers.Base.BaseController.ResultResponse(WebFeatures.Application.Infrastructure.Results.Result)">
-            <summary>
-            Ответ с результатом
-            </summary>
-            <param name="result">Результат выполнения команды</param>
-        </member>
         <member name="T:WebFeatures.WebApi.Controllers.BlogController">
             <summary>
             Блоги
             </summary>
         </member>
-        <member name="M:WebFeatures.WebApi.Controllers.BlogController.GetInfos(WebFeatures.QueryFiltering.Filters.QueryFilter)">
+        <member name="M:WebFeatures.WebApi.Controllers.BlogController.Get(WebFeatures.QueryFiltering.Filters.QueryFilter)">
             <summary>
             Получить информацию по всем блогам
             </summary>
@@ -124,7 +110,7 @@
             Посты
             </summary>
         </member>
-        <member name="M:WebFeatures.WebApi.Controllers.PostController.GetInfos(WebFeatures.QueryFiltering.Filters.QueryFilter)">
+        <member name="M:WebFeatures.WebApi.Controllers.PostController.Get(WebFeatures.QueryFiltering.Filters.QueryFilter)">
             <summary>
             Получить информацию по всем постам
             </summary>

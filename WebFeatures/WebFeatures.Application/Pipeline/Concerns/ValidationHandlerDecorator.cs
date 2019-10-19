@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using FluentValidation;
+using System.Collections.Generic;
 using System.Linq;
-using FluentValidation;
 using WebFeatures.Application.Infrastructure.Failures;
 using WebFeatures.Application.Pipeline.Abstractions;
 using ValidationException = WebFeatures.Application.Infrastructure.Exceptions.ValidationException;
@@ -27,7 +27,7 @@ namespace WebFeatures.Application.Pipeline.Concerns
                 .SelectMany(x => x.Errors)
                 .ToList();
 
-            if (errors.Any())
+            if (errors.Count != 0)
             {
                 throw new ValidationException(new Fail(errors));
             }

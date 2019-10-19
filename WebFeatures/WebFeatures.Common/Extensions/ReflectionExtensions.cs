@@ -5,7 +5,7 @@ using System.Reflection;
 namespace WebFeatures.Common.Extensions
 {
     /// <summary>
-    /// Расширения для работы с рефлексией
+    /// Расширения для работы с reflection
     /// </summary>
     public static class ReflectionExtensions
     {

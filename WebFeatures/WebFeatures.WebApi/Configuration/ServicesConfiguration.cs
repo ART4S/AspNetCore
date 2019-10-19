@@ -1,20 +1,16 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Swashbuckle.AspNetCore.Swagger;
 using WebFeatures.Application.Interfaces;
 using WebFeatures.Application.Pipeline.Abstractions;
 using WebFeatures.Application.Pipeline.Concerns;
 using WebFeatures.Application.Pipeline.Mediators;
 using WebFeatures.Common.Extensions;
-using WebFeatures.Common.Time;
 using WebFeatures.DataContext.Sql;
 
 namespace WebFeatures.WebApi.Configuration
@@ -27,13 +23,9 @@ namespace WebFeatures.WebApi.Configuration
         /// <summary>
         /// Добавить контекст данных
         /// </summary>
-        public static void AddAppContext(this IServiceCollection services, IConfiguration configuration)
+        public static void AddAppContext(this IServiceCollection services)
         {
-            services.AddDbContext<IAppContext, SqlAppContext>(opt =>
-            {
-                opt.UseSqlServer(configuration.GetConnectionString(nameof(SqlAppContext)));
-                opt.ConfigureWarnings(warnings => warnings.Log(RelationalEventId.QueryClientEvaluationWarning));
-            });
+            services.AddDbContext<IAppContext, SqlAppContext>();
         }
 
         /// <summary>
@@ -138,14 +130,6 @@ namespace WebFeatures.WebApi.Configuration
             config.AssertConfigurationIsValid();
 
             services.AddSingleton(provider => config.CreateMapper());
-        }
-
-        /// <summary>
-        /// Добавить инфраструктурные сервисы приложения
-        /// </summary>
-        public static void AddInfrastructure(this IServiceCollection services)
-        {
-            services.AddSingleton<IServerTime, ServerTime>();
         }
 
         /// <summary>

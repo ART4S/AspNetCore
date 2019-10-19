@@ -6,7 +6,7 @@ using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Posts.DeletePost
 {
-    public class DeletePostCommandHandler : ICommandHandler<DeletePostCommand, Result>
+    public class DeletePostCommandHandler : ICommandHandler<DeletePostCommand, Unit>
     {
         private readonly IAppContext _context;
 
@@ -15,10 +15,10 @@ namespace WebFeatures.Application.Features.Posts.DeletePost
             _context = context;
         }
 
-        public Result Handle(DeletePostCommand input)
+        public Unit Handle(DeletePostCommand input)
         {
             _context.Set<Post>().Remove(input.Id);
-            return Result.Success();
+            return Unit.Value;
         }
     }
 }

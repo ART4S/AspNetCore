@@ -7,7 +7,7 @@ using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Posts.UpdatePost
 {
-    public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, Result>
+    public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, Unit>
     {
         private readonly IAppContext _context;
         private readonly IMapper _mapper;
@@ -18,12 +18,12 @@ namespace WebFeatures.Application.Features.Posts.UpdatePost
             _mapper = mapper;
         }
 
-        public Result Handle(UpdatePostCommand input)
+        public Unit Handle(UpdatePostCommand input)
         {
             var post = _context.Set<Post>().First(x => x.Id == input.Id);
             _mapper.Map(input, post);
 
-            return Result.Success();
+            return Unit.Value;
         }
     }
 }

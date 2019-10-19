@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Mvc.Formatters.Internal;
 using WebFeatures.Application.Infrastructure.Exceptions;
 using WebFeatures.QueryFiltering.Exceptions;
 

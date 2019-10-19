@@ -18,8 +18,8 @@ namespace WebFeatures.WebApi.Controllers
         [HttpPost]
         public IActionResult RegisterUser([FromBody, Required] RegisterUserCommand command)
         {
-            var result = Mediator.Send(command);
-            return ResultResponse(result);
+            Mediator.Send(command);
+            return Ok();
         }
     }
 }

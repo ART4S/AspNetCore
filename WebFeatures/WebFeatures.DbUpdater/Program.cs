@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
 using WebFeatures.Application.Interfaces;
-using WebFeatures.Common.Time;
 using WebFeatures.DataContext.Sql;
 using WebFeatures.DbUpdater.Core;
 
@@ -26,16 +24,10 @@ namespace WebFeatures.DbUpdater
             var configuration = BuildConfiguration();
 
             services.AddLogging(x => x.AddConsole());
-
             services.AddSingleton(configuration);
-            services.AddSingleton<IServerTime, ServerTime>();
-
-            services.AddDbContext<IAppContext, SqlAppContext>(opt =>
-                opt.UseSqlServer(configuration.GetConnectionString("Sql")));
-
+            services.AddDbContext<IAppContext, SqlAppContext>();
             services.AddOptions();
             services.Configure<UpdaterOptions>(configuration.GetSection(nameof(UpdaterOptions)));
-
             services.AddSingleton<Updater>();
 
             return services.BuildServiceProvider();

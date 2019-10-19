@@ -29,12 +29,11 @@ namespace WebFeatures.WebApi
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAppContext(Configuration);
+            services.AddAppContext();
             services.AddPipeline();
             services.AddValidators();
             services.AddAutomapper();
             services.AddDataProtection();
-            services.AddInfrastructure();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

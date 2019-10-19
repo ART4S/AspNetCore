@@ -6,7 +6,7 @@ using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Posts.CreatePost
 {
-    public class CreatePostCommandHandler : ICommandHandler<CreatePostCommand, Result>
+    public class CreatePostCommandHandler : ICommandHandler<CreatePostCommand, Unit>
     {
         private readonly IAppContext _context;
         private readonly IMapper _mapper;
@@ -17,12 +17,12 @@ namespace WebFeatures.Application.Features.Posts.CreatePost
             _mapper = mapper;
         }
 
-        public Result Handle(CreatePostCommand input)
+        public Unit Handle(CreatePostCommand input)
         {
             var post = _mapper.Map<Post>(input);
             _context.Set<Post>().Add(post);
 
-            return Result.Success();
+            return Unit.Value;
         }
     }
 }

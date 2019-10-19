@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using WebFeatures.Application.Interfaces;
 using WebFeatures.Domian.Entities.Model;
 

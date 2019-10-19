@@ -84,6 +84,22 @@ namespace QueryFiltering.Tests
         }
 
         [Fact]
+        public void OrderBy_IntValueByAscWithDifferentSyntax_ReturnsOrdered()
+        {
+            var testObjects = new[]
+            {
+                new TestObject(){IntValue = 3},
+                new TestObject(){IntValue = 2},
+                new TestObject(){IntValue = 1}
+            }.AsQueryable();
+
+            var expected = testObjects.ApplyQuery("$orderBy=IntValue");
+            var actual = testObjects.ApplyQuery("$orderBy=IntValue asc");
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
         public void OrderBy_IntValueByDesc_ReturnsOrdered()
         {
             var testObjects = new[]

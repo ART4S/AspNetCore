@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using System.Linq;
 using WebFeatures.Application.Extensions;
 using WebFeatures.Application.Infrastructure.Validation;
 using WebFeatures.Application.Interfaces;

@@ -6,7 +6,7 @@ using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Blogs.CreateBlog
 {
-    public class CreateBlogCommandHandler : ICommandHandler<CreateBlogCommand, Result>
+    public class CreateBlogCommandHandler : ICommandHandler<CreateBlogCommand, Unit>
     {
         private readonly IAppContext _context;
         private readonly IMapper _mapper;
@@ -17,12 +17,12 @@ namespace WebFeatures.Application.Features.Blogs.CreateBlog
             _mapper = mapper;
         }
 
-        public Result Handle(CreateBlogCommand input)
+        public Unit Handle(CreateBlogCommand input)
         {
             var blog = _mapper.Map<Blog>(input);
             _context.Set<Blog>().Add(blog);
 
-            return Result.Success();
+            return Unit.Value;
         }
     }
 }

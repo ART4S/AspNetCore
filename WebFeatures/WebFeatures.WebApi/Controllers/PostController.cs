@@ -20,11 +20,11 @@ namespace WebFeatures.WebApi.Controllers
         /// Получить информацию по всем постам
         /// </summary>
         /// <param name="filter">Фильтр</param>
-        [HttpGet("infos")]
-        public IActionResult GetInfos(QueryFilter filter)
+        [HttpGet]
+        public IActionResult Get(QueryFilter filter)
         {
-            var infos = Mediator.Send(new GetPostInfosQuery()).ApplyFilter(filter);
-            return Ok(infos);
+            var posts = Mediator.Send(new GetPostInfosQuery()).ApplyFilter(filter);
+            return Ok(posts);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace WebFeatures.WebApi.Controllers
         [HttpGet("{id:int}")]
         public IActionResult GetById([Required] int id)
         {
-            var post = Mediator.Send(new GetPostByIdQuery() {Id = id});
+            var post = Mediator.Send(new GetPostByIdQuery() { Id = id });
             return Ok(post);
         }
 
@@ -44,8 +44,8 @@ namespace WebFeatures.WebApi.Controllers
         [HttpPost]
         public IActionResult Create([FromBody, Required] CreatePostCommand command)
         {
-            var result = Mediator.Send(command);
-            return ResultResponse(result);
+            Mediator.Send(command);
+            return Ok();
         }
 
         /// <summary>
@@ -54,8 +54,8 @@ namespace WebFeatures.WebApi.Controllers
         [HttpPut]
         public IActionResult Update([FromBody, Required] UpdatePostCommand command)
         {
-            var result = Mediator.Send(command);
-            return ResultResponse(result);
+            Mediator.Send(command);
+            return Ok();
         }
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace WebFeatures.WebApi.Controllers
         [HttpDelete("{id:int}")]
         public IActionResult Delete([Required] int id)
         {
-            var result = Mediator.Send(new DeletePostCommand() {Id = id});
-            return ResultResponse(result);
+            Mediator.Send(new DeletePostCommand() { Id = id });
+            return Ok();
         }
     }
 }

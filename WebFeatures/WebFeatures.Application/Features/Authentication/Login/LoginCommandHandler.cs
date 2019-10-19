@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
 using System.Linq;
 using System.Security.Claims;
-using WebFeatures.Application.Infrastructure.Failures;
-using WebFeatures.Application.Infrastructure.Results;
+using WebFeatures.Application.Infrastructure.Exceptions;
 using WebFeatures.Application.Infrastructure.Validation;
 using WebFeatures.Application.Interfaces;
 using WebFeatures.Application.Pipeline.Abstractions;
@@ -10,7 +9,7 @@ using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Authentication.Login
 {
-    public class LoginCommandHandler : ICommandHandler<LoginCommand, Result<Claim[], Fail>>
+    public class LoginCommandHandler : ICommandHandler<LoginCommand, Claim[]>
     {
         private readonly IAppContext _context;
         private readonly IDataProtector _protector;
@@ -21,26 +20,21 @@ namespace WebFeatures.Application.Features.Authentication.Login
             _protector = protectionProvider.CreateProtector("UserPassword");
         }
 
-        public Result<Claim[], Fail> Handle(LoginCommand input)
+        public Claim[] Handle(LoginCommand input)
         {
             var user = _context.Set<User>().FirstOrDefault(x => x.Name == input.Name);
             if (user == null)
             {
-                return Result<Claim[], Fail>.Fail(ValidationErrorMessages.InvalidLoginOrPassword);
+                throw new ValidationException(ValidationErrorMessages.InvalidLoginOrPassword);
             }
 
-            var pass = _protector.Unprotect(user.PasswordHash);
-            if (pass != input.Password)
+            var password = _protector.Unprotect(user.PasswordHash);
+            if (password != input.Password)
             {
-                return Result<Claim[], Fail>.Fail(ValidationErrorMessages.InvalidLoginOrPassword);
+                throw new ValidationException(ValidationErrorMessages.InvalidLoginOrPassword);
             }
 
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.Name, user.Name)
-            };
-
-            return Result<Claim[], Fail>.Success(claims);
+            return new[] { new Claim(ClaimTypes.Name, user.Name) };
         }
     }
 }

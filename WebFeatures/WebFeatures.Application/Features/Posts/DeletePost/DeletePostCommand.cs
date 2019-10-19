@@ -3,7 +3,7 @@ using WebFeatures.Application.Pipeline.Abstractions;
 
 namespace WebFeatures.Application.Features.Posts.DeletePost
 {
-    public class DeletePostCommand : ICommand<Result>
+    public class DeletePostCommand : ICommand<Unit>
     {
         public int Id { get; set; }
     }

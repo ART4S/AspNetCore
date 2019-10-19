@@ -9,12 +9,13 @@ namespace WebFeatures.Domian.Entities.Model
     {
         public int BlogId { get; set; }
         public virtual Blog Blog { get; set; }
+
         public string Title { get; set; }
         public string Content { get; set; }
 
         public static class Specs
         {
-            public static readonly Spec<Post> IsAuthorNotAdmin = new Spec<Post>(p => p.Blog.Author.Name != "Admin");
+            public static readonly Spec<Post> IsAuthorNotAdmin = new Spec<Post>(p => p.Blog.Author.Name != "Admin"); // example spec
         }
     }
 }

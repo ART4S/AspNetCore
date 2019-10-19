@@ -17,11 +17,11 @@ namespace WebFeatures.WebApi.Controllers
         /// <summary>
         /// Получить информацию по всем блогам
         /// </summary>
-        [HttpGet("infos")]
-        public IActionResult GetInfos(QueryFilter filter)
+        [HttpGet]
+        public IActionResult Get(QueryFilter filter)
         {
-            var infos = Mediator.Send(new GetBlogInfosQuery()).ApplyFilter(filter);
-            return Ok(infos);
+            var blogs = Mediator.Send(new GetBlogInfosQuery()).ApplyFilter(filter);
+            return Ok(blogs);
         }
 
         /// <summary>
@@ -30,8 +30,8 @@ namespace WebFeatures.WebApi.Controllers
         [HttpPost]
         public IActionResult Create([FromBody, Required] CreateBlogCommand command)
         {
-            var result = Mediator.Send(command);
-            return ResultResponse(result);
+            Mediator.Send(command);
+            return Ok();
         }
 
         /// <summary>
@@ -41,8 +41,8 @@ namespace WebFeatures.WebApi.Controllers
         [HttpDelete("{id:int}")]
         public IActionResult Delete([Required] int id)
         {
-            var result = Mediator.Send(new DeleteBlogCommand() {Id = id});
-            return ResultResponse(result);
+            Mediator.Send(new DeleteBlogCommand() { Id = id });
+            return Ok();
         }
     }
 }
