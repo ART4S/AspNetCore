@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using WebFeatures.Application.Features.Blogs.CreateBlog;
 using WebFeatures.Application.Features.Blogs.DeleteBlog;
 using WebFeatures.Application.Features.Blogs.GetBlogsInfo;
 using WebFeatures.QueryFiltering.Filters;
 using WebFeatures.QueryFiltering.Utils;
-using WebFeatures.WebApi.Attributes;
 using WebFeatures.WebApi.Controllers.Base;
 
 namespace WebFeatures.WebApi.Controllers
@@ -39,7 +39,7 @@ namespace WebFeatures.WebApi.Controllers
         /// </summary>
         /// <param name="id">Id блога</param>
         [HttpDelete("{id:int}")]
-        public IActionResult Delete([Required] int id)
+        public IActionResult Delete(int id)
         {
             Mediator.Send(new DeleteBlogCommand() { Id = id });
             return Ok();

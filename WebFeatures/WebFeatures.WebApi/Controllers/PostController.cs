@@ -32,7 +32,7 @@ namespace WebFeatures.WebApi.Controllers
         /// </summary>
         /// <param name="id">Id поста</param>
         [HttpGet("{id:int}")]
-        public IActionResult GetById([Required] int id)
+        public IActionResult GetById(int id)
         {
             var post = Mediator.Send(new GetPostByIdQuery() { Id = id });
             return Ok(post);
@@ -63,7 +63,7 @@ namespace WebFeatures.WebApi.Controllers
         /// </summary>
         /// <param name="id">Id поста</param>
         [HttpDelete("{id:int}")]
-        public IActionResult Delete([Required] int id)
+        public IActionResult Delete(int id)
         {
             Mediator.Send(new DeletePostCommand() { Id = id });
             return Ok();
