@@ -14,24 +14,23 @@ namespace WebFeatures.Domian.Infrastructure
                 return false;
             }
 
-            using (var thisEnumerator = GetAtomicValues().GetEnumerator())
-            using (var otherEnumerator = ((ValueObject) other).GetAtomicValues().GetEnumerator())
-            {
-                while (thisEnumerator.MoveNext() && otherEnumerator.MoveNext())
-                {
-                    if (!(thisEnumerator.Current is null) && !thisEnumerator.Current.Equals(otherEnumerator.Current))
-                    {
-                        return false;
-                    }
+            using var thisEnumerator = GetAtomicValues().GetEnumerator();
+            using var otherEnumerator = ((ValueObject) other).GetAtomicValues().GetEnumerator();
 
-                    if (!(otherEnumerator.Current is null) && !otherEnumerator.Current.Equals(thisEnumerator.Current))
-                    {
-                        return false;
-                    }
+            while (thisEnumerator.MoveNext() && otherEnumerator.MoveNext())
+            {
+                if (!(thisEnumerator.Current is null) && !thisEnumerator.Current.Equals(otherEnumerator.Current))
+                {
+                    return false;
                 }
 
-                return !thisEnumerator.MoveNext() && !thisEnumerator.MoveNext();
+                if (!(otherEnumerator.Current is null) && !otherEnumerator.Current.Equals(thisEnumerator.Current))
+                {
+                    return false;
+                }
             }
+
+            return !thisEnumerator.MoveNext() && !thisEnumerator.MoveNext();
         }
 
         public override int GetHashCode()
