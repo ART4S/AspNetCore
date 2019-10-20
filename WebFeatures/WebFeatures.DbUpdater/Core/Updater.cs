@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
-using AppContext = WebFeatures.DataContext.AppContext;
+using WebFeatures.Application.Interfaces;
 
 namespace WebFeatures.DbUpdater.Core
 {
@@ -14,9 +14,9 @@ namespace WebFeatures.DbUpdater.Core
     {
         private readonly ILogger<Updater> _logger;
         private readonly UpdaterOptions _options;
-        private readonly AppContext _context;
+        private readonly IAppContext _context;
 
-        public Updater(ILogger<Updater> logger, IOptions<UpdaterOptions> options, AppContext context)
+        public Updater(ILogger<Updater> logger, IOptions<UpdaterOptions> options, IAppContext context)
         {
             _logger = logger;
             _options = options.Value;

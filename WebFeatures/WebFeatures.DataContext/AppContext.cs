@@ -26,9 +26,6 @@ namespace WebFeatures.DataContext
 
         public DbSet<ContactDetails> ContactDetailses { get; set; }
 
-        public IQueryable<T> Get<T>(bool tracking) where T : class, IEntity, new()
-            => tracking ? Set<T>() : Set<T>().AsNoTracking();
-
         public T GetById<T>(int id) where T : class, IEntity, new()
             => Find<T>(new T() { Id = id });
 
