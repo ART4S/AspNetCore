@@ -11,22 +11,14 @@ namespace QueryFiltering
     {
         public static IQueryable<T> ApplyQuery<T>(this IQueryable<T> sourceQueryable, string query)
         {
-            if (sourceQueryable == null) throw new ArgumentNullException(nameof(sourceQueryable));
-            if (query == null) throw new ArgumentNullException(nameof(query));
-
-            return (IQueryable<T>) ApplyQueryImpl(sourceQueryable, query);
+            return (IQueryable<T>) ApplyQuery((IQueryable) sourceQueryable, query);
         }
 
-        public static IQueryable<dynamic> ApplyQueryAsDynamic<T>(this IQueryable<T> sourceQueryable, string query)
+        public static object ApplyQuery(this IQueryable sourceQueryable, string query)
         {
             if (sourceQueryable == null) throw new ArgumentNullException(nameof(sourceQueryable));
             if (query == null) throw new ArgumentNullException(nameof(query));
 
-            return (IQueryable<dynamic>) ApplyQueryImpl(sourceQueryable, query);
-        }
-
-        private static object ApplyQueryImpl(IQueryable sourceQueryable, string query)
-        {
             var parser = new QueryFilteringParser(
                 new CommonTokenStream(
                     new QueryFilteringLexer(

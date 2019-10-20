@@ -459,17 +459,16 @@ namespace QueryFiltering.Tests
         [Fact]
         public void Select_OneProperty_ReturnsOneWithOneProperty()
         {
-            var testObjects = new[]
+            IQueryable testObjects = new[]
             {
                 new TestObject(){IntValue = 1, DoubleValue = 1},
             }.AsQueryable();
 
-            var actual = testObjects.ApplyQueryAsDynamic("$select=IntValue");
+            var actual = (IQueryable) testObjects.ApplyQuery("$select=IntValue");
 
-            Assert.Single(actual);
-            Assert.IsNotType<TestObject>(actual.First());
-            Assert.True(actual.First().GetType().GetFields().Length == 1);
-            Assert.True(actual.First().GetType().GetFields()[0].Name == "IntValue");
+            Assert.True(actual.ElementType != typeof(TestObject));
+            Assert.True(actual.ElementType.GetFields().Length == 1);
+            Assert.True(actual.ElementType.GetFields().First().Name == "IntValue");
         }
 
         #endregion
