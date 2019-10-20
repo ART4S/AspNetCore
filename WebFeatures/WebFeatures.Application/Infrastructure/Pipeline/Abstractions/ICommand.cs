@@ -1,4 +1,4 @@
-﻿namespace WebFeatures.Application.Pipeline.Abstractions
+﻿namespace WebFeatures.Application.Infrastructure.Pipeline.Abstractions
 {
     /// <summary>
     /// Команда

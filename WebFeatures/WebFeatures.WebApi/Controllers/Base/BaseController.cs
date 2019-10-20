@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using WebFeatures.Application.Pipeline.Mediators;
+using WebFeatures.Application.Infrastructure.Pipeline.Mediators;
 
 namespace WebFeatures.WebApi.Controllers.Base
 {

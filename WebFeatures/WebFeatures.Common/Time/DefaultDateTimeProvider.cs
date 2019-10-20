@@ -2,7 +2,7 @@
 
 namespace WebFeatures.Common.Time
 {
-    internal class AppDateTimeDefault : AppDateTime
+    internal class DefaultDateTimeProvider : DateTimeProvider
     {
         public override DateTime Now => DateTime.UtcNow;
     }

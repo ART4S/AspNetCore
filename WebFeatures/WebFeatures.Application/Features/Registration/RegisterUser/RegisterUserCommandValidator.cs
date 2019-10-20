@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using WebFeatures.Application.Interfaces;
 using WebFeatures.Domian.Entities.Model;
@@ -15,7 +14,7 @@ namespace WebFeatures.Application.Features.Registration.RegisterUser
                 .MinimumLength(3).WithMessage("Имя должно состоять минимум из 3-х символов")
                 .MaximumLength(15).WithMessage("Имя должно состоять максимум из 15-и символов")
                 .Matches(@"^[A-Za-z0-9#?!@$%^&*-]+$").WithMessage("Имя может содержать буквы, цифры и следующие символы:'#?!@$%^&*-'")
-                .Must(n => context.Set<User>().All(y => n != y.Name))
+                .Must(n => context.Get<User>().All(x => x.Name != n))
                     .WithMessage("Пользователь с данным именем уже зарегестрирован");
 
             RuleFor(x => x.Password)
@@ -30,10 +29,8 @@ namespace WebFeatures.Application.Features.Registration.RegisterUser
 
             RuleFor(x => x.ContactDetailsEmail)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .EmailAddress()
-                .WithMessage("Некорректный e-mail")
-                .Must(e => context.Set<User>().AsNoTracking().Count(x => x.ContactDetails.Email == e) == 0)
-                .WithMessage("Пользователь с данным e-mail уже зарегистрирован");
+                .EmailAddress().WithMessage("Некорректный e-mail")
+                .Must(e => context.Get<User>().All(x => x.ContactDetails.Email != e)).WithMessage("Пользователь с данным e-mail уже зарегистрирован");
         }
     }
 }

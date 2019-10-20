@@ -1,4 +1,5 @@
-﻿using WebFeatures.Domian.Entities.Abstractions;
+﻿using System.ComponentModel;
+using WebFeatures.Domian.Entities.Abstractions;
 using WebFeatures.Domian.ValueObjects;
 
 namespace WebFeatures.Domian.Entities.Model
@@ -6,7 +7,8 @@ namespace WebFeatures.Domian.Entities.Model
     /// <summary>
     /// Контактная информация пользователя
     /// </summary>
-    public class ContactDetails : BaseEntity<int>
+    [Description("Контактная информация")]
+    public class ContactDetails : BaseEntity
     {
         public int UserId { get; set; }
         public virtual User User { get; set; }

@@ -1,6 +1,6 @@
-﻿using WebFeatures.Application.Pipeline.Abstractions;
+﻿using WebFeatures.Application.Infrastructure.Pipeline.Abstractions;
 
-namespace WebFeatures.Application.Pipeline.Mediators
+namespace WebFeatures.Application.Infrastructure.Pipeline.Mediators
 {
     /// <summary>
     /// Посредник для отправки запросов подходящим обработчикам

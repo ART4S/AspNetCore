@@ -1,17 +1,21 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using WebFeatures.Domian.Entities.Abstractions;
 using WebFeatures.Specifications;
 
 namespace WebFeatures.Domian.Entities.Model
 {
     [Description("Пост")]
-    public class Post : BaseEntity<int>
+    public class Post : BaseEntity, IUpdatable
     {
         public int BlogId { get; set; }
         public virtual Blog Blog { get; set; }
 
         public string Title { get; set; }
         public string Content { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
         public static class Specs
         {

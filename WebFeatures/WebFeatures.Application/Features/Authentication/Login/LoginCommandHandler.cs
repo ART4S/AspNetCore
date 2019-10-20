@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Security.Claims;
 using WebFeatures.Application.Infrastructure.Exceptions;
+using WebFeatures.Application.Infrastructure.Pipeline.Abstractions;
 using WebFeatures.Application.Infrastructure.Validation;
 using WebFeatures.Application.Interfaces;
-using WebFeatures.Application.Pipeline.Abstractions;
 using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Authentication.Login
@@ -22,7 +22,7 @@ namespace WebFeatures.Application.Features.Authentication.Login
 
         public Claim[] Handle(LoginCommand input)
         {
-            var user = _context.Set<User>().FirstOrDefault(x => x.Name == input.Name);
+            var user = _context.Get<User>().FirstOrDefault(x => x.Name == input.Name);
             if (user == null)
             {
                 throw new ValidationException(ValidationErrorMessages.InvalidLoginOrPassword);

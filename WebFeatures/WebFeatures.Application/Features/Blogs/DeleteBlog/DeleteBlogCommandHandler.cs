@@ -1,7 +1,6 @@
-﻿using WebFeatures.Application.Extensions;
+﻿using WebFeatures.Application.Infrastructure.Pipeline.Abstractions;
 using WebFeatures.Application.Infrastructure.Results;
 using WebFeatures.Application.Interfaces;
-using WebFeatures.Application.Pipeline.Abstractions;
 using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Blogs.DeleteBlog
@@ -17,7 +16,7 @@ namespace WebFeatures.Application.Features.Blogs.DeleteBlog
 
         public Unit Handle(DeleteBlogCommand input)
         {
-            _context.Set<Blog>().Remove(input.Id);
+            _context.Remove<Blog>(input.Id);
             return Unit.Value;
         }
     }

@@ -1,15 +1,12 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
 using System;
-using System.IO;
 using System.Linq;
-using System.Reflection;
+using WebFeatures.Application.Infrastructure.Pipeline.Abstractions;
+using WebFeatures.Application.Infrastructure.Pipeline.Concerns;
+using WebFeatures.Application.Infrastructure.Pipeline.Mediators;
 using WebFeatures.Application.Interfaces;
-using WebFeatures.Application.Pipeline.Abstractions;
-using WebFeatures.Application.Pipeline.Concerns;
-using WebFeatures.Application.Pipeline.Mediators;
 using WebFeatures.Common.Extensions;
 using WebFeatures.DataContext.Sql;
 
@@ -132,21 +129,21 @@ namespace WebFeatures.WebApi.Configuration
             services.AddSingleton(provider => config.CreateMapper());
         }
 
-        /// <summary>
-        /// Добавить swagger
-        /// </summary>
-        public static void AddSwagger(this IServiceCollection services)
-        {
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info() { Title = "WebFeatures", Version = "v1" });
+        ///// <summary>
+        ///// Добавить swagger
+        ///// </summary>
+        //public static void AddSwagger(this IServiceCollection services)
+        //{
+        //    services.AddSwaggerGen(c =>
+        //    {
+        //        c.SwaggerDoc("v1", new Info() { Title = "WebFeatures", Version = "v1" });
 
-                var xml = Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
-                if (File.Exists(xml))
-                {
-                    c.IncludeXmlComments(xml);
-                }
-            });
-        }
+        //        var xml = Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
+        //        if (File.Exists(xml))
+        //        {
+        //            c.IncludeXmlComments(xml);
+        //        }
+        //    });
+        //}
     }
 }

@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebFeatures.Application\WebFeatures.Application.csproj" />
-    <ProjectReference Include="..\WebFeatures.Common\WebFeatures.Common.csproj" />
   </ItemGroup>
 
 </Project>

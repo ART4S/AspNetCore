@@ -4,21 +4,6 @@
         <name>WebFeatures.WebApi</name>
     </assembly>
     <members>
-        <member name="T:WebFeatures.WebApi.Attributes.RequiredAttribute">
-            <summary>
-            Атрибут для проверки на null или default значение
-            </summary>
-        </member>
-        <member name="M:WebFeatures.WebApi.Attributes.RequiredAttribute.#ctor(System.Boolean)">
-            <summary>
-            <inheritdoc />
-            </summary>
-        </member>
-        <member name="M:WebFeatures.WebApi.Attributes.RequiredAttribute.IsValid(System.Object)">
-            <summary>
-            <inheritdoc />
-            </summary>
-        </member>
         <member name="T:WebFeatures.WebApi.Configuration.ServicesConfiguration">
             <summary>
             Расширения для конфигурации сервисов приложения
@@ -52,11 +37,6 @@
         <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddAutomapper(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Добавить профили automapper
-            </summary>
-        </member>
-        <member name="M:WebFeatures.WebApi.Configuration.ServicesConfiguration.AddSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            Добавить swagger
             </summary>
         </member>
         <member name="T:WebFeatures.WebApi.Controllers.AuthController">

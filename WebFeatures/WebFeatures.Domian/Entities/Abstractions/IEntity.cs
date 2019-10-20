@@ -3,11 +3,11 @@
     /// <summary>
     /// Сущность
     /// </summary>
-    public interface IEntity<TId> where TId : struct
+    public interface IEntity
     {
         /// <summary>
         /// Идентификатор
         /// </summary>
-        TId Id { get; set; }
+        int Id { get; set; }
     }
 }

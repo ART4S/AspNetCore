@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using WebFeatures.Application.Pipeline.Abstractions;
+using WebFeatures.Application.Infrastructure.Pipeline.Abstractions;
 
 namespace WebFeatures.Application.Features.Posts.GetPostsInfo
 {

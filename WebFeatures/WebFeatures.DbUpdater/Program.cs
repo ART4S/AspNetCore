@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
-using WebFeatures.Application.Interfaces;
+using WebFeatures.DataContext;
 using WebFeatures.DataContext.Sql;
 using WebFeatures.DbUpdater.Core;
 
@@ -12,22 +12,23 @@ namespace WebFeatures.DbUpdater
     {
         public static void Main()
         {
-            var services = BuildServices();
-            var updater = services.GetService<Updater>();
-
-            updater.Run();
+            BuildServices().GetService<Updater>().Run();
         }
 
         private static ServiceProvider BuildServices()
         {
             var services = new ServiceCollection();
+
             var configuration = BuildConfiguration();
+            services.AddSingleton(configuration);
 
             services.AddLogging(x => x.AddConsole());
-            services.AddSingleton(configuration);
-            services.AddDbContext<IAppContext, SqlAppContext>();
+
+            services.AddDbContext<AppContext, SqlAppContext>();
+
             services.AddOptions();
             services.Configure<UpdaterOptions>(configuration.GetSection(nameof(UpdaterOptions)));
+
             services.AddSingleton<Updater>();
 
             return services.BuildServiceProvider();

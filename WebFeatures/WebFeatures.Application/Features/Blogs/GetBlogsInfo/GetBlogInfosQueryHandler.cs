@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using WebFeatures.Application.Infrastructure.Pipeline.Abstractions;
 using WebFeatures.Application.Interfaces;
-using WebFeatures.Application.Pipeline.Abstractions;
 using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Blogs.GetBlogsInfo
@@ -22,8 +21,7 @@ namespace WebFeatures.Application.Features.Blogs.GetBlogsInfo
         public IQueryable<BlogInfoDto> Handle(GetBlogInfosQuery input)
         {
             var blogs = _context
-                .Set<Blog>()
-                .AsNoTracking()
+                .Get<Blog>()
                 .ProjectTo<BlogInfoDto>(_mapper.ConfigurationProvider);
 
             return blogs;

@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.Extensions.Logging;
-using WebFeatures.Application.Pipeline.Abstractions;
+using WebFeatures.Application.Infrastructure.Pipeline.Abstractions;
 
-namespace WebFeatures.Application.Pipeline.Concerns
+namespace WebFeatures.Application.Infrastructure.Pipeline.Concerns
 {
     /// <summary>
     /// Логирование долгих запросов

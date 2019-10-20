@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using WebFeatures.Application.Pipeline.Abstractions;
+using WebFeatures.Application.Infrastructure.Pipeline.Abstractions;
 
 namespace WebFeatures.Application.Features.Authentication.Login
 {

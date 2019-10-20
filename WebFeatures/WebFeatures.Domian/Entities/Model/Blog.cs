@@ -5,7 +5,7 @@ using WebFeatures.Domian.Entities.Abstractions;
 namespace WebFeatures.Domian.Entities.Model
 {
     [Description("Блог")]
-    public class Blog : BaseEntity<int>
+    public class Blog : BaseEntity
     {
         public Blog()
         {
@@ -17,6 +17,6 @@ namespace WebFeatures.Domian.Entities.Model
 
         public string Title { get; set; }
 
-        public virtual ICollection<Post> Posts { get;  }
+        public virtual ICollection<Post> Posts { get; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using WebFeatures.Application.Interfaces;
 using WebFeatures.Common.Time;
 using WebFeatures.Domian.Entities.Abstractions;
@@ -25,9 +26,24 @@ namespace WebFeatures.DataContext
 
         public DbSet<ContactDetails> ContactDetailses { get; set; }
 
+        public IQueryable<T> Get<T>(bool tracking) where T : class, IEntity, new()
+            => tracking ? Set<T>() : Set<T>().AsNoTracking();
+
+        public T GetById<T>(int id) where T : class, IEntity, new()
+            => Find<T>(new T() { Id = id });
+
+        public new void Add<T>(T entity) where T : class, IEntity, new()
+            => Set<T>().Add(entity);
+
+        public void Remove<T>(int id) where T : class, IEntity, new()
+            => Remove(new T() { Id = id });
+
+        public bool Exists<T>(int id) where T : class, IEntity, new()
+            => Set<T>().AsNoTracking().Any(x => x.Id == id);
+
         public override int SaveChanges()
         {
-            var now = AppDateTime.Instance.Now;
+            var now = DateTimeProvider.Instance.Now;
 
             foreach (var entry in ChangeTracker.Entries())
             {

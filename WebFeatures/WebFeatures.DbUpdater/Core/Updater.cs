@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using WebFeatures.Application.Interfaces;
+using System.Linq;
+using AppContext = WebFeatures.DataContext.AppContext;
 
 namespace WebFeatures.DbUpdater.Core
 {
@@ -14,9 +14,9 @@ namespace WebFeatures.DbUpdater.Core
     {
         private readonly ILogger<Updater> _logger;
         private readonly UpdaterOptions _options;
-        private readonly IAppContext _context;
+        private readonly AppContext _context;
 
-        public Updater(ILogger<Updater> logger, IOptions<UpdaterOptions> options, IAppContext context)
+        public Updater(ILogger<Updater> logger, IOptions<UpdaterOptions> options, AppContext context)
         {
             _logger = logger;
             _options = options.Value;

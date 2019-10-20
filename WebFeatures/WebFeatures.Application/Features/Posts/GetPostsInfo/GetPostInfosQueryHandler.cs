@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using WebFeatures.Application.Infrastructure.Pipeline.Abstractions;
 using WebFeatures.Application.Interfaces;
-using WebFeatures.Application.Pipeline.Abstractions;
 using WebFeatures.Domian.Entities.Model;
 
 namespace WebFeatures.Application.Features.Posts.GetPostsInfo
@@ -21,13 +20,11 @@ namespace WebFeatures.Application.Features.Posts.GetPostsInfo
 
         public IQueryable<PostInfoDto> Handle(GetPostInfosQuery input)
         {
-            var infos = _context
-                .Set<Post>()
-                .AsNoTracking()
+            var posts = _context.Get<Post>()
                 .Where(Post.Specs.IsAuthorNotAdmin)
                 .ProjectTo<PostInfoDto>(_mapper.ConfigurationProvider);
 
-            return infos;
+            return posts;
         }
     }
 }
