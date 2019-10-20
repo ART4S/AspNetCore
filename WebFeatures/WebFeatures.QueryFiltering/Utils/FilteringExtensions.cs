@@ -30,14 +30,14 @@ namespace WebFeatures.QueryFiltering.Utils
 
             var filteringParams = new List<string>();
 
-            if (filter.Skip.HasValue && filter.Skip.Value > 0)
-            {
-                filteringParams.Add($"$skip={filter.Skip.Value}");
-            }
-
             if (filter.Top.HasValue && filter.Top.Value > 0)
             {
                 filteringParams.Add($"$top={filter.Top.Value}");
+            }
+
+            if (filter.Skip.HasValue && filter.Skip.Value > 0)
+            {
+                filteringParams.Add($"$skip={filter.Skip.Value}");
             }
 
             if (filter.Filter != null)

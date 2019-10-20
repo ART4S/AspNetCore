@@ -6,12 +6,12 @@ namespace WebFeatures.QueryFiltering.Results
     {
         public int Count { get; }
 
-        public ICollection Records { get; }
+        public ICollection Items { get; }
 
-        public FilteringResult(ICollection records)
+        public FilteringResult(ICollection items)
         {
-            Count = records.Count;
-            Records = records;
+            Count = items.Count;
+            Items = items;
         }
     }
 }

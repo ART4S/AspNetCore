@@ -17,7 +17,10 @@ namespace WebFeatures.DbUpdater.Core
         private readonly UpdaterOptions _options;
         private readonly IAppContext _context;
 
-        public Updater(ILogger<Updater> logger, IOptions<UpdaterOptions> options, IAppContext context)
+        public Updater(
+            ILogger<Updater> logger, 
+            IOptions<UpdaterOptions> options, 
+            IAppContext context)
         {
             _logger = logger;
             _options = options.Value;
