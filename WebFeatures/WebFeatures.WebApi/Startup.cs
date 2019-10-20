@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -11,6 +12,7 @@ using WebFeatures.QueryFiltering.Exceptions;
 using WebFeatures.WebApi.Configuration;
 using ValidationException = WebFeatures.Application.Infrastructure.Exceptions.ValidationException;
 
+[assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace WebFeatures.WebApi
 {
     /// <summary>
@@ -45,7 +47,7 @@ namespace WebFeatures.WebApi
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
 
-            //services.AddSwagger();
+            services.AddSwaggerDocument();
         }
 
         /// <summary>
@@ -84,13 +86,14 @@ namespace WebFeatures.WebApi
                 });
             });
 
-            app.UseRouting();
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
-            //app.UseSwagger(); https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1275
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebFeatures v1");
-            //});
+            // Register the Swagger generator and the Swagger UI middlewares
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
+
+            app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -11,7 +10,7 @@ namespace WebFeatures.DataContext.Sql
         private readonly ILoggerFactory _loggerFactory;
 
         public SqlAppContext(
-            DbContextOptions<SqlAppContext> options, 
+            DbContextOptions<SqlAppContext> options,
             IConfiguration configuration, 
             ILoggerFactory loggerFactory) : base(options)
         {
@@ -22,7 +21,6 @@ namespace WebFeatures.DataContext.Sql
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_configuration.GetConnectionString(nameof(SqlAppContext)));
-            optionsBuilder.ConfigureWarnings(warnings => warnings.Log(RelationalEventId.QueryClientEvaluationWarning));
             optionsBuilder.UseLoggerFactory(_loggerFactory);
         }
     }

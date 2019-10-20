@@ -16,7 +16,7 @@ namespace WebFeatures.WebApi.Controllers.Base
         /// <summary>
         /// Посредник для отправки запроса подходящим обработчикам
         /// </summary>
-        protected IMediator Mediator => _mediator ?? (_mediator = HttpContext.RequestServices.GetService<IMediator>());
+        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
         private IMediator _mediator;
     }
 }
