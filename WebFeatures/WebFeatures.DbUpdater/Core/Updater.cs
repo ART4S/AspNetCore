@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 using WebFeatures.Application.Interfaces;
+using WebFeatures.DataContext;
 
 namespace WebFeatures.DbUpdater.Core
 {
@@ -31,6 +32,8 @@ namespace WebFeatures.DbUpdater.Core
                 {
                     _context.Database.EnsureDeleted();
                     _context.Database.Migrate();
+
+                    _context.Seed();
                     return;
                 }
 
@@ -52,6 +55,8 @@ namespace WebFeatures.DbUpdater.Core
                     {
                         _context.Database.EnsureCreated();
                     }
+
+                    _context.Seed();
                 }
             }
             catch (Exception e)
