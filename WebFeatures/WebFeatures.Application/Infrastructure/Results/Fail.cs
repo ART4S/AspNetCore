@@ -1,8 +1,8 @@
-﻿using FluentValidation.Results;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using FluentValidation.Results;
 
-namespace WebFeatures.Application.Infrastructure.Failures
+namespace WebFeatures.Application.Infrastructure.Results
 {
     /// <summary>
     /// Ошибка запроса

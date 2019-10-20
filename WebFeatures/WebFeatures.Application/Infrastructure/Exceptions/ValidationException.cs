@@ -1,5 +1,5 @@
 ﻿using System;
-using WebFeatures.Application.Infrastructure.Failures;
+using WebFeatures.Application.Infrastructure.Results;
 
 namespace WebFeatures.Application.Infrastructure.Exceptions
 {

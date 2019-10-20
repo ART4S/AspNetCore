@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using FluentValidation;
+using System.Collections.Generic;
 using System.Linq;
-using FluentValidation;
-using WebFeatures.Application.Infrastructure.Failures;
 using WebFeatures.Application.Infrastructure.Pipeline.Abstractions;
+using WebFeatures.Application.Infrastructure.Results;
 using ValidationException = WebFeatures.Application.Infrastructure.Exceptions.ValidationException;
 
 namespace WebFeatures.Application.Infrastructure.Pipeline.Concerns
