@@ -41,7 +41,7 @@ namespace HangfireExample.Client.Controllers
             //_recurringJobManager.AddOrUpdate(
             //    recurringJobId: Guid.NewGuid().ToString(),
             //    methodCall: job,
-            //    cronExpression: () => "1 * * *",
+            //    cronExpression: Cron.Minutely,
             //    timeZone: TimeZoneInfo.Utc,
             //    queue: "recurring");
 

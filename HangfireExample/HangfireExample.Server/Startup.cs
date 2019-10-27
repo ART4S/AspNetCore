@@ -1,5 +1,6 @@
 using Hangfire;
 using Hangfire.SqlServer;
+using HangfireExample.Server.Activators;
 using HangfireExample.Server.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,12 +21,13 @@ namespace HangfireExample.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHangfire(configuration =>
+            services.AddHangfire((provider, configuration) =>
             {
                 configuration
                     .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                     .UseSimpleAssemblyNameTypeSerializer()
                     .UseRecommendedSerializerSettings()
+                    .UseActivator(provider.GetService<ServiceProviderJobActivator>())
                     .UseSqlServerStorage(Configuration.GetValue<string>("Data:ConnectionStrings:Hangfire"), new SqlServerStorageOptions()
                     {
                         PrepareSchemaIfNecessary = true,
