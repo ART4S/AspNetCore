@@ -1,11 +1,12 @@
 using Hangfire;
-using HangfireExample.Services;
+using Hangfire.SqlServer;
 using HangfireExample.Services.Implementations;
 using HangfireExample.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace HangfireExample.Client
 {
@@ -25,7 +26,18 @@ namespace HangfireExample.Client
 
             services.AddHangfire(configuration =>
             {
-                configuration.UseSqlServerStorage(Configuration.GetValue<string>("Data:ConnectionStrings:Hangfire"));
+                configuration
+                    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                    .UseSimpleAssemblyNameTypeSerializer()
+                    .UseRecommendedSerializerSettings()
+                    .UseSqlServerStorage(Configuration.GetValue<string>("Data:ConnectionStrings:Hangfire"), new SqlServerStorageOptions()
+                    {
+                        PrepareSchemaIfNecessary = false,
+                        QueuePollInterval = TimeSpan.Zero,
+                        UseRecommendedIsolationLevel = true,
+                        UsePageLocksOnDequeue = true,
+                        DisableGlobalLocks = true
+                    });
             });
 
             services.AddControllers();
@@ -35,8 +47,6 @@ namespace HangfireExample.Client
         {
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
