@@ -6,7 +6,9 @@ namespace HangfireExample.Server.Filters
     {
         public bool Authorize(DashboardContext context)
         {
-            return context.GetHttpContext().User.Identity.IsAuthenticated;
+            var httpContext = context.GetHttpContext();
+
+            return httpContext.User.Identity.IsAuthenticated;
         }
     }
 }

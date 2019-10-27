@@ -22,7 +22,6 @@ namespace HangfireExample.Client
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IEmailService, EmailService>();
-            services.AddTransient<IVideoService, VideoService>();
 
             services.AddHangfire(configuration =>
             {

@@ -38,7 +38,7 @@ namespace HangfireExample.Server
 
             services.AddHangfireServer(options =>
             {
-                options.Queues = new[] { "email", "video" };
+                options.Queues = new[] { "recurring", "email" };
             });
         }
 
