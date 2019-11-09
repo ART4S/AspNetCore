@@ -1,4 +1,5 @@
-﻿using AuthenticationExample.Data;
+﻿using AuthenticationExample.Security.Middlewares;
+using AuthenticationExample.WebApi.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,9 @@ namespace AuthenticationExample.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<UserContext>();
+            services.AddUserContext();
+            services.AddTokenAuthentication();
+
             services.AddControllers(configure =>
             {
                 configure.Filters.Add(new ProducesAttribute(MediaTypeNames.Application.Json));
@@ -29,6 +32,8 @@ namespace AuthenticationExample.WebApi
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseMiddleware<TokenMiddleware>();
+
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
