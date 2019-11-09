@@ -17,7 +17,6 @@ namespace AuthenticationExample.Security.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-            context.Request.
             if (!context.Request.Headers.TryGetValue("access_token", out var values) && !values.Any())
             {
                 await NotAuthorizedResponse(context);
