@@ -11,6 +11,9 @@
     <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
       <HintPath>C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\3.0.0\ref\netcoreapp3.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
+      <HintPath>C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\3.0.0\ref\netcoreapp3.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
       <HintPath>C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\3.0.0\ref\netcoreapp3.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
@@ -18,8 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.0.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>

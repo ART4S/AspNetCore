@@ -1,5 +1,5 @@
-﻿using AuthenticationExample.Security.Middlewares;
-using AuthenticationExample.WebApi.Extensions;
+﻿using AuthenticationExample.Data;
+using AuthenticationExample.Security.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Net.Mime;
 
 [assembly: ApiController]
-[assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace AuthenticationExample.WebApi
 {
     public class Startup
@@ -21,7 +20,7 @@ namespace AuthenticationExample.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddUserContext();
+            services.AddDbContext<UserContext>();
             services.AddTokenAuthentication();
 
             services.AddControllers(configure =>
@@ -32,7 +31,8 @@ namespace AuthenticationExample.WebApi
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseMiddleware<TokenMiddleware>();
+            app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseRouting();
             app.UseEndpoints(endpoints =>
