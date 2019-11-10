@@ -31,8 +31,8 @@ namespace AuthenticationExample.WebApi
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseRouting();
             app.UseEndpoints(endpoints =>
