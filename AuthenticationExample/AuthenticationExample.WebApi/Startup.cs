@@ -31,10 +31,14 @@ namespace AuthenticationExample.WebApi
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseRouting();
+
+            // who are you?
             app.UseAuthentication();
+
+            // are you allowed?
             app.UseAuthorization();
 
-            app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
