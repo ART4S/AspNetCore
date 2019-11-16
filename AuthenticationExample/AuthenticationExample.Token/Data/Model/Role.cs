@@ -1,7 +1,7 @@
-﻿using AuthenticationExample.Data.Abstractions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using AuthenticationExample.Token.Data.Abstractions;
 
-namespace AuthenticationExample.Data.Model
+namespace AuthenticationExample.Token.Data.Model
 {
     public class Role : BaseEntity
     {

@@ -1,11 +1,11 @@
-﻿using AuthenticationExample.Data.Abstractions;
+﻿using AuthenticationExample.Cookie.Data.Abstractions;
 using System.Collections.Generic;
 
-namespace AuthenticationExample.Data.Model
+namespace AuthenticationExample.Cookie.Data.Model
 {
-    public class Role : BaseEntity
+    public class User : BaseEntity
     {
-        public Role()
+        public User()
         {
             UserRoles = new HashSet<UserRole>();
         }

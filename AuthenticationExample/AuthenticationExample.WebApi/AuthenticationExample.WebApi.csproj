@@ -5,8 +5,4 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\AuthenticationExample.Security\AuthenticationExample.Security.csproj" />
-  </ItemGroup>
-
 </Project>

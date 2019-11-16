@@ -10,8 +10,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\AuthenticationExample.Data\AuthenticationExample.Data.csproj" />
-  </ItemGroup>
-
 </Project>
