@@ -1,9 +1,9 @@
-﻿using AuthenticationExample.Token.Data.Abstractions;
-
-namespace AuthenticationExample.Token.Data.Model
+﻿namespace AuthenticationExample.Token.Data.Model
 {
-    public class UserRole : BaseEntity
+    public class UserRole
     {
+        public int Id { get; set; }
+
         public int UserId { get; set; }
         public virtual User User { get; set; }
 

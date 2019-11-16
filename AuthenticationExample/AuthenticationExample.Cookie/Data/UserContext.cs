@@ -7,14 +7,6 @@ namespace AuthenticationExample.Cookie.Data
     {
         public UserContext(DbContextOptions<UserContext> options) : base(options) { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-
-            optionsBuilder.UseInMemoryDatabase("MemoryDb");
-            optionsBuilder.UseLazyLoadingProxies();
-        }
-
         public DbSet<User> Users { get; set; }
 
         public DbSet<Role> Roles { get; set; }

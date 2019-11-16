@@ -1,13 +1,13 @@
-﻿using AuthenticationExample.Data;
-using AuthenticationExample.Security.Extensions;
+using AuthenticationExample.Identity.Data;
+using AuthenticationExample.Identity.Data.Model;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Net.Mime;
 
-[assembly: ApiController]
-namespace AuthenticationExample.WebApi
+namespace AuthenticationExample.Identity
 {
     public class Startup
     {
@@ -20,23 +20,23 @@ namespace AuthenticationExample.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<UserContext>();
-            services.AddTokenAuthentication();
+            services.AddControllers();
 
-            services.AddControllers(configure =>
+            services.AddDbContext<UserContext>(options =>
             {
-                configure.Filters.Add(new ProducesAttribute(MediaTypeNames.Application.Json));
+                options.UseInMemoryDatabase("Memory");
             });
+
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<UserContext>()
+                .AddDefaultTokenProviders();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
 
-            // who are you?
             app.UseAuthentication();
-
-            // are you allowed?
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

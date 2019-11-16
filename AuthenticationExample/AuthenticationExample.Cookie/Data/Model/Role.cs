@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
-using AuthenticationExample.Cookie.Data.Abstractions;
 
 namespace AuthenticationExample.Cookie.Data.Model
 {
-    public class Role : BaseEntity
+    public class Role
     {
         public Role()
         {
             UserRoles = new HashSet<UserRole>();
         }
+
+        public int Id { get; set; }
 
         public string Name { get; set; }
 

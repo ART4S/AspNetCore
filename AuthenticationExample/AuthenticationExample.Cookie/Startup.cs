@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,7 +23,11 @@ namespace AuthenticationExample.Cookie
         {
             services.AddControllers();
 
-            services.AddDbContext<UserContext>();
+            services.AddDbContext<UserContext>(options =>
+            {
+                options.UseInMemoryDatabase("Memory");
+                options.UseLazyLoadingProxies();
+            });
 
             services.AddAuthentication(options =>
             {

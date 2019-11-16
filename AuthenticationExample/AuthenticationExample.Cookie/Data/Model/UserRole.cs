@@ -1,9 +1,9 @@
-﻿using AuthenticationExample.Cookie.Data.Abstractions;
-
-namespace AuthenticationExample.Cookie.Data.Model
+﻿namespace AuthenticationExample.Cookie.Data.Model
 {
-    public class UserRole : BaseEntity
+    public class UserRole
     {
+        public int Id { get; set; }
+
         public int UserId { get; set; }
         public virtual User User { get; set; }
 

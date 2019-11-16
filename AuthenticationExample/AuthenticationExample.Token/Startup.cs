@@ -1,13 +1,14 @@
+using AuthenticationExample.Token.Data;
 using AuthenticationExample.Token.Defaults;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using AuthenticationExample.Token.Data;
 
 [assembly: ApiController]
 namespace AuthenticationExample.Token
@@ -25,7 +26,11 @@ namespace AuthenticationExample.Token
         {
             services.AddControllers();
 
-            services.AddDbContext<UserContext>();
+            services.AddDbContext<UserContext>(options =>
+            {
+                options.UseInMemoryDatabase("Memory");
+                options.UseLazyLoadingProxies();
+            });
 
             services.AddAuthentication(options =>
             {

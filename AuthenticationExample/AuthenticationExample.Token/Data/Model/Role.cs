@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
-using AuthenticationExample.Token.Data.Abstractions;
 
 namespace AuthenticationExample.Token.Data.Model
 {
-    public class Role : BaseEntity
+    public class Role
     {
         public Role()
         {
             UserRoles = new HashSet<UserRole>();
         }
+
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
