@@ -8,7 +8,6 @@ namespace AuthenticationExample.Identity.Data
     {
         public UserContext(DbContextOptions<UserContext> options) : base(options)
         {
-
         }
     }
 }

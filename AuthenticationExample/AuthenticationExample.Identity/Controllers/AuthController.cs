@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 namespace AuthenticationExample.Identity.Controllers
 {
     [Route("api/[controller]")]
-    public class AuthContoller : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public AuthContoller(
+        public AuthController(
             UserManager<User> userManager, 
             SignInManager<User> signInManager)
         {
