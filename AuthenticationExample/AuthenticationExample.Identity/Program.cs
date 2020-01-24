@@ -37,25 +37,27 @@ namespace AuthenticationExample.Identity
             var userManager = scope.ServiceProvider.GetService<UserManager<User>>();
 
             var admin = new User() { UserName = "admin" };
-            userManager.CreateAsync(admin, "admin").GetAwaiter().GetResult();
+            userManager.CreateAsync(admin, "12345").GetAwaiter().GetResult();
 
             userManager.AddClaimsAsync(
                 admin, 
                 new []
                 {
                     new Claim(ClaimTypes.Role, SystemRoles.Admin),
-                    new Claim(ClaimTypes.Expiration, DateTime.UtcNow.Add(TimeSpan.FromDays(1)).ToString(CultureInfo.InvariantCulture))
+                    new Claim(ClaimTypes.Expiration, DateTime.UtcNow.Add(TimeSpan.FromDays(1)).ToString(CultureInfo.InvariantCulture)),
+                    new Claim(SystemClaimTypes.HireDate, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture))
                 }).GetAwaiter().GetResult();
 
-            var user = new User() { UserName = "user" };
-            userManager.CreateAsync(user, "user").GetAwaiter().GetResult();
+            var employee = new User() { UserName = "employee" };
+            userManager.CreateAsync(employee, "12345").GetAwaiter().GetResult();
 
             userManager.AddClaimsAsync(
-                user, 
+                employee, 
                 new[]
                 {
-                    new Claim(ClaimTypes.Role, SystemRoles.User), 
-                    new Claim(ClaimTypes.Expiration, DateTime.UtcNow.Add(TimeSpan.FromDays(1)).ToString(CultureInfo.InvariantCulture))
+                    new Claim(ClaimTypes.Role, SystemRoles.Employee), 
+                    new Claim(ClaimTypes.Expiration, DateTime.UtcNow.Add(TimeSpan.FromDays(1)).ToString(CultureInfo.InvariantCulture)),
+                    new Claim(SystemClaimTypes.HireDate, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture))
                 }).GetAwaiter().GetResult();
         }
     }
