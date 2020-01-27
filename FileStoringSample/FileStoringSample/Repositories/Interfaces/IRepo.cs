@@ -1,9 +1,9 @@
-﻿using FileStoringSample.Context;
-using FileStoringSample.Model.Abstractions;
-using System;
+﻿using System;
 using System.Linq;
+using FileStoringSample.Data.Context;
+using FileStoringSample.Data.Model.Abstractions;
 
-namespace FileStoringSample.Repositories.Interfaces
+namespace FileStoringSample.Data.Repositories.Interfaces
 {
     public interface IRepo<TEntity, TDataContext>
         where TEntity : class, IEntity

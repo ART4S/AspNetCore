@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FileStoringSample.Model.Abstractions
+namespace FileStoringSample.Data.Model.Abstractions
 {
     public class BaseEntity : IEntity
     {

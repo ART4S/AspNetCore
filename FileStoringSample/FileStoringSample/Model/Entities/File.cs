@@ -1,7 +1,7 @@
-﻿using FileStoringSample.Model.Abstractions;
-using System;
+﻿using System;
+using FileStoringSample.Data.Model.Abstractions;
 
-namespace FileStoringSample.Model.Entities
+namespace FileStoringSample.Data.Model.Entities
 {
     public class File : BaseEntity
     {
@@ -23,7 +23,7 @@ namespace FileStoringSample.Model.Entities
         /// <summary>
         /// Содержимое
         /// </summary>
-        public Guid? ContentId { get; set; }
+        public Guid ContentId { get; set; }
         public virtual FileContent Content { get; set; }
     }
 }

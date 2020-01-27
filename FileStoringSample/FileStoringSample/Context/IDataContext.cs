@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace FileStoringSample.Context
+namespace FileStoringSample.Data.Context
 {
     public interface IDataContext
     {

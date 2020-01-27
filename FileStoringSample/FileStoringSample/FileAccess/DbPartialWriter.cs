@@ -1,30 +1,33 @@
-﻿using System;
-using System.Linq;
-using FileStoringSample.Context;
-using FileStoringSample.Model.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using FileStoringSample.Data.Context;
+using FileStoringSample.Data.Model.Entities;
 using PartialStreams.Database;
+using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
-namespace FileStoringSample
+namespace FileStoringSample.Data.FileAccess
 {
     public class DbPartialWriter : IDbPartialWriter
     {
+        private readonly int _partSize;
+
         private IDataContext _dataContext;
         private FileContent _content;
         private FileContentPart _currentPart;
-        private readonly int _maxPartSize;
+        private int _currentPartPosition;
 
-        public DbPartialWriter(IDataContext dataContext, FileContent content, int maxPartSize = 1024)
+        public long Position => _currentPart.PositionInFile + _currentPartPosition;
+        public long TotalLength => _content.CurrentSize;
+        public bool CanSeek => true;
+        public bool HasParts => CanWriteBytes();
+        public bool CanWriteToCurrentPart => _currentPartPosition + 1 <= _partSize && CanWriteBytes();
+
+        public DbPartialWriter(IDataContext dataContext, FileContent content, int partSize = 1024)
         {
             _dataContext = dataContext;
             _content = content;
-            _maxPartSize = maxPartSize;
-            
-            Init();
-        }
+            _partSize = partSize;
 
-        private void Init()
-        {
             _currentPart = _dataContext.Set<FileContentPart>()
                 .AsNoTracking()
                 .Where(x => x.ContentId == _content.Id)
@@ -36,18 +39,16 @@ namespace FileStoringSample
                 _currentPart = new FileContentPart()
                 {
                     Content = _content,
-                    Data = new FileContentPartData() { Bytes = new byte[0] },
-                    Position = 0,
+                    Data = new FileContentPartData() { Bytes = new byte[_partSize] },
+                    PositionInFile = 0,
+                    Order = 0,
                     Length = 0,
-                    Order = 0
                 };
-            }
-        }
 
-        public void Dispose()
-        {
-            _dataContext = null;
-            _content = null;
+                _dataContext.Set<FileContentPart>().Add(_currentPart);
+            }
+
+            _currentPartPosition = (int) (_content.CurrentSize - _currentPart.PositionInFile);
         }
 
         public void SetStreamLength(long value) => throw new NotImplementedException();
@@ -58,37 +59,61 @@ namespace FileStoringSample
                 .AsNoTracking()
                 .FirstOrDefault(
                     x => x.ContentId == _content.Id &&
-                         x.Position <= streamOffset &&
-                         streamOffset < x.Position + x.Length);
+                         x.PositionInFile <= streamOffset &&
+                         streamOffset < x.PositionInFile + x.Length);
 
             if (_currentPart == null)
-            {
                 throw new InvalidOperationException();
-            }
+
+            _currentPartPosition = (int) (streamOffset - _currentPart.PositionInFile);
         }
 
         public int Write(byte[] buffer, int offset, int count)
         {
-            int writeCount = Math.Min(_currentPart.Length + count, _maxPartSize - _currentPart.Length);
+            int writeCount = Math.Min(
+                Math.Min(count, _partSize - _currentPartPosition), 
+                (int)(_content.MaxSize - _content.CurrentSize));
 
-            if (_currentPart.Data.Bytes.Length)
+            Array.Copy(buffer, offset, _currentPart.Data.Bytes, _currentPartPosition, writeCount);
+
+            _currentPartPosition += writeCount;
+            _content.CurrentSize += writeCount;
+
+            return writeCount;
         }
 
         public bool Next()
         {
-            throw new NotImplementedException();
+            if (_content.CurrentSize == _content.MaxSize)
+                return false;
+
+            var newPart = new FileContentPart()
+            {
+                Content = _content,
+                Data = new FileContentPartData() { Bytes = new byte[_partSize] },
+                PositionInFile = _currentPart.PositionInFile + _currentPart.Length + 1,
+                Order = _currentPart.Order + 1,
+                Length = 0
+            };
+
+            _dataContext.Set<FileContentPart>().Add(newPart);
+
+            return true;
         }
 
         public void Flush()
         {
-            throw new NotImplementedException();
+            _dataContext.SaveChanges();
         }
 
-        public bool CanSeek => true;
-        public bool HasParts => _currentPart != null;
-        public long Position => _currentPart.Position + _currentPart.Length
-        public long TotalLength => _content.MaxSize;
-        public bool CanWriteToCurrentPart { get; }
+        public void Dispose()
+        {
+            _dataContext = null;
+            _content = null;
+            _currentPart = null;
+        }
+
+        private bool CanWriteBytes() => _currentPart.PositionInFile + _currentPartPosition + 1 <= _content.MaxSize;
     }
 
     /// <summary>

@@ -1,13 +1,11 @@
-﻿using FileStoringSample.Context;
-using FileStoringSample.Model.Entities;
-using Microsoft.EntityFrameworkCore;
-using PartialStreams.Database;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
+using FileStoringSample.Data.Context;
+using FileStoringSample.Data.Model.Entities;
+using PartialStreams.Database;
 
-namespace FileStoringSample
+namespace FileStoringSample.Data.FileAccess
 {
     /// <summary>
     /// Читатель данных из бд
@@ -93,7 +91,7 @@ namespace FileStoringSample
 
             SetCurrentPart(part);
             mCurrentPartPosition = 0;
-            Position = mCurrentPart?.Position ?? TotalLength;
+            Position = mCurrentPart?.PositionInFile ?? TotalLength;
 
             return HasParts;
         }

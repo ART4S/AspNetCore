@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{8E9650ED-0E02-462A-B37C-A9517ED73767}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileStoringSample.Web", "Web\FileStoringSample.Web.csproj", "{8E9650ED-0E02-462A-B37C-A9517ED73767}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileStoringSample", "FileStoringSample\FileStoringSample.csproj", "{DDC7FC34-0CD2-4E1F-935D-C9C16A47C6A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileStoringSample.Data", "FileStoringSample\FileStoringSample.Data.csproj", "{DDC7FC34-0CD2-4E1F-935D-C9C16A47C6A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

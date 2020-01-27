@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace FileStoringSample.Context
+﻿namespace FileStoringSample.Data.Context
 {
     public class DataContext : DbContext, IDataContext
     {

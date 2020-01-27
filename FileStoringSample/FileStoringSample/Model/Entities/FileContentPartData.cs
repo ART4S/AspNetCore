@@ -1,6 +1,6 @@
-﻿using FileStoringSample.Model.Abstractions;
+﻿using FileStoringSample.Data.Model.Abstractions;
 
-namespace FileStoringSample.Model.Entities
+namespace FileStoringSample.Data.Model.Entities
 {
     public class FileContentPartData : BaseEntity
     {

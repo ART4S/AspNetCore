@@ -1,7 +1,7 @@
-﻿using FileStoringSample.Model.Abstractions;
-using System;
+﻿using System;
+using FileStoringSample.Data.Model.Abstractions;
 
-namespace FileStoringSample.Model.Entities
+namespace FileStoringSample.Data.Model.Entities
 {
     public class FileContentPart : BaseEntity
     {
@@ -24,7 +24,7 @@ namespace FileStoringSample.Model.Entities
         /// <summary>
         /// Позиция части в файле
         /// </summary>
-        public int Position { get; set; }
+        public int PositionInFile { get; set; }
 
         /// <summary>
         /// Содержание части файла

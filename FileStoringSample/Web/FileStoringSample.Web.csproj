@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FileStoringSample\FileStoringSample.Data.csproj" />
   </ItemGroup>
 
 </Project>

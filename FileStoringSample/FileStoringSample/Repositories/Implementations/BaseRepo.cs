@@ -1,10 +1,10 @@
-﻿using FileStoringSample.Context;
-using FileStoringSample.Model.Abstractions;
-using FileStoringSample.Repositories.Interfaces;
-using System;
+﻿using System;
 using System.Linq;
+using FileStoringSample.Data.Context;
+using FileStoringSample.Data.Model.Abstractions;
+using FileStoringSample.Data.Repositories.Interfaces;
 
-namespace FileStoringSample.Repositories.Implementations
+namespace FileStoringSample.Data.Repositories.Implementations
 {
     public class BaseRepo<TEntity, TDataContext> : IRepo<TEntity, TDataContext>
         where TEntity: class, IEntity

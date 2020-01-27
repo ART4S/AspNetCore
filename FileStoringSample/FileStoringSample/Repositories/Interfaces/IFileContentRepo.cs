@@ -1,9 +1,9 @@
-﻿using FileStoringSample.Context;
-using FileStoringSample.Model.Entities;
-using System;
+﻿using System;
 using System.IO;
+using FileStoringSample.Data.Context;
+using FileStoringSample.Data.Model.Entities;
 
-namespace FileStoringSample.Repositories.Interfaces
+namespace FileStoringSample.Data.Repositories.Interfaces
 {
     public interface IFileContentRepo<TDataContext> : IRepo<FileContent, TDataContext>
         where TDataContext : IDataContext
